@@ -14,6 +14,7 @@ import {
   CardTitle,
 } from "@/shared/ui/card";
 import { InputWithLabel } from "@/shared/ui/input-with-label";
+import { Spinner } from "@/shared/ui/spinner";
 import { ShopLayout } from "@/shop";
 
 const SignUpFormSchema = z.object({
@@ -79,7 +80,9 @@ const SignUpPage = () => {
               error={<ErrorMessage errors={errors} name="password" />}
             />
 
-            <Button className="mt-2">Sign up</Button>
+            <Button className="mt-2">
+              {isLoading ? <Spinner className="h-6 w-6" /> : "Sign up"}
+            </Button>
           </form>
         </CardContent>
       </Card>
