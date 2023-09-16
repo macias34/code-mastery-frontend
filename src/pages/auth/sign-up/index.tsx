@@ -20,11 +20,11 @@ const SignUpPage = () => {
             Enter your details below to create a new account.
           </CardDescription>
         </CardHeader>
-        <CardContent className="flex flex-col gap-5">
+        <CardContent className="flex flex-col gap-4">
           <Input placeholder="Username" />
           <Input placeholder="Email" />
           <Input type="password" placeholder="Password" />
-          <Button>Sign up</Button>
+          <Button className="mt-2">Sign up</Button>
         </CardContent>
       </Card>
     </ShopLayout>

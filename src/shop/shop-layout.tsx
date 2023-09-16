@@ -1,6 +1,6 @@
 import React, { FC, PropsWithChildren } from "react";
 
-import { cn } from "@/libs/cn";
+import { cn } from "@/libs/utils/cn";
 
 interface ShopLayoutProps extends PropsWithChildren {
   className?: string;
