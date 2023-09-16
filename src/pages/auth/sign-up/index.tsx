@@ -1,3 +1,4 @@
+import { Button } from "@/shared/ui/button";
 import {
   Card,
   CardContent,
@@ -6,22 +7,25 @@ import {
   CardHeader,
   CardTitle,
 } from "@/shared/ui/card";
+import { Input } from "@/shared/ui/input";
 import { ShopLayout } from "@/shop";
 
 const SignUpPage = () => {
   return (
     <ShopLayout>
-      <Card>
+      <Card className="w-96 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
         <CardHeader>
-          <CardTitle>Card Title</CardTitle>
-          <CardDescription>Card Description</CardDescription>
+          <CardTitle>Sign up</CardTitle>
+          <CardDescription>
+            Enter your details below to create a new account.
+          </CardDescription>
         </CardHeader>
-        <CardContent>
-          <p>Card Content</p>
+        <CardContent className="flex flex-col gap-5">
+          <Input placeholder="Username" />
+          <Input placeholder="Email" />
+          <Input type="password" placeholder="Password" />
+          <Button>Sign up</Button>
         </CardContent>
-        <CardFooter>
-          <p>Card Footer</p>
-        </CardFooter>
       </Card>
     </ShopLayout>
   );

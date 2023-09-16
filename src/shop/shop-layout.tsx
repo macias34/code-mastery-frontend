@@ -1,5 +1,11 @@
 import React, { FC, PropsWithChildren } from "react";
 
-export const ShopLayout: FC<PropsWithChildren> = ({ children }) => {
-  return <main className=" min-h-screen">{children}</main>;
+import { cn } from "@/libs/cn";
+
+interface ShopLayoutProps extends PropsWithChildren {
+  className?: string;
+}
+
+export const ShopLayout: FC<ShopLayoutProps> = ({ children, className }) => {
+  return <main className={cn("min-h-screen", className)}>{children}</main>;
 };
