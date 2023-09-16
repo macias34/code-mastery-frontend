@@ -1,3 +1,4 @@
+import { ErrorMessage } from "@hookform/error-message";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
@@ -9,17 +10,19 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/shared/ui/card";
-import { Input } from "@/shared/ui/input";
+import { InputWithLabel } from "@/shared/ui/input-with-label";
 import { ShopLayout } from "@/shop";
 
 const SignUpFormSchema = z.object({
-  username: z.string().min(3).max(20),
+  username: z
+    .string()
+    .min(3, "Username must contain at least 3 characters")
+    .max(20, "Username must contain 20 characters maximum"),
   email: z.string().email(),
-  password: z.string().min(5),
+  password: z.string().min(5, "Password must contain at least 5 characters"),
 });
 
 type SignUpFormData = z.infer<typeof SignUpFormSchema>;
@@ -29,7 +32,11 @@ const SignUpPage = () => {
     mutationFn: signUp,
   });
 
-  const { register, handleSubmit } = useForm<SignUpFormData>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignUpFormData>({
     mode: "onBlur",
     resolver: zodResolver(SignUpFormSchema),
   });
@@ -52,13 +59,26 @@ const SignUpPage = () => {
             className="flex flex-col gap-4"
             onSubmit={handleSubmit(onSubmit)}
           >
-            <Input {...register("username")} placeholder="Username" />
-            <Input {...register("email")} placeholder="Email" type="email" />
-            <Input
-              {...register("password")}
-              type="password"
-              placeholder="Password"
+            <InputWithLabel
+              name="username"
+              labelContent="Username"
+              input={{ ...register("username") }}
+              error={<ErrorMessage errors={errors} name="username" />}
             />
+
+            <InputWithLabel
+              name="email"
+              labelContent="Email"
+              input={{ ...register("email"), type: "email" }}
+              error={<ErrorMessage errors={errors} name="email" />}
+            />
+            <InputWithLabel
+              name="password"
+              labelContent="Password"
+              input={{ ...register("password"), type: "password" }}
+              error={<ErrorMessage errors={errors} name="password" />}
+            />
+
             <Button className="mt-2">Sign up</Button>
           </form>
         </CardContent>
