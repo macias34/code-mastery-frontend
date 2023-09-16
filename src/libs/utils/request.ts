@@ -19,6 +19,8 @@ export async function request<TResponse>(
     };
   }
 
+  console.log(getApiUrl() + url);
+
   const response = await fetch(getApiUrl() + url, {
     ...config,
     headers,

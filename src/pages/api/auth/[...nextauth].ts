@@ -8,7 +8,7 @@ import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { z } from "zod";
 
-import { signIn } from "@/libs/auth";
+import { signUp } from "@/libs/auth";
 
 export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
@@ -29,7 +29,7 @@ export const authOptions: NextAuthOptions = {
         const { username, password } =
           await loginSchema.parseAsync(credentials);
 
-        const { token: access_token } = await signIn({
+        const { token: access_token } = await signUp({
           username,
           password,
         });

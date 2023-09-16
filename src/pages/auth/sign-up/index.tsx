@@ -1,7 +1,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { useMutation } from "react-query";
 import { z } from "zod";
 
+import { signUp } from "@/libs/auth";
 import { Button } from "@/shared/ui/button";
 import {
   Card,
@@ -23,13 +25,17 @@ const SignUpFormSchema = z.object({
 type SignUpFormData = z.infer<typeof SignUpFormSchema>;
 
 const SignUpPage = () => {
+  const { mutate, isLoading } = useMutation({
+    mutationFn: signUp,
+  });
+
   const { register, handleSubmit } = useForm<SignUpFormData>({
     mode: "onBlur",
     resolver: zodResolver(SignUpFormSchema),
   });
 
   const onSubmit = (formData: SignUpFormData) => {
-    console.log(formData);
+    mutate(formData);
   };
 
   return (
