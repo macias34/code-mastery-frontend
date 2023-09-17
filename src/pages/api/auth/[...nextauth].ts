@@ -8,7 +8,7 @@ import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { z } from "zod";
 
-import { signUp } from "@/libs/auth";
+import { signIn } from "@/libs/auth";
 
 export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
@@ -16,30 +16,29 @@ export const authOptions: NextAuthOptions = {
     CredentialsProvider({
       name: "credentials",
       credentials: {
-        login: { label: "Login", type: "text" },
-        password: { label: "Hasło", type: "password" },
+        login: { label: "login", type: "text" },
+        password: { label: "password", type: "password" },
       },
 
       authorize: async (credentials) => {
         const loginSchema = z.object({
-          username: z.string().min(2),
-          password: z.string().min(5).max(100),
+          username: z.string().min(3).max(20),
+          password: z.string().min(5),
         });
 
         const { username, password } =
           await loginSchema.parseAsync(credentials);
 
-        const { token: access_token } = await signUp({
+        const { accessToken } = await signIn({
           username,
           password,
         });
 
-        if (!access_token || Object.keys(access_token).length === 0)
-          return null;
+        if (!accessToken || Object.keys(accessToken).length === 0) return null;
 
-        const user: { name: string; access_token: string } = {
+        const user: { name: string; accessToken: string } = {
           name: username,
-          access_token,
+          accessToken,
         };
 
         return user as any;
@@ -49,27 +48,29 @@ export const authOptions: NextAuthOptions = {
 
   session: {
     strategy: "jwt",
-    maxAge: 5 * 60 * 60 - 120, // 5 hours - 2 minutes
+    maxAge: 5 * 60 * 60, // 5 hours
   },
   callbacks: {
     jwt({ token, user, account }) {
       if (account) {
         token.username = user.name;
-        token.access_token = user.access_token;
+        token.email = user.email;
+        token.accessToken = user.accessToken;
       }
       return token;
     },
     session({ session, token }) {
       if (token?.username && token?.access_token && session.user) {
         session.user.name = token.username;
-        session.user.access_token = token.access_token;
+        session.user.email = token.email;
+        session.user.accessToken = token.accessToken;
       }
 
       return session;
     },
   },
   pages: {
-    signIn: "/panel/logowanie",
+    signIn: "/auth",
   },
 };
 

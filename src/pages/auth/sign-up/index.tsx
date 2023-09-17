@@ -6,6 +6,7 @@ import { useMutation } from "react-query";
 import { z } from "zod";
 
 import { signUp } from "@/libs/auth";
+import { TOAST_ERROR_TITLE, TOAST_SUCCESS_TITLE } from "@/libs/toast";
 import { ApiError } from "@/libs/utils";
 import { Button } from "@/shared/ui/button";
 import {
@@ -37,14 +38,15 @@ const SignUpPage = () => {
   const { mutate, isLoading } = useMutation(signUp, {
     onSuccess: () => {
       toast({
-        title: "Success!",
-        description: "You have successfully signed up! You can log in now.",
+        title: TOAST_SUCCESS_TITLE,
+        description:
+          "You have successfully signed up! Please confirm your email, then you can login.",
       });
       void router.push("/auth");
     },
     onError: (error: ApiError) => {
       toast({
-        title: "Something went wrong!",
+        title: TOAST_ERROR_TITLE,
         description: error.message,
         variant: "destructive",
       });

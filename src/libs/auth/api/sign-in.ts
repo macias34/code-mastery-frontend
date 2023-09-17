@@ -3,7 +3,7 @@ import { request } from "@/libs/utils";
 import { SignInDto } from "../dto";
 
 interface JWTToken {
-  token: string;
+  accessToken: string;
 }
 
 export const signIn = async (signInDto: SignInDto) => {
