@@ -19,7 +19,7 @@ export const Navbar = () => {
   ];
 
   return (
-    <nav className="py-4 shadow w-full">
+    <nav className="py-4 border-b border-border w-full">
       <div className="container flex justify-between items-center">
         <Link href="/">
           <Logo />
