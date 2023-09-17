@@ -62,7 +62,7 @@ const SignInPage = () => {
     if (res?.error) {
       toast({
         title: TOAST_ERROR_TITLE,
-        description: res.error,
+        description: "The credentials you provided are incorrect.",
         variant: "destructive",
       });
     }
