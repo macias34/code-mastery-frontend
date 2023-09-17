@@ -13,7 +13,7 @@ interface ShopLayoutProps extends PropsWithChildren {
 
 export const ShopLayout: FC<ShopLayoutProps> = ({ children, classNames }) => {
   return (
-    <main className={cn("flex flex-col bg-background", classNames?.root)}>
+    <main className={cn("flex flex-col", classNames?.root)}>
       <Navbar />
       <div className={cn(classNames?.children)}>{children}</div>
     </main>

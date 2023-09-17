@@ -16,7 +16,7 @@ export default function App({
   return (
     <SessionProvider session={session}>
       <QueryClientProvider client={queryClient}>
-        <NextThemesProvider attribute="class" defaultTheme="light" enableSystem>
+        <NextThemesProvider attribute="class" defaultTheme="dark" enableSystem>
           <Component {...pageProps} />
           <Toaster />
         </NextThemesProvider>
