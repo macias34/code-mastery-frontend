@@ -1,10 +1,12 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 import { z } from "zod";
 
 import { signUp } from "@/libs/auth";
+import { ApiError } from "@/libs/utils";
 import { Button } from "@/shared/ui/button";
 import {
   Card,
@@ -15,6 +17,7 @@ import {
 } from "@/shared/ui/card";
 import { InputWithLabel } from "@/shared/ui/input-with-label";
 import { Spinner } from "@/shared/ui/spinner";
+import { toast } from "@/shared/ui/use-toast";
 import { ShopLayout } from "@/shop";
 
 const SignUpFormSchema = z.object({
@@ -29,8 +32,23 @@ const SignUpFormSchema = z.object({
 type SignUpFormData = z.infer<typeof SignUpFormSchema>;
 
 const SignUpPage = () => {
-  const { mutate, isLoading } = useMutation({
-    mutationFn: signUp,
+  const router = useRouter();
+
+  const { mutate, isLoading } = useMutation(signUp, {
+    onSuccess: () => {
+      toast({
+        title: "Success!",
+        description: "You have successfully signed up! You can log in now.",
+      });
+      void router.push("/auth");
+    },
+    onError: (error: ApiError) => {
+      toast({
+        title: "Something went wrong!",
+        description: error.message,
+        variant: "destructive",
+      });
+    },
   });
 
   const {
