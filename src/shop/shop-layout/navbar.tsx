@@ -1,17 +1,18 @@
+import { useSession } from "next-auth/react";
+
 import { Logo } from "@/shared/ui/logo";
-import { SessionAvatar } from "@/shared/ui/session-avatar";
 
 import { NavbarItem, NavbarItemProps } from "./navbar-item";
+import { SessionAvatar } from "./session-avatar";
+import { SignUpLink } from "./sign-up-link";
 
 export const Navbar = () => {
-  const navbarItems: NavbarItemProps[] = [
+  const session = useSession();
+
+  const noAuthNavbarItems: NavbarItemProps[] = [
     {
       title: "All courses",
       href: "/courses",
-    },
-    {
-      title: "My courses",
-      href: "/my-courses",
     },
   ];
 
@@ -20,11 +21,18 @@ export const Navbar = () => {
       <div className="container flex justify-between items-center">
         <Logo />
         <div className="flex items-center">
-          {navbarItems.map(({ title, href }) => (
+          {noAuthNavbarItems.map(({ title, href }) => (
             <NavbarItem key={href} title={title} href={href} />
           ))}
 
-          <SessionAvatar className="ml-4" />
+          {session.status === "authenticated" ? (
+            <>
+              <NavbarItem title="My courses" href="/my-courses" />
+              <SessionAvatar className="ml-4" />
+            </>
+          ) : (
+            <SignUpLink />
+          )}
         </div>
       </div>
     </nav>
