@@ -20,14 +20,14 @@ export const SessionSettingsDropdown: FC<PropsWithChildren> = ({
       <DropdownMenuContent className="mr-5 w-44">
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem className="cursor-pointer">
           <User size={14} className="mr-2" /> Profile
         </DropdownMenuItem>
-        <DropdownMenuItem>
+        <DropdownMenuItem className="cursor-pointer">
           <Code size={14} className="mr-2" /> My courses
         </DropdownMenuItem>
         {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
-        <DropdownMenuItem onClick={() => signOut()}>
+        <DropdownMenuItem className="cursor-pointer" onClick={() => signOut()}>
           <LogOut size={14} className="mr-2" />
           Sign out
         </DropdownMenuItem>
