@@ -1,5 +1,7 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { GetServerSideProps } from "next";
+import { getServerSession } from "next-auth";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -22,6 +24,8 @@ import { InputWithLabel } from "@/shared/ui/input-with-label";
 import { Spinner } from "@/shared/ui/spinner";
 import { toast } from "@/shared/ui/use-toast";
 import { ShopLayout } from "@/shop";
+
+import { authOptions } from "../api/auth/[...nextauth]";
 
 const SignInFormSchema = z.object({
   username: z
@@ -104,6 +108,22 @@ const SignInPage = () => {
       </Card>
     </ShopLayout>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  const session = await getServerSession(req, res, authOptions);
+  if (session) {
+    return {
+      redirect: {
+        destination: "/",
+        statusCode: 302,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
 };
 
 export default SignInPage;
