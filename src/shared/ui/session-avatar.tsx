@@ -4,7 +4,7 @@ import React, { FC } from "react";
 import { cn } from "@/libs/utils";
 
 import { PropsWithClassname } from "../types";
-import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
+import { Avatar, AvatarFallback } from "./avatar";
 
 export const SessionAvatar: FC<PropsWithClassname> = ({ className }) => {
   const session = useSession();

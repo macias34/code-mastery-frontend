@@ -81,7 +81,7 @@ const SignUpPage = () => {
         <CardContent>
           <form
             className="flex flex-col gap-4"
-            onSubmit={handleSubmit(onSubmit)}
+            onSubmit={void handleSubmit(onSubmit)}
           >
             <InputWithLabel
               name="username"

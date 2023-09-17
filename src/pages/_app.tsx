@@ -1,3 +1,4 @@
+import { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import type { AppProps } from "next/app";
@@ -11,7 +12,7 @@ const queryClient = new QueryClient();
 export default function App({
   Component,
   pageProps: { session, ...pageProps },
-}: AppProps) {
+}: AppProps<{ session: Session | null }>) {
   return (
     <SessionProvider session={session}>
       <QueryClientProvider client={queryClient}>

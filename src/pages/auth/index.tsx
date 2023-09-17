@@ -6,12 +6,9 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useMutation } from "react-query";
 import { z } from "zod";
 
-import { signUp } from "@/libs/auth";
 import { TOAST_ERROR_TITLE, TOAST_SUCCESS_TITLE } from "@/libs/toast";
-import { ApiError } from "@/libs/utils";
 import { Button } from "@/shared/ui/button";
 import {
   Card,
@@ -84,7 +81,7 @@ const SignInPage = () => {
         <CardContent>
           <form
             className="flex flex-col gap-4"
-            onSubmit={handleSubmit(onSubmit)}
+            onSubmit={void handleSubmit(onSubmit)}
           >
             <InputWithLabel
               name="username"
