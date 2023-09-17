@@ -27,7 +27,7 @@ export const SessionSettingsDropdown: FC<PropsWithChildren> = ({
         </DropdownMenuItem>
         <DropdownMenuItem>
           <LogOut size={14} className="mr-2" />
-          Log out
+          Sign out
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
