@@ -13,8 +13,6 @@ export const SessionAvatar: FC<PropsWithClassname> = ({ className }) => {
 
   return (
     <Avatar className={cn(className)}>
-      {/* <AvatarImage  /> */}
-
       {session.status === "loading" && <AvatarFallback>CN</AvatarFallback>}
 
       {session.status === "authenticated" && (
