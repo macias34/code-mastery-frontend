@@ -6,6 +6,7 @@ import { Logo } from "@/shared/ui/logo";
 import { NavbarItem, NavbarItemProps } from "./navbar-item";
 import { SessionAvatar } from "./session-avatar";
 import { SignUpLink } from "./sign-up-link";
+import { ThemeToggle } from "./theme-toggle";
 
 export const Navbar = () => {
   const session = useSession();
@@ -31,11 +32,13 @@ export const Navbar = () => {
           {session.status === "authenticated" ? (
             <>
               <NavbarItem title="My courses" href="/my-courses" />
-              <SessionAvatar className="ml-4" />
+              <SessionAvatar className="mr-4 ml-1" />
             </>
           ) : (
             <SignUpLink />
           )}
+
+          <ThemeToggle />
         </div>
       </div>
     </nav>
