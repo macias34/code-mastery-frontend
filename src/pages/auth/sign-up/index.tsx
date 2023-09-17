@@ -2,6 +2,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { GetServerSideProps } from "next";
 import { getServerSession } from "next-auth";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
@@ -70,8 +71,13 @@ const SignUpPage = () => {
   };
 
   return (
-    <ShopLayout>
-      <Card className="w-96 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+    <ShopLayout
+      classNames={{
+        root: "min-h-screen",
+        children: "flex flex-col items-center gap-6 justify-center grow",
+      }}
+    >
+      <Card className="w-96">
         <CardHeader>
           <CardTitle>Sign up</CardTitle>
           <CardDescription>
@@ -109,6 +115,13 @@ const SignUpPage = () => {
           </form>
         </CardContent>
       </Card>
+
+      <p className="text-muted-foreground text-sm">
+        Already have an account?{" "}
+        <Link className="text-primary font-semibold" href="/auth">
+          Sign in
+        </Link>
+      </p>
     </ShopLayout>
   );
 };

@@ -3,6 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { GetServerSideProps } from "next";
 import { getServerSession } from "next-auth";
 import { signIn } from "next-auth/react";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -70,8 +71,13 @@ const SignInPage = () => {
   }
 
   return (
-    <ShopLayout>
-      <Card className="w-96 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+    <ShopLayout
+      classNames={{
+        root: "min-h-screen",
+        children: "flex flex-col items-center gap-6 justify-center grow",
+      }}
+    >
+      <Card className="w-96">
         <CardHeader>
           <CardTitle>Sign in</CardTitle>
           <CardDescription>
@@ -81,7 +87,7 @@ const SignInPage = () => {
         <CardContent>
           <form
             className="flex flex-col gap-4"
-            onSubmit={void handleSubmit(onSubmit)}
+            onSubmit={handleSubmit(onSubmit)}
           >
             <InputWithLabel
               name="username"
@@ -98,11 +104,18 @@ const SignInPage = () => {
             />
 
             <Button className="mt-2">
-              {isLoading ? <Spinner className="h-6 w-6" /> : "Sign up"}
+              {isLoading ? <Spinner className="h-6 w-6" /> : "Sign in"}
             </Button>
           </form>
         </CardContent>
       </Card>
+
+      <p className="text-muted-foreground text-sm">
+        No account?{" "}
+        <Link className="text-primary font-semibold" href="/auth/sign-up">
+          Sign up
+        </Link>
+      </p>
     </ShopLayout>
   );
 };

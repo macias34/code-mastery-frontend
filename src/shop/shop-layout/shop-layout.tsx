@@ -5,14 +5,17 @@ import { cn } from "@/libs/utils/cn";
 import { Navbar } from "./navbar";
 
 interface ShopLayoutProps extends PropsWithChildren {
-  className?: string;
+  classNames?: {
+    root?: string;
+    children?: string;
+  };
 }
 
-export const ShopLayout: FC<ShopLayoutProps> = ({ children, className }) => {
+export const ShopLayout: FC<ShopLayoutProps> = ({ children, classNames }) => {
   return (
-    <main className={cn("min-h-screen", className)}>
+    <main className={cn("flex flex-col", classNames?.root)}>
       <Navbar />
-      {children}
+      <div className={cn(classNames?.children)}>{children}</div>
     </main>
   );
 };

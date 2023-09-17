@@ -8,7 +8,10 @@ export const SignUpLink = () => {
   return (
     <Link
       className={cn(
-        buttonVariants({ size: "lg", className: "font-semibold ml-4 text-sm" }),
+        buttonVariants({
+          size: "lg",
+          className: "font-semibold ml-4",
+        }),
       )}
       href="/auth/sign-up"
     >
