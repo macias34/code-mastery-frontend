@@ -1,4 +1,5 @@
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 
 import { Logo } from "@/shared/ui/logo";
 
@@ -19,7 +20,9 @@ export const Navbar = () => {
   return (
     <nav className="py-4 shadow w-full">
       <div className="container flex justify-between items-center">
-        <Logo />
+        <Link href="/">
+          <Logo />
+        </Link>
         <div className="flex items-center">
           {noAuthNavbarItems.map(({ title, href }) => (
             <NavbarItem key={href} title={title} href={href} />
