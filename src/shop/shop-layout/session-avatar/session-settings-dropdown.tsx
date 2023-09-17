@@ -1,4 +1,5 @@
 import { Code, LogOut, User } from "lucide-react";
+import { signOut } from "next-auth/react";
 import { FC, PropsWithChildren } from "react";
 
 import {
@@ -25,7 +26,8 @@ export const SessionSettingsDropdown: FC<PropsWithChildren> = ({
         <DropdownMenuItem>
           <Code size={14} className="mr-2" /> My courses
         </DropdownMenuItem>
-        <DropdownMenuItem>
+        {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
+        <DropdownMenuItem onClick={() => signOut()}>
           <LogOut size={14} className="mr-2" />
           Sign out
         </DropdownMenuItem>

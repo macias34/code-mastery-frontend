@@ -87,7 +87,7 @@ const SignInPage = () => {
         <CardContent>
           <form
             className="flex flex-col gap-4"
-            onSubmit={handleSubmit(onSubmit)}
+            onSubmit={handleSubmit(onSubmit)} // eslint-disable-line @typescript-eslint/no-misused-promises
           >
             <InputWithLabel
               name="username"
