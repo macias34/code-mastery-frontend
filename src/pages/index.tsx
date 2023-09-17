@@ -5,8 +5,7 @@ import { ShopLayout } from "@/shop";
 
 export default function Home() {
   const session = useSession();
-  console.log(session);
   const user = session.data?.user;
 
-  return <ShopLayout>{user && user.name}</ShopLayout>;
+  return <ShopLayout>{user && "Logged as " + user.name}</ShopLayout>;
 }

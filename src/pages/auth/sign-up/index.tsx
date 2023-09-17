@@ -1,5 +1,7 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { GetServerSideProps } from "next";
+import { getServerSession } from "next-auth";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
@@ -8,6 +10,7 @@ import { z } from "zod";
 import { signUp } from "@/libs/auth";
 import { TOAST_ERROR_TITLE, TOAST_SUCCESS_TITLE } from "@/libs/toast";
 import { ApiError } from "@/libs/utils";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { Button } from "@/shared/ui/button";
 import {
   Card,
@@ -108,6 +111,22 @@ const SignUpPage = () => {
       </Card>
     </ShopLayout>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  const session = await getServerSession(req, res, authOptions);
+  if (session) {
+    return {
+      redirect: {
+        destination: "/",
+        statusCode: 302,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
 };
 
 export default SignUpPage;
