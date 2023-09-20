@@ -1,4 +1,4 @@
-import { GetServerSideProps } from "next";
+import { type GetServerSideProps } from "next";
 
 import { Course } from "@/course/course";
 import { type CourseResponseDto } from "@/libs/course";
@@ -10,19 +10,45 @@ export default function CoursesPage({
 }: {
   courseResponse: CourseResponseDto;
 }) {
+  const { courses } = courseResponse;
+
+  if (courses.length === 0) {
+    return (
+      <ShopLayout>
+        <div className="flex justify-center gap-5 mt-10">
+          <p>Brak kursów</p>
+        </div>
+      </ShopLayout>
+    );
+  }
+
   return (
     <ShopLayout>
-      {courseResponse?.courses.length > 0 &&
-        courseResponse.courses.map((course) => (
+      <div className="flex justify-center gap-5 mt-10 flex-wrap">
+        {courseResponse.courses.map((course) => (
           <Course course={course} key={course.id} />
         ))}
+      </div>
     </ShopLayout>
   );
 }
 
 export const getServerSideProps = (async () => {
-  const courseResponse = await request<CourseResponseDto>("/course/");
-  return { props: { courseResponse } };
+  try {
+    const courseResponse = await request<CourseResponseDto>("/course/");
+    return { props: { courseResponse } };
+  } catch (e) {
+    return {
+      props: {
+        courseResponse: {
+          courses: [],
+          currentPage: 0,
+          totalPages: 0,
+          totalElements: 0,
+        },
+      },
+    };
+  }
 }) satisfies GetServerSideProps<{
   courseResponse: CourseResponseDto;
 }>;
