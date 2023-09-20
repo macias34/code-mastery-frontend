@@ -2,7 +2,7 @@ import { type GetServerSideProps } from "next";
 
 import { Course } from "@/course/course";
 import { FilterBar } from "@/course/filter-bart/filter-bar";
-import { type CourseResponseDto } from "@/libs/course";
+import { type CourseResponseDto } from "@/course/types";
 import { request } from "@/libs/utils";
 import { ShopLayout } from "@/shop";
 

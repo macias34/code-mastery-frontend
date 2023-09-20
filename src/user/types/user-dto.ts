@@ -1,4 +1,4 @@
-import { CourseDto } from "@/course";
+import { CourseDto } from "@/course/types";
 
 import { InvoiceDetailsDto } from "./invoice-details-dto";
 import { PersonalDetailsDto } from "./personal-details-dto";
@@ -13,6 +13,6 @@ export interface UserDto {
   role: UserRole;
   personalDetails: PersonalDetailsDto;
   invoiceDetails: InvoiceDetailsDto;
-  courses: Set<CourseDto>;
+  courses: CourseDto[];
   // private List<OrderEntity> orders
 }
