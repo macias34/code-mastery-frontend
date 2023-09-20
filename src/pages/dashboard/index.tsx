@@ -1,5 +1,10 @@
-import { DashboardLayout } from "@/dashboard/shared";
+import { useSession } from "next-auth/react";
+
+import { ShopLayout } from "@/shop";
 
 export default function Dashboard() {
-  return <DashboardLayout>dashboard</DashboardLayout>;
+  const session = useSession();
+  console.log(session);
+
+  return <ShopLayout>dashboard</ShopLayout>;
 }
