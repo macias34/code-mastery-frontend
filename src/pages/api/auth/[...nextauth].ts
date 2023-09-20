@@ -53,8 +53,6 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     jwt({ token, user, account }) {
       if (account) {
-        token.username = user.name;
-        token.email = user.email;
         token.accessToken = user.accessToken;
       }
       return token;
