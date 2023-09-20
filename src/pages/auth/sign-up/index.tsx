@@ -32,6 +32,16 @@ const SignUpFormSchema = z.object({
     .max(20, "Username must contain 20 characters maximum"),
   email: z.string().email(),
   password: z.string().min(5, "Password must contain at least 5 characters"),
+  firstName: z.string().min(3, "First Name must contain at least 3 characters"),
+  lastName: z.string().min(3, "Last Name must contain at least 3 characters"),
+  postalCode: z
+    .string()
+    .min(2, "Postal code must contain at least 2 characters"),
+  city: z.string().min(2, "City must contain at least 2 characters"),
+  street: z.string().min(2, "Street must contain at least 2 characters"),
+  phoneNumber: z
+    .string()
+    .min(2, "Phone number must contain at least 2 characters"),
 });
 
 type SignUpFormData = z.infer<typeof SignUpFormSchema>;
@@ -77,7 +87,7 @@ const SignUpPage = () => {
         children: "flex flex-col items-center gap-6 justify-center grow",
       }}
     >
-      <Card className="w-96">
+      <Card className="w-96 my-4">
         <CardHeader>
           <CardTitle>Sign up</CardTitle>
           <CardDescription>
@@ -108,20 +118,58 @@ const SignUpPage = () => {
               input={{ ...register("password"), type: "password" }}
               error={<ErrorMessage errors={errors} name="password" />}
             />
+            <InputWithLabel
+              name="firstName"
+              labelContent="First name"
+              input={{ ...register("firstName"), type: "text" }}
+              error={<ErrorMessage errors={errors} name="firstName" />}
+            />
+            <InputWithLabel
+              name="lastName"
+              labelContent="Last name"
+              input={{ ...register("lastName"), type: "text" }}
+              error={<ErrorMessage errors={errors} name="lastName" />}
+            />
+            <InputWithLabel
+              name="postalCode"
+              labelContent="Postal code"
+              input={{ ...register("postalCode"), type: "text" }}
+              error={<ErrorMessage errors={errors} name="postalCode" />}
+            />
+
+            <InputWithLabel
+              name="city"
+              labelContent="City"
+              input={{ ...register("city"), type: "text" }}
+              error={<ErrorMessage errors={errors} name="city" />}
+            />
+
+            <InputWithLabel
+              name="street"
+              labelContent="Street"
+              input={{ ...register("street"), type: "text" }}
+              error={<ErrorMessage errors={errors} name="street" />}
+            />
+
+            <InputWithLabel
+              name="phoneNumber"
+              labelContent="Phone Number"
+              input={{ ...register("phoneNumber"), type: "text" }}
+              error={<ErrorMessage errors={errors} name="phoneNumber" />}
+            />
 
             <Button className="mt-2">
               {isLoading ? <Spinner className="h-6 w-6" /> : "Sign up"}
             </Button>
           </form>
         </CardContent>
+        <p className="text-muted-foreground text-sm text-center p-4">
+          Already have an account?{" "}
+          <Link className="text-primary font-semibold" href="/auth">
+            Sign in
+          </Link>
+        </p>
       </Card>
-
-      <p className="text-muted-foreground text-sm">
-        Already have an account?{" "}
-        <Link className="text-primary font-semibold" href="/auth">
-          Sign in
-        </Link>
-      </p>
     </ShopLayout>
   );
 };
