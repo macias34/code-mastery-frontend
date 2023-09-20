@@ -108,14 +108,13 @@ const SignInPage = () => {
             </Button>
           </form>
         </CardContent>
+        <p className="text-muted-foreground text-sm text-center p-4">
+          No account?{" "}
+          <Link className="text-primary font-semibold" href="/auth/sign-up">
+            Sign up
+          </Link>
+        </p>
       </Card>
-
-      <p className="text-muted-foreground text-sm">
-        No account?{" "}
-        <Link className="text-primary font-semibold" href="/auth/sign-up">
-          Sign up
-        </Link>
-      </p>
     </ShopLayout>
   );
 };
