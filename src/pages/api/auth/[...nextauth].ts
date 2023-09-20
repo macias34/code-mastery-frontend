@@ -16,14 +16,14 @@ export const authOptions: NextAuthOptions = {
     CredentialsProvider({
       name: "credentials",
       credentials: {
-        login: { label: "login", type: "text" },
-        password: { label: "password", type: "password" },
+        login: { label: "Login", type: "text" },
+        password: { label: "Hasło", type: "password" },
       },
 
       authorize: async (credentials) => {
         const loginSchema = z.object({
-          username: z.string().min(3).max(20),
-          password: z.string().min(5),
+          username: z.string().min(2),
+          password: z.string().min(5).max(100),
         });
 
         const { username, password } =
@@ -48,19 +48,19 @@ export const authOptions: NextAuthOptions = {
 
   session: {
     strategy: "jwt",
-    maxAge: 5 * 60 * 60, // 5 hours
+    maxAge: 5 * 60 * 60 - 120, // 5 hours - 2 minutes
   },
   callbacks: {
     jwt({ token, user, account }) {
       if (account) {
+        token.username = user.name;
         token.accessToken = user.accessToken;
       }
       return token;
     },
     session({ session, token }) {
-      if (token?.username && token?.access_token && session.user) {
+      if (token?.username && token?.accessToken && session.user) {
         session.user.name = token.username;
-        session.user.email = token.email;
         session.user.accessToken = token.accessToken;
       }
 

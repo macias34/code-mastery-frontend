@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { type CourseDto } from "@/libs/course";
 import { useEnvironment } from "@/libs/environment";
 import { Badge } from "@/shared/ui/badge";
 import { Button } from "@/shared/ui/button";
@@ -13,6 +12,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/shared/ui/card";
+
+import { type CourseDto } from "../types";
 
 interface Props {
   course: CourseDto;
