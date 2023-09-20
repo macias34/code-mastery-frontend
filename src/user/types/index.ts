@@ -1,4 +1,4 @@
-export * from "./invoice-details-dto";
-export * from "./personal-details-dto";
-export * from "./user-dto";
+export * from "./invoice-details";
+export * from "./personal-details";
+export * from "./user";
 export * from "./user-role";
