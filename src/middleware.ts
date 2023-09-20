@@ -12,7 +12,7 @@ interface DecodedToken {
 
 export default withAuth({
   callbacks: {
-    authorized: async ({ req, token }) => {
+    authorized: ({ req, token }) => {
       const pathname = req.nextUrl.pathname;
 
       if (
