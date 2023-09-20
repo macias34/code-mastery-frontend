@@ -1,6 +1,7 @@
 import { type GetServerSideProps } from "next";
 
 import { Course } from "@/course/course";
+import { FilterBar } from "@/course/filter-bart/filter-bar";
 import { type CourseResponseDto } from "@/libs/course";
 import { request } from "@/libs/utils";
 import { ShopLayout } from "@/shop";
@@ -24,10 +25,13 @@ export default function CoursesPage({
 
   return (
     <ShopLayout>
-      <div className="flex justify-center gap-5 mt-10 flex-wrap">
-        {courseResponse.courses.map((course) => (
-          <Course course={course} key={course.id} />
-        ))}
+      <FilterBar />
+      <div className="w-11/12 max-w-6xl mx-auto mt-10 ">
+        <div className=" flex justify-center gap-5 mt-10 flex-wrap">
+          {courseResponse.courses.map((course) => (
+            <Course course={course} key={course.id} />
+          ))}
+        </div>
       </div>
     </ShopLayout>
   );
