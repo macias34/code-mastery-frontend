@@ -14,7 +14,7 @@ export const SessionAvatar: FC<PropsWithClassname> = ({ className }) => {
   return (
     <SessionSettingsDropdown>
       <Avatar className={cn(className)}>
-        <AvatarFallback className="bg-primary/90 text-secondary font-semibold cursor-pointer hover:bg-primary transition">
+        <AvatarFallback className="bg-primary/90 text-white font-semibold cursor-pointer hover:bg-primary transition">
           {session.status !== "authenticated" ? "CN" : usernameFallback}
         </AvatarFallback>
       </Avatar>
