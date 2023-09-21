@@ -4,7 +4,7 @@ import { ThemeProvider as NextThemesProvider } from "next-themes";
 import type { AppProps } from "next/app";
 import { QueryClient, QueryClientProvider } from "react-query";
 
-import { Toaster } from "@/shared/ui/toaster";
+import { Toaster } from "@/components/toaster";
 import "@/styles/globals.css";
 
 const queryClient = new QueryClient();

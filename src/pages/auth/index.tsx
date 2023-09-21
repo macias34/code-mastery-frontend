@@ -9,18 +9,18 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { TOAST_ERROR_TITLE, TOAST_SUCCESS_TITLE } from "@/libs/toast";
-import { Button } from "@/shared/ui/button";
+import { Button } from "@/components/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/shared/ui/card";
-import { InputWithLabel } from "@/shared/ui/input-with-label";
-import { Spinner } from "@/shared/ui/spinner";
-import { toast } from "@/shared/ui/use-toast";
+} from "@/components/card";
+import { InputWithLabel } from "@/components/input-with-label";
+import { Spinner } from "@/components/spinner";
+import { toast } from "@/components/use-toast";
+import { TOAST_ERROR_TITLE, TOAST_SUCCESS_TITLE } from "@/libs/toast";
 import { ShopLayout } from "@/shop";
 
 import { authOptions } from "../api/auth/[...nextauth]";

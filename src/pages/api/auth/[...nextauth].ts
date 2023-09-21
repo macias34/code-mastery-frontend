@@ -8,7 +8,7 @@ import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { z } from "zod";
 
-import { signIn } from "@/libs/auth";
+import { signIn } from "@/features/auth";
 
 export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,

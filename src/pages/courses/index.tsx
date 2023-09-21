@@ -3,8 +3,8 @@ import { type GetServerSideProps } from "next";
 import { Course } from "@/course/components/course";
 import { FilterBar } from "@/course/components/filter-bar/filter-bar";
 import { type CourseResponseDto } from "@/course/types";
-import { request } from "@/libs/utils";
 import { ShopLayout } from "@/shop";
+import { request } from "@/utils";
 
 export default function CoursesPage({
   courseResponse,
