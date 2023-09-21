@@ -1,6 +1,6 @@
 import { request } from "@/utils";
 
-import { SignInDto } from "../dto";
+import { SignInDto } from "../types";
 
 interface JWTToken {
   accessToken: string;

@@ -1,6 +1,6 @@
 import { request } from "@/utils";
 
-import { type SignUpDto } from "../dto";
+import { type SignUpDto } from "../types";
 
 export const signUp = async (signUpDto: SignUpDto) => {
   const { username, email, password, ...personalDetails } = signUpDto;
