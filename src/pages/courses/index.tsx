@@ -1,9 +1,7 @@
 import { type GetServerSideProps } from "next";
 
-import { Course } from "@/course/components/course";
-import { FilterBar } from "@/course/components/filter-bar/filter-bar";
-import { type CourseResponseDto } from "@/course/types";
-import { ShopLayout } from "@/shop";
+import { Course, type CourseResponseDto, FilterBar } from "@/features/course";
+import { ShopLayout } from "@/features/shop";
 import { request } from "@/utils";
 
 export default function CoursesPage({

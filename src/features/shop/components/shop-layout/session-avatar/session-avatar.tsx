@@ -1,10 +1,10 @@
 import { useSession } from "next-auth/react";
 import React, { FC } from "react";
 
+import { Avatar, AvatarFallback } from "@/components/avatar";
+import { PropsWithClassname } from "@/types";
 import { cn } from "@/utils";
 
-import { PropsWithClassname } from "../../../shared/types";
-import { Avatar, AvatarFallback } from "../../../shared/ui/avatar";
 import { SessionSettingsDropdown } from "./session-settings-dropdown";
 
 export const SessionAvatar: FC<PropsWithClassname> = ({ className }) => {

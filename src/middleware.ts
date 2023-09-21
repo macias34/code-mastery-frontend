@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import { withAuth } from "next-auth/middleware";
 
-import { UserRole } from "./user";
+import { UserRole } from "./features/user";
 
 interface DecodedToken {
   sub: string;

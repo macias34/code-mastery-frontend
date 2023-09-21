@@ -20,8 +20,8 @@ import {
 import { InputWithLabel } from "@/components/input-with-label";
 import { Spinner } from "@/components/spinner";
 import { toast } from "@/components/use-toast";
+import { ShopLayout } from "@/features/shop";
 import { TOAST_ERROR_TITLE, TOAST_SUCCESS_TITLE } from "@/libs/toast";
-import { ShopLayout } from "@/shop";
 
 import { authOptions } from "../api/auth/[...nextauth]";
 

@@ -11,7 +11,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/card";
-import { useEnvironment } from "@/libs/environment";
+import { useEnvironment } from "@/hooks";
 
 import { type CourseDto } from "../types";
 

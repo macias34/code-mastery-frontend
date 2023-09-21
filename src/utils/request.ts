@@ -1,4 +1,4 @@
-import { useEnvironment } from "../libs/environment";
+import { useEnvironment } from "@/hooks";
 
 export async function request<TResponse>(
   url: string,

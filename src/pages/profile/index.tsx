@@ -1,4 +1,4 @@
-import { ShopLayout } from "@/shop";
+import { ShopLayout } from "@/features/shop";
 
 export default function ProfilePage() {
   return (

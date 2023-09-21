@@ -1,1 +1,1 @@
-export * from "./shop-layout";
+export * from "./components";

@@ -1,4 +1,4 @@
-import { CourseDto } from "@/course/types";
+import { CourseDto } from "@/features/course";
 
 import { InvoiceDetailsDto } from "./invoice-details";
 import { PersonalDetailsDto } from "./personal-details";

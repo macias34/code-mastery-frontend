@@ -20,9 +20,9 @@ import { InputWithLabel } from "@/components/input-with-label";
 import { Spinner } from "@/components/spinner";
 import { toast } from "@/components/use-toast";
 import { signUp } from "@/features/auth";
+import { ShopLayout } from "@/features/shop";
 import { TOAST_ERROR_TITLE, TOAST_SUCCESS_TITLE } from "@/libs/toast";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
-import { ShopLayout } from "@/shop";
 import { ApiError } from "@/utils";
 
 const SignUpFormSchema = z.object({

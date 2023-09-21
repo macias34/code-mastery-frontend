@@ -1,5 +1,5 @@
-import { ShopLayout } from "@/shop";
-import { useUser } from "@/user";
+import { ShopLayout } from "@/features/shop";
+import { useUser } from "@/features/user";
 
 export default function MyCoursesPage() {
   const { userData } = useUser();
