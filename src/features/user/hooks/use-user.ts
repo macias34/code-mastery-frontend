@@ -1,7 +1,7 @@
 import { useSession } from "next-auth/react";
 import { useQuery } from "react-query";
 
-import { request } from "@/utils";
+import { request } from "@/shared/utils";
 
 import { UserDto } from "../types";
 

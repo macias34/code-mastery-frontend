@@ -2,7 +2,7 @@ import { type GetServerSideProps } from "next";
 
 import { Course, type CourseResponseDto, FilterBar } from "@/features/course";
 import { ShopLayout } from "@/features/shop";
-import { request } from "@/utils";
+import { request } from "@/shared/utils";
 
 export default function CoursesPage({
   courseResponse,

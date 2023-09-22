@@ -1,7 +1,7 @@
 import { Loader2 } from "lucide-react";
 import React, { FC } from "react";
 
-import { cn } from "@/utils";
+import { cn } from "@/shared/utils";
 
 interface SpinnerProps {
   className?: string;

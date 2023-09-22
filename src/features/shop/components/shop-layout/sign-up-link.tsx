@@ -1,8 +1,8 @@
 import Link from "next/link";
 import React from "react";
 
-import { buttonVariants } from "@/components/button";
-import { cn } from "@/utils";
+import { buttonVariants } from "@/shared/components/button";
+import { cn } from "@/shared/utils";
 
 export const SignUpLink = () => {
   return (

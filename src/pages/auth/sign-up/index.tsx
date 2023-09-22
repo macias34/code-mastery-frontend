@@ -8,22 +8,22 @@ import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 import { z } from "zod";
 
-import { Button } from "@/components/button";
+import { signUp } from "@/features/auth";
+import { ShopLayout } from "@/features/shop";
+import { TOAST_ERROR_TITLE, TOAST_SUCCESS_TITLE } from "@/libs/toast";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
+import { Button } from "@/shared/components/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/card";
-import { InputWithLabel } from "@/components/input-with-label";
-import { Spinner } from "@/components/spinner";
-import { toast } from "@/components/use-toast";
-import { signUp } from "@/features/auth";
-import { ShopLayout } from "@/features/shop";
-import { TOAST_ERROR_TITLE, TOAST_SUCCESS_TITLE } from "@/libs/toast";
-import { authOptions } from "@/pages/api/auth/[...nextauth]";
-import { ApiError } from "@/utils";
+} from "@/shared/components/card";
+import { InputWithLabel } from "@/shared/components/input-with-label";
+import { Spinner } from "@/shared/components/spinner";
+import { toast } from "@/shared/components/use-toast";
+import { ApiError } from "@/shared/utils";
 
 const SignUpFormSchema = z.object({
   username: z

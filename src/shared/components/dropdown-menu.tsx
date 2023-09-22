@@ -6,7 +6,7 @@ import {
 } from "@radix-ui/react-icons";
 import * as React from "react";
 
-import { cn } from "@/utils/cn";
+import { cn } from "@/shared/utils/cn";
 
 const DropdownMenu = DropdownMenuPrimitive.Root;
 

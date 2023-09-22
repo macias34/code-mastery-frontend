@@ -1,7 +1,7 @@
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 
-import { Logo } from "@/components/logo";
+import { Logo } from "@/shared/components/logo";
 
 import { NavbarItem, NavbarItemProps } from "./navbar-item";
 import { SessionAvatar } from "./session-avatar";

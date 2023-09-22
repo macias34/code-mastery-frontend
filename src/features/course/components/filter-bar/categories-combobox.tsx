@@ -1,16 +1,20 @@
 import { Check, ChevronsUpDown } from "lucide-react";
 import { useState } from "react";
 
-import { Button } from "@/components/button";
+import { Button } from "@/shared/components/button";
 import {
   Command,
   CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
-} from "@/components/command";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/popover";
-import { cn } from "@/utils";
+} from "@/shared/components/command";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/shared/components/popover";
+import { cn } from "@/shared/utils";
 
 const categories = [
   {

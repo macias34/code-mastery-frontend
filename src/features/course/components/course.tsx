@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { Badge } from "@/components/badge";
-import { Button } from "@/components/button";
+import { Badge } from "@/shared/components/badge";
+import { Button } from "@/shared/components/button";
 import {
   Card,
   CardContent,
@@ -10,8 +10,8 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/card";
-import { useEnvironment } from "@/hooks";
+} from "@/shared/components/card";
+import { useEnvironment } from "@/shared/hooks";
 
 import { type CourseDto } from "../types";
 

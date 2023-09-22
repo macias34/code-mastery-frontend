@@ -9,7 +9,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/dropdown-menu";
+} from "@/shared/components/dropdown-menu";
 
 export const SessionSettingsDropdown: FC<PropsWithChildren> = ({
   children,

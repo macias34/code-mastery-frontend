@@ -1,9 +1,9 @@
 import { useSession } from "next-auth/react";
 import React, { FC } from "react";
 
-import { Avatar, AvatarFallback } from "@/components/avatar";
-import { PropsWithClassname } from "@/types";
-import { cn } from "@/utils";
+import { Avatar, AvatarFallback } from "@/shared/components/avatar";
+import { PropsWithClassname } from "@/shared/types";
+import { cn } from "@/shared/utils";
 
 import { SessionSettingsDropdown } from "./session-settings-dropdown";
 

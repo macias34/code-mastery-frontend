@@ -1,5 +1,5 @@
-import { Button } from "@/components/button";
-import { Input } from "@/components/input";
+import { Button } from "@/shared/components/button";
+import { Input } from "@/shared/components/input";
 
 import { CategoriesCombobox } from "./categories-combobox";
 

@@ -1,4 +1,4 @@
-import { request } from "@/utils";
+import { request } from "@/shared/utils";
 
 import { type SignUpDto } from "../types";
 

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React, { FC } from "react";
 
-import { cn } from "@/utils";
+import { cn } from "@/shared/utils";
 
 import { PropsWithClassname } from "../types";
 

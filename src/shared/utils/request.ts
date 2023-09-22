@@ -1,4 +1,4 @@
-import { useEnvironment } from "@/hooks";
+import { useEnvironment } from "@/shared/hooks";
 
 export async function request<TResponse>(
   url: string,
