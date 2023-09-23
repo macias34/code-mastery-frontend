@@ -23,12 +23,20 @@ interface SignInPageProps {
 }
 
 const SignInPage = ({ emailConfirmed }: SignInPageProps) => {
+  const router = useRouter();
+
   if (emailConfirmed) {
     toast({
       title: TOAST_SUCCESS_TITLE,
       description: "Your email has been confirmed. You can sign in now.",
     });
   }
+
+  useEffect(() => {
+    if (emailConfirmed) {
+      router.replace("/auth");
+    }
+  }, []);
 
   return (
     <ShopLayout
