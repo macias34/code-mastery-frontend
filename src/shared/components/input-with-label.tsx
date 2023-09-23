@@ -26,7 +26,7 @@ export const InputWithLabel: FC<InputWithLabelProps> = ({
       </Label>
       <Input {...input} />
 
-      {error && <p className="text-red-500 text-sm">{error}</p>}
+      {error && <p className="text-red-500 text-xs pl-1">{error}</p>}
     </div>
   );
 };
