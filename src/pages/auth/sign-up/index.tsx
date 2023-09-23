@@ -21,11 +21,11 @@ const SignUpPage = () => {
     <ShopLayout
       classNames={{
         root: "min-h-screen",
-        children: "flex flex-col items-center gap-6 justify-center grow",
+        children: "flex flex-col items-center gap-4 justify-center grow",
       }}
     >
       <div className="flex flex-col">
-        <Card className="w-96 flex flex-wrap my-4">
+        <Card className="w-96 flex flex-wrap">
           <CardHeader className="w-full">
             <CardTitle>Sign up</CardTitle>
             <CardDescription>

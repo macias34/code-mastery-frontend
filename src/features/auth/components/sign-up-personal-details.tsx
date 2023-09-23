@@ -14,6 +14,16 @@ export const SignUpPersonalDetails = () => {
 
   return (
     <>
+      <InputWithLabel
+        name="username"
+        labelContent="Username"
+        input={{
+          ...register("username"),
+          type: "text",
+          placeholder: "johndoe3",
+        }}
+        error={<ErrorMessage errors={errors} name="username" />}
+      />
       <div className="flex gap-4 justify-between">
         <InputWithLabel
           name="firstName"

@@ -11,6 +11,10 @@ import { SignUpAdress } from "./sign-up-adress";
 import { SignUpPersonalDetails } from "./sign-up-personal-details";
 
 const SignUpFormSchema = z.object({
+  username: z
+    .string()
+    .min(3, "Username must contain at least 3 characters")
+    .max(20, "Username must contain 20 characters maximum"),
   email: z.string().email(),
   password: z.string().min(5, "Password must contain at least 5 characters"),
   firstName: z.string().min(3, "First Name must contain at least 3 characters"),
