@@ -15,6 +15,7 @@ export const SignUpAdressDetails = () => {
     <>
       <div className="flex gap-4 justify-between">
         <InputWithLabel
+          className="w-1/2"
           name="firstName"
           labelContent="First name"
           input={{
@@ -25,6 +26,7 @@ export const SignUpAdressDetails = () => {
           error={<ErrorMessage errors={errors} name="firstName" />}
         />
         <InputWithLabel
+          className="w-1/2"
           name="lastName"
           labelContent="Last name"
           input={{

@@ -13,20 +13,22 @@ import { SignUpPersonalDetails } from "./sign-up-personal-details";
 const SignUpFormSchema = z.object({
   username: z
     .string()
-    .min(3, "Username must contain at least 3 characters")
-    .max(20, "Username must contain 20 characters maximum"),
+    .min(3, "Username should be at least 3 characters long")
+    .max(20, "Username should be at max 20 characters long"),
   email: z.string().email(),
-  password: z.string().min(5, "Password must contain at least 5 characters"),
-  firstName: z.string().min(3, "First Name must contain at least 3 characters"),
-  lastName: z.string().min(3, "Last Name must contain at least 3 characters"),
+  password: z.string().min(5, "Password should be at least 5 characters long"),
+  firstName: z
+    .string()
+    .min(3, "First name should be at least 3 characters long"),
+  lastName: z.string().min(3, "Last name should be at least 3 characters long"),
   postalCode: z
     .string()
-    .min(2, "Postal code must contain at least 2 characters"),
-  city: z.string().min(2, "City must contain at least 2 characters"),
-  street: z.string().min(2, "Street must contain at least 2 characters"),
+    .min(2, "Postal code should be at least 2 characters long"),
+  city: z.string().min(2, "City should be at least 2 characters long"),
+  street: z.string().min(2, "Street should be at least 3 characters long"),
   phoneNumber: z
     .string()
-    .min(2, "Phone number must contain at least 2 characters"),
+    .min(2, "Phone number should be at least 2 characters long"),
 });
 
 export type SignUpFormData = z.infer<typeof SignUpFormSchema>;
