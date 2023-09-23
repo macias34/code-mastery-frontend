@@ -2,7 +2,6 @@ import { signIn as NextAuthSignIn, SignInResponse } from "next-auth/react";
 import { UseMutationOptions, useMutation } from "react-query";
 
 import { SignInFormData } from "@/features/auth";
-import { ApiError } from "@/shared/utils";
 
 const signIn = async (
   data: SignInFormData & { redirect?: boolean },

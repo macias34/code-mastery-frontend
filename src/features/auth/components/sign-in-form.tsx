@@ -48,7 +48,7 @@ export const SignInForm = () => {
     resolver: zodResolver(SignInFormSchema),
   });
 
-  async function onSubmit(data: SignInFormData) {
+  function onSubmit(data: SignInFormData) {
     mutate(data);
   }
   return (

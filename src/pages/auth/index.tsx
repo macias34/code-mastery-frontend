@@ -34,7 +34,7 @@ const SignInPage = ({ emailConfirmed }: SignInPageProps) => {
 
   useEffect(() => {
     if (emailConfirmed) {
-      router.replace("/auth");
+      void router.replace("/auth");
     }
   }, []);
 
