@@ -1,3 +1,6 @@
+import { GetServerSideProps } from "next";
+
+import { withRoleAuthorization } from "@/features/auth";
 import { ShopLayout } from "@/features/shop";
 
 export default function ProfilePage() {
@@ -12,3 +15,7 @@ export default function ProfilePage() {
     </ShopLayout>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = ({ req, res }) => {
+  return withRoleAuthorization({ req, res });
+};
