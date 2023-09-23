@@ -1,2 +1,2 @@
-export * from "./categories-combobox";
+export * from "./combobox";
 export * from "./filter-bar";
