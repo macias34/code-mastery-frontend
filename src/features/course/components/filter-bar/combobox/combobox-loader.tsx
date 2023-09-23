@@ -1,4 +1,4 @@
-import { Skeleton } from "@/components/ui/skeleton";
+import { Skeleton } from "@/shared/components/skeleton";
 
 export const ComboboxLoader = () => {
   return (
