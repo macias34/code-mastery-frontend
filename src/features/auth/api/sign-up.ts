@@ -1,6 +1,5 @@
 import router from "next/router";
 import { useMutation } from "react-query";
-import { z } from "zod";
 
 import { TOAST_ERROR_TITLE, TOAST_SUCCESS_TITLE } from "@/libs/toast";
 import { toast } from "@/shared/components/use-toast";
