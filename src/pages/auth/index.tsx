@@ -92,14 +92,18 @@ const SignInPage = () => {
             <InputWithLabel
               name="username"
               labelContent="Username"
-              input={{ ...register("username") }}
+              input={{ ...register("username"), placeholder: "johndoe3" }}
               error={<ErrorMessage errors={errors} name="username" />}
             />
 
             <InputWithLabel
               name="password"
               labelContent="Password"
-              input={{ ...register("password"), type: "password" }}
+              input={{
+                ...register("password"),
+                type: "password",
+                placeholder: "●●●●●●●●",
+              }}
               error={<ErrorMessage errors={errors} name="password" />}
             />
 
