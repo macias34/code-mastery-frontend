@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { formatToDDMMYYYY } from "@/libs/dayjs";
 import { Badge } from "@/shared/components/badge";
 import { Button } from "@/shared/components/button";
 import {
@@ -50,7 +51,7 @@ export const Course = ({ course }: Props) => {
       <CardFooter className="flex justify-between mt-auto h-max">
         <div className="self-start flex flex-col justify-around gap-y-2">
           <p className="font-semibold ">Price: {course.price.toFixed(2)} zł</p>
-          <p>Last update: {course.updatedAt}</p>
+          <p>Last update: {formatToDDMMYYYY(course.updatedAt)}</p>
         </div>
 
         <div className="flex flex-col gap-y-3">
