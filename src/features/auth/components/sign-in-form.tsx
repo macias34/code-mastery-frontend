@@ -22,7 +22,22 @@ const SignInFormSchema = z.object({
 export type SignInFormData = z.infer<typeof SignInFormSchema>;
 
 export const SignInForm = () => {
-  const { mutate, isLoading } = useSignIn();
+  const { mutate, isLoading } = useSignIn({
+    async onSuccess() {
+      await router.push("/");
+      toast({
+        title: TOAST_SUCCESS_TITLE,
+        description: "You have successfuly signed in.",
+      });
+    },
+    onError(error: Error) {
+      toast({
+        title: TOAST_ERROR_TITLE,
+        description: error?.message,
+        variant: "destructive",
+      });
+    },
+  });
 
   const {
     register,
@@ -34,22 +49,7 @@ export const SignInForm = () => {
   });
 
   async function onSubmit(data: SignInFormData) {
-    mutate(data, {
-      async onSuccess() {
-        await router.push("/");
-        toast({
-          title: TOAST_SUCCESS_TITLE,
-          description: "You have successfuly signed in.",
-        });
-      },
-      onError() {
-        toast({
-          title: TOAST_ERROR_TITLE,
-          description: "The credentials you provided are incorrect.",
-          variant: "destructive",
-        });
-      },
-    });
+    mutate(data);
   }
   return (
     <form
