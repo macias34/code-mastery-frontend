@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth";
 import Link from "next/link";
 import { useState } from "react";
 
-import { SignUpForm, SignUpStepper } from "@/features/auth";
+import { SignUpForm } from "@/features/auth";
 import { ShopLayout } from "@/features/shop";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import {
