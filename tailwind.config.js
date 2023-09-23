@@ -13,6 +13,9 @@ module.exports = {
         center: true,
         padding: "2rem",
       },
+      transitionProperty: {
+        height: "height",
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

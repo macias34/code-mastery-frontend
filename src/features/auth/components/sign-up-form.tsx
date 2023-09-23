@@ -1,17 +1,14 @@
-import { ErrorMessage } from "@hookform/error-message";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Dispatch, FC, SetStateAction, useState } from "react";
+import { Dispatch, FC, SetStateAction } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { Button } from "@/shared/components/button";
-import { InputWithLabel } from "@/shared/components/input-with-label";
 import { Spinner } from "@/shared/components/spinner";
 
 import { useSignUp } from "../api";
 import { SignUpAdress } from "./sign-up-adress";
 import { SignUpPersonalDetails } from "./sign-up-personal-details";
-import { SignUpStepper } from "./sign-up-stepper";
 
 const SignUpFormSchema = z.object({
   email: z.string().email(),
@@ -44,9 +41,8 @@ export const SignUpForm: FC<SignUpFormProps> = ({ step, setStep }) => {
   });
 
   const {
-    register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { isValid },
   } = methods;
 
   const onSubmit = (formData: SignUpFormData) => {
@@ -74,13 +70,16 @@ export const SignUpForm: FC<SignUpFormProps> = ({ step, setStep }) => {
           {step === 0 && "Next step"}
           {step === 1 && "Previous step"}
         </Button>
-        <Button
-          title={!isValid ? "Please fill all fields correctly" : ""}
-          disabled={!isValid}
-          className="mt-2"
-        >
-          {isLoading ? <Spinner className="h-6 w-6" /> : "Sign up"}
-        </Button>
+
+        {step === 1 && (
+          <Button
+            title={!isValid ? "Please fill all fields correctly" : ""}
+            disabled={!isValid}
+            className="mt-2"
+          >
+            {isLoading ? <Spinner className="h-6 w-6" /> : "Sign up"}
+          </Button>
+        )}
       </form>
     </FormProvider>
   );
