@@ -10,6 +10,7 @@ interface WithRoleAuthorizationArgs {
   req: GetServerSidePropsContext<ParsedUrlQuery>["req"];
   res: GetServerSidePropsContext<ParsedUrlQuery>["res"];
   userRoleToExclude?: UserRole;
+  redirectDestination?: string;
 }
 
 type WithRoleAuthorizationReturnType = Promise<
@@ -20,20 +21,27 @@ export const withRoleAuthorization = async ({
   req,
   res,
   userRoleToExclude = UserRole.USER,
+  redirectDestination = "/",
 }: WithRoleAuthorizationArgs): WithRoleAuthorizationReturnType => {
   const session = await getServerSession(req, res, authOptions);
-  const accessToken = session?.user?.accessToken ?? "";
-  let userRole: UserRole | undefined;
 
-  if (accessToken) {
-    const decodedToken = jose.decodeJwt(accessToken);
-    userRole = decodedToken?.role as UserRole;
-  }
-
-  if (!session || userRole === userRoleToExclude) {
+  if (!session) {
     return {
       redirect: {
-        destination: "/",
+        destination: "/auth",
+        statusCode: 302,
+      },
+    };
+  }
+
+  const accessToken = session.user?.accessToken ?? "";
+  const decodedToken = jose.decodeJwt(accessToken);
+  const userRole = decodedToken?.role as UserRole;
+
+  if (userRole === userRoleToExclude) {
+    return {
+      redirect: {
+        destination: redirectDestination,
         statusCode: 302,
       },
     };
