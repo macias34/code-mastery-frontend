@@ -20,7 +20,7 @@ type WithRoleAuthorizationReturnType = Promise<
 export const withRoleAuthorization = async ({
   req,
   res,
-  userRoleToExclude = UserRole.USER,
+  userRoleToExclude,
   redirectDestination = "/",
 }: WithRoleAuthorizationArgs): WithRoleAuthorizationReturnType => {
   const session = await getServerSession(req, res, authOptions);
