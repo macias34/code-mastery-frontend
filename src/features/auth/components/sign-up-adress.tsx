@@ -13,6 +13,28 @@ export const SignUpAdress = () => {
   } = useFormContext<SignUpFormData>();
   return (
     <>
+      <div className="flex gap-4 justify-between">
+        <InputWithLabel
+          name="firstName"
+          labelContent="First name"
+          input={{
+            ...register("firstName"),
+            type: "text",
+            placeholder: "John",
+          }}
+          error={<ErrorMessage errors={errors} name="firstName" />}
+        />
+        <InputWithLabel
+          name="lastName"
+          labelContent="Last name"
+          input={{
+            ...register("lastName"),
+            type: "text",
+            placeholder: "Doe",
+          }}
+          error={<ErrorMessage errors={errors} name="lastName" />}
+        />
+      </div>
       <InputWithLabel
         name="postalCode"
         labelContent="Postal code"

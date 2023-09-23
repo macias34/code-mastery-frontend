@@ -30,7 +30,7 @@ const SignUpPage = () => {
             <CardTitle>Sign up</CardTitle>
             <CardDescription>
               {step === 0 && "Enter your personal details."}
-              {step === 1 && "Enter your address."}
+              {step === 1 && "Enter your address details."}
             </CardDescription>
           </CardHeader>
           <CardContent className="w-full">
