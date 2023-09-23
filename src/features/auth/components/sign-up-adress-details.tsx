@@ -6,7 +6,7 @@ import { InputWithLabel } from "@/shared/components/input-with-label";
 
 import { SignUpFormData } from "./sign-up-form";
 
-export const SignUpAdress = () => {
+export const SignUpAdressDetails = () => {
   const {
     register,
     formState: { errors },

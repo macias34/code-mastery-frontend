@@ -7,7 +7,7 @@ import { Button } from "@/shared/components/button";
 import { Spinner } from "@/shared/components/spinner";
 
 import { useSignUp } from "../api";
-import { SignUpAdress } from "./sign-up-adress";
+import { SignUpAdressDetails } from "./sign-up-adress-details";
 import { SignUpPersonalDetails } from "./sign-up-personal-details";
 
 const SignUpFormSchema = z.object({
@@ -68,7 +68,7 @@ export const SignUpForm: FC<SignUpFormProps> = ({ step, setStep }) => {
         onSubmit={handleSubmit(onSubmit)} // eslint-disable-line @typescript-eslint/no-misused-promises
       >
         {step === 0 && <SignUpPersonalDetails />}
-        {step === 1 && <SignUpAdress />}
+        {step === 1 && <SignUpAdressDetails />}
 
         <Button type="button" onClick={switchStep} className="mt-2">
           {step === 0 && "Next step"}
