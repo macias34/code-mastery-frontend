@@ -74,7 +74,7 @@ const SignInPage = () => {
     <ShopLayout
       classNames={{
         root: "min-h-screen",
-        children: "flex flex-col items-center gap-6 justify-center grow",
+        children: "flex flex-col items-center gap-4 justify-center grow",
       }}
     >
       <Card className="w-96">
@@ -108,13 +108,13 @@ const SignInPage = () => {
             </Button>
           </form>
         </CardContent>
-        <p className="text-muted-foreground text-sm text-center p-4">
-          No account?{" "}
-          <Link className="text-primary font-semibold" href="/auth/sign-up">
-            Sign up
-          </Link>
-        </p>
       </Card>
+      <p className="text-muted-foreground text-sm text-center p-4">
+        No account?{" "}
+        <Link className="text-primary font-semibold" href="/auth/sign-up">
+          Sign up
+        </Link>
+      </p>
     </ShopLayout>
   );
 };
