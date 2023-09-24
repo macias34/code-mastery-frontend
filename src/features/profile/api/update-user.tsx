@@ -36,7 +36,7 @@ export const useUpdateUser = () => {
     onSuccess: async () => {
       toast({
         title: TOAST_SUCCESS_TITLE,
-        description: "You have successfully updated user!",
+        description: "You have successfully updated account!",
       });
       await queryClient.invalidateQueries(["userData"]);
     },
