@@ -1,4 +1,4 @@
-import { GetServerSideProps } from "next";
+import { type GetServerSideProps } from "next";
 
 import { withRoleAuthorization } from "@/features/auth";
 import { ShopLayout } from "@/features/shop";
