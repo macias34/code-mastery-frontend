@@ -44,7 +44,7 @@ export const useUsers = ({
 }) => {
   const userData = useUser();
   return useQuery({
-    queryKey: ["users"],
+    queryKey: ["users", page, userFilter],
     queryFn: () =>
       getUsers({ accessToken: userData.accessToken, page, userFilter }),
   });

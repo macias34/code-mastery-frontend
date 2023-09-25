@@ -1,24 +1,50 @@
 import { type GetServerSideProps } from "next";
-import { useSession } from "next-auth/react";
+import { FormProvider, useForm } from "react-hook-form";
 
 import { withRoleAuthorization } from "@/features/auth";
+import { UsersCard } from "@/features/dashboard/users";
+import { type UserFilter } from "@/features/profile/types";
 import { ShopLayout } from "@/features/shop";
+import { type UserRole } from "@/features/user";
 import { useUsers } from "@/features/user/api";
 
-export default function UsersDashboard() {
-  const session = useSession();
+export type UserSearchFilters = Omit<Required<UserFilter>, "role"> & {
+  role: UserRole | "ALL";
+  page: number;
+};
 
-  const { data, isLoading } = useUsers({
-    userFilter: {
+export default function UsersDashboard() {
+  const methods = useForm<UserSearchFilters>({
+    defaultValues: {
       email: "",
       username: "",
+      role: "ALL",
+      page: 0,
     },
-    page: 0,
   });
 
-  console.log(data);
+  const page = methods.watch("page");
+  const role = methods.watch("role");
+  const username = methods.watch("username");
 
-  return <ShopLayout>dashboard</ShopLayout>;
+  console.log(role);
+
+  const { data: usersReponse, isLoading: areUsersLoading } = useUsers({
+    userFilter: {
+      email: "",
+      username,
+      role: role === "ALL" ? undefined : role,
+    },
+    page: page,
+  });
+
+  return (
+    <ShopLayout>
+      <FormProvider {...methods}>
+        <UsersCard {...usersReponse} isLoading={areUsersLoading} />
+      </FormProvider>
+    </ShopLayout>
+  );
 }
 
 // @TODO - add role authorization
