@@ -27,6 +27,16 @@ export const FilterBar = () => {
           placeholder="Instuctor name"
           className="w-fit border-secondary-foreground"
         />
+        <Input
+          placeholder="Maximum price"
+          className="w-fit border-secondary-foreground [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+          type="number"
+          min={0}
+        />
+        <Input
+          placeholder="Instuctor name"
+          className="w-fit border-secondary-foreground"
+        />
         <CategoriesCombobox />
       </div>
 

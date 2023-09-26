@@ -6,6 +6,18 @@ const config = {
 	root: true,
 	overrides: [
 		{
+			files: ['*.tsx'],
+			rules: {
+				'max-lines-per-function': 'off',
+			},
+		},
+		{
+			files: ['*.cjs'],
+			rules: {
+				'max-lines': 'off',
+			},
+		},
+		{
 			extends: [
 				"plugin:@typescript-eslint/recommended-requiring-type-checking",
 			],
@@ -22,6 +34,22 @@ const config = {
 	plugins: ["@typescript-eslint"],
 	extends: ["next/core-web-vitals", "plugin:@typescript-eslint/recommended"],
 	rules: {
+		'max-lines': [
+			'error',
+			{
+				max: 50,
+				skipBlankLines: true,
+				skipComments: true,
+			},
+		],
+		'max-lines-per-function': [
+			'error',
+			{
+				max: 20,
+				skipBlankLines: true,
+				skipComments: true,
+				IIFEs: true,
+			}],
 		"@typescript-eslint/consistent-type-imports": [
 			"warn",
 			{
