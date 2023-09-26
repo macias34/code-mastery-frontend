@@ -37,8 +37,17 @@ const config = {
 		"sourceType": "module",
 	},
 	plugins: ["@typescript-eslint", "unicorn"],
-	extends: ["next/core-web-vitals", "plugin:@typescript-eslint/recommended", "plugin:unicorn/all"],
+	extends: ["next/core-web-vitals", "plugin:@typescript-eslint/recommended", "plugin:unicorn/recommended"],
 	rules: {
+		"unicorn/prevent-abbreviations": [
+			"error",
+			{
+				"replacements": {
+					"props": false
+				}
+			}
+		],
+		"unicorn/no-keyword-prefix": "off",
 		"unicorn/better-regex": "error",
 		'max-lines': [
 			'error',
