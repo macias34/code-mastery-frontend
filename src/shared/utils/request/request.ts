@@ -13,10 +13,7 @@ export async function request<TResponse>(
   const request = createRequest(url, config, session);
   const response = await request;
 
-  const errorResponse = await handleResponseError<TResponse>(response);
-  if (errorResponse) {
-    return errorResponse;
-  }
+  await handleResponseError(response);
 
   const validResponse = await handleValidResponse<TResponse>(response);
   if (validResponse) {
