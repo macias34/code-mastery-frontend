@@ -7,24 +7,38 @@ import { type UserFilter } from "../../profile/types";
 
 // TODO: Think about good placement for this function, maybe in dashboard/users/api or dashboard/api ??
 
+interface GetUsersArguments {
+  accessToken: string;
+  userFilter: UserFilter;
+  page: number;
+}
+
+type CreateSearchParametersArguments = Omit<GetUsersArguments, "accessToken">;
+
+const createSearchParameters = ({
+  page,
+  userFilter: { email, role, username },
+}: CreateSearchParametersArguments) => {
+  const searchParameters = new URLSearchParams({
+    page: page.toString(),
+    size: "5",
+    email: email ?? "",
+    role: role ?? "",
+    username: username ?? "",
+  });
+
+  return searchParameters;
+};
+
 export const getUsers = async ({
   userFilter,
   accessToken,
   page,
-}: {
-  accessToken: string;
-  userFilter: UserFilter;
-  page: number;
-}) => {
-  const searchParams = new URLSearchParams();
-  searchParams.append("page", page.toString());
-  searchParams.append("size", "5");
-  userFilter.email && searchParams.append("email", userFilter.email);
-  userFilter.role && searchParams.append("role", userFilter.role);
-  userFilter.username && searchParams.append("username", userFilter.username);
+}: GetUsersArguments) => {
+  const searchParameters = createSearchParameters({ userFilter, page });
 
   return await request<GetUsersDto>(
-    `/user?${searchParams.toString()}`,
+    `/user?${searchParameters.toString()}`,
     {
       method: "GET",
       headers: {
@@ -42,10 +56,9 @@ export const useUsers = ({
   userFilter: UserFilter;
   page: number;
 }) => {
-  const userData = useUser();
+  const { accessToken } = useUser();
   return useQuery({
     queryKey: ["users", page, userFilter],
-    queryFn: () =>
-      getUsers({ accessToken: userData.accessToken, page, userFilter }),
+    queryFn: () => getUsers({ accessToken, page, userFilter }),
   });
 };
