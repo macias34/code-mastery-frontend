@@ -26,7 +26,7 @@ export default function CoursesPage({
       <FilterBar />
       <div className="w-11/12 max-w-6xl mx-auto mt-10 ">
         <div className=" flex justify-center gap-5 mt-10 flex-wrap">
-          {courseResponse.courses.map((course) => (
+          {courses.map((course) => (
             <Course course={course} key={course.id} />
           ))}
         </div>
@@ -39,7 +39,7 @@ export const getServerSideProps = (async () => {
   try {
     const courseResponse = await request<CourseResponseDto>("/course/");
     return { props: { courseResponse } };
-  } catch (e) {
+  } catch {
     return {
       props: {
         courseResponse: {
