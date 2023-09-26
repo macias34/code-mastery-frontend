@@ -54,7 +54,7 @@ export const PersonalDetailsChangeForm = () => {
 
   return (
     <FormProvider {...methods}>
-      <Card>
+      <Card className="w-96">
         <CardHeader>
           <CardTitle>Personal Details</CardTitle>
           <CardDescription>
@@ -62,7 +62,7 @@ export const PersonalDetailsChangeForm = () => {
             done.
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-2 flex flex-col gap-4 w-full">
+        <CardContent className="flex flex-col gap-4 w-full">
           <form
             className="flex flex-col gap-4 w-full"
             onSubmit={handleSubmit(onSubmit)}

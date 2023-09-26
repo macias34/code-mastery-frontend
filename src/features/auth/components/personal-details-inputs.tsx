@@ -4,7 +4,7 @@ import { useFormContext } from "react-hook-form";
 
 import { InputWithLabel } from "@/shared/components/input-with-label";
 
-import { type PersonalDetailsFormData } from "../../profile/components/personal-details-change/personal-details-change-form";
+import { type PersonalDetailsFormData } from "../../profile/components/personal-details-change-form/personal-details-change-form";
 
 export const PersonalDetailsInputs = () => {
   const {
