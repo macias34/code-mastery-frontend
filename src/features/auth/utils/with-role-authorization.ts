@@ -1,12 +1,12 @@
 import * as jose from "jose";
 import { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
 import { getServerSession } from "next-auth";
-import { ParsedUrlQuery } from "querystring";
+import { ParsedUrlQuery } from "node:querystring";
 
 import { UserRole } from "@/features/user";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 
-interface WithRoleAuthorizationArgs {
+interface WithRoleAuthorizationArguments {
   req: GetServerSidePropsContext<ParsedUrlQuery>["req"];
   res: GetServerSidePropsContext<ParsedUrlQuery>["res"];
   userRoleToExclude?: UserRole;
@@ -22,32 +22,18 @@ export const withRoleAuthorization = async ({
   res,
   userRoleToExclude,
   redirectDestination = "/",
-}: WithRoleAuthorizationArgs): WithRoleAuthorizationReturnType => {
+}: WithRoleAuthorizationArguments): WithRoleAuthorizationReturnType => {
   const session = await getServerSession(req, res, authOptions);
 
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/auth",
-        statusCode: 302,
-      },
-    };
+  if (!session || session.user?.accessToken === undefined) {
+    return { redirect: { destination: "/auth", statusCode: 302 } };
   }
 
-  const accessToken = session.user?.accessToken ?? "";
-  const decodedToken = jose.decodeJwt(accessToken);
-  const userRole = decodedToken?.role as UserRole;
+  const userRole = jose.decodeJwt(session.user.accessToken)?.role as UserRole;
 
   if (userRole === userRoleToExclude) {
-    return {
-      redirect: {
-        destination: redirectDestination,
-        statusCode: 302,
-      },
-    };
+    return { redirect: { destination: redirectDestination, statusCode: 302 } };
   }
 
-  return {
-    props: {},
-  };
+  return { props: {} };
 };
