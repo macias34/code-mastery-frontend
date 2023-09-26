@@ -16,6 +16,7 @@ import {
 } from "@/shared/components/card";
 import { Spinner } from "@/shared/components/spinner";
 
+import { resetPersonalDetailsForm } from "../../utils";
 import { FormSkeleton } from "./form-skeleton";
 
 export type PersonalDetailsFormData = z.infer<typeof PersonalDetailsSchema>;
@@ -36,20 +37,10 @@ export const PersonalDetailsChangeForm = () => {
   const { mutate, isLoading } = useUpdateUser();
 
   useEffect(() => {
-    if (userData && userData.personalDetails) {
-      const { city, firstName, lastName, phoneNumber, postalCode, street } =
-        userData.personalDetails;
-
-      reset({
-        city,
-        firstName,
-        lastName,
-        phoneNumber,
-        postalCode,
-        street,
-      });
+    if (userData) {
+      resetPersonalDetailsForm(reset, userData);
     }
-  }, [userData, reset]);
+  }, [reset, userData]);
 
   const onSubmit = (formData: PersonalDetailsFormData) => {
     if (userData?.id) {
