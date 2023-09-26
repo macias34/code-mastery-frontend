@@ -73,9 +73,7 @@ export const AccountDetailsChangeForm = () => {
           className="space-y-2 flex flex-col gap-4 w-full"
           onSubmit={handleSubmit(onSubmit)} // eslint-disable-line @typescript-eslint/no-misused-promises
         >
-          {!userData?.username ? (
-            <Skeleton className="h-10 w-96" />
-          ) : (
+          {userData?.username ? (
             <InputWithLabel
               name="username"
               labelContent="Username"
@@ -84,11 +82,11 @@ export const AccountDetailsChangeForm = () => {
               }}
               error={<ErrorMessage errors={errors} name="username" />}
             />
+          ) : (
+            <Skeleton className="h-10 w-96" />
           )}
 
-          {!userData?.email ? (
-            <Skeleton className="h-10 w-96" />
-          ) : (
+          {userData?.email ? (
             <InputWithLabel
               name="email"
               labelContent="Email"
@@ -98,6 +96,8 @@ export const AccountDetailsChangeForm = () => {
               }}
               error={<ErrorMessage errors={errors} name="email" />}
             />
+          ) : (
+            <Skeleton className="h-10 w-96" />
           )}
           <Button disabled={!isValid} type="submit" className="max-w-fit">
             {isLoading ? <Spinner className="h-6 w-6" /> : "Save changes"}
