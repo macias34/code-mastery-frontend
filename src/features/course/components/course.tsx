@@ -45,7 +45,7 @@ export const Course = ({ course, buttonText }: Props) => {
             <CardDescription>{course.instructorName}</CardDescription>
           </div>
 
-          <Button>{buttonText ? buttonText : "See details"}</Button>
+          <Button>{buttonText ?? "See details"}</Button>
         </Link>
       </CardContent>
       <CardFooter className="flex justify-between mt-auto h-max">
