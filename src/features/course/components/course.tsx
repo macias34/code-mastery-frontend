@@ -18,9 +18,10 @@ import { type CourseDto } from "../types";
 
 interface Props {
   course: CourseDto;
+  buttonText?: string;
 }
 
-export const Course = ({ course }: Props) => {
+export const Course = ({ course, buttonText }: Props) => {
   console.log(course);
   const { getApiUrl } = useEnvironment();
   return (
@@ -45,7 +46,7 @@ export const Course = ({ course }: Props) => {
             <CardDescription>{course.instructorName}</CardDescription>
           </div>
 
-          <Button>See details</Button>
+          <Button>{buttonText ? buttonText : "See details"}</Button>
         </Link>
       </CardContent>
       <CardFooter className="flex justify-between mt-auto h-max">

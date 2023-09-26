@@ -1,7 +1,19 @@
-import { GetServerSideProps } from "next";
+import { type GetServerSideProps } from "next";
 
 import { withRoleAuthorization } from "@/features/auth";
+import {
+  AccountDetailsChangeForm,
+  InvoiceDetailsChangeForm,
+  PasswordChangeForm,
+  PersonalDetailsChangeForm,
+} from "@/features/profile/components";
 import { ShopLayout } from "@/features/shop";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/shared/components/tabs";
 
 export default function ProfilePage() {
   return (
@@ -11,7 +23,26 @@ export default function ProfilePage() {
         children: "flex flex-col items-center gap-6 justify-center grow",
       }}
     >
-      <h1>Your profile page</h1>
+      <Tabs defaultValue="account" className="w-[600px]">
+        <TabsList className="grid w-full grid-cols-4">
+          <TabsTrigger value="account">Account</TabsTrigger>
+          <TabsTrigger value="password">Password</TabsTrigger>
+          <TabsTrigger value="personalDetails">Personal Details</TabsTrigger>
+          <TabsTrigger value="invoiceDetails">Invoice Details</TabsTrigger>
+        </TabsList>
+        <TabsContent value="account">
+          <AccountDetailsChangeForm />
+        </TabsContent>
+        <TabsContent value="password">
+          <PasswordChangeForm />
+        </TabsContent>
+        <TabsContent value="personalDetails">
+          <PersonalDetailsChangeForm />
+        </TabsContent>
+        <TabsContent value="invoiceDetails">
+          <InvoiceDetailsChangeForm />
+        </TabsContent>
+      </Tabs>
     </ShopLayout>
   );
 }
