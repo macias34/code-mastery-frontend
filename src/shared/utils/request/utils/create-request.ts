@@ -1,4 +1,4 @@
-import { getApiUrl } from "@/shared/hooks";
+import { API_URL } from "@/shared/constants";
 
 import { type AccessToken } from "../types";
 
@@ -16,7 +16,7 @@ export const createRequest = (
     };
   }
 
-  const response = fetch(getApiUrl() + url, {
+  const response = fetch(API_URL + url, {
     ...config,
     headers,
   });
