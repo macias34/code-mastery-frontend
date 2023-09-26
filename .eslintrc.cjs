@@ -43,7 +43,8 @@ const config = {
 			"error",
 			{
 				"replacements": {
-					"props": false
+					"props": false,
+					"ref": false
 				}
 			}
 		],
