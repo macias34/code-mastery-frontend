@@ -22,9 +22,9 @@ const PasswordResetFormSchema = z
       .string()
       .min(5, "Password must contain at least 5 characters"),
   })
-  .superRefine(({ confirmPassword, password }, ctx) => {
+  .superRefine(({ confirmPassword, password }, context) => {
     if (confirmPassword !== password) {
-      ctx.addIssue({
+      context.addIssue({
         code: "custom",
         message: "The passwords did not match",
         path: ["confirmPassword"],
