@@ -59,7 +59,7 @@ export const SignUpForm: FC<SignUpFormProps> = ({ step, setStep }) => {
 
         {step === 1 && (
           <Button
-            title={!isValid ? "Please fill all fields correctly" : ""}
+            title={isValid ? "" : "Please fill all fields correctly"}
             disabled={!isValid}
             className="mt-2"
           >
