@@ -4,13 +4,13 @@ import { useFormContext } from "react-hook-form";
 
 import { InputWithLabel } from "@/shared/components/input-with-label";
 
-import { SignUpFormData } from "./sign-up-form";
+import { type PersonalDetailsFormData } from "../../profile/components/personal-details-change/personal-details-change-form";
 
-export const SignUpAdressDetails = () => {
+export const PersonalDetailsInputs = () => {
   const {
     register,
     formState: { errors },
-  } = useFormContext<SignUpFormData>();
+  } = useFormContext<PersonalDetailsFormData>();
   return (
     <>
       <div className="flex gap-4 justify-between">
@@ -25,6 +25,7 @@ export const SignUpAdressDetails = () => {
           }}
           error={<ErrorMessage errors={errors} name="firstName" />}
         />
+
         <InputWithLabel
           className="w-1/2"
           name="lastName"
@@ -37,6 +38,16 @@ export const SignUpAdressDetails = () => {
           error={<ErrorMessage errors={errors} name="lastName" />}
         />
       </div>
+      <InputWithLabel
+        name="phoneNumber"
+        labelContent="Phone Number"
+        input={{
+          ...register("phoneNumber"),
+          type: "text",
+          placeholder: "(607) 772-1621",
+        }}
+        error={<ErrorMessage errors={errors} name="phoneNumber" />}
+      />
       <InputWithLabel
         name="postalCode"
         labelContent="Postal code"

@@ -4,13 +4,17 @@ import { useFormContext } from "react-hook-form";
 
 import { InputWithLabel } from "@/shared/components/input-with-label";
 
-import { SignUpFormData } from "./sign-up-form";
+interface FormWithAccountDetailsData {
+  username: string;
+  email: string;
+  password: string;
+}
 
-export const SignUpPersonalDetails = () => {
+export const AccountDetailsInputs = () => {
   const {
     register,
     formState: { errors },
-  } = useFormContext<SignUpFormData>();
+  } = useFormContext<FormWithAccountDetailsData>();
 
   return (
     <>
@@ -35,17 +39,6 @@ export const SignUpPersonalDetails = () => {
           placeholder: "johndoe@mail.com",
         }}
         error={<ErrorMessage errors={errors} name="email" />}
-      />
-
-      <InputWithLabel
-        name="phoneNumber"
-        labelContent="Phone Number"
-        input={{
-          ...register("phoneNumber"),
-          type: "text",
-          placeholder: "(607) 772-1621",
-        }}
-        error={<ErrorMessage errors={errors} name="phoneNumber" />}
       />
 
       <InputWithLabel

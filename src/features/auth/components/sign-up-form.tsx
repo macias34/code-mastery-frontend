@@ -7,29 +7,9 @@ import { Button } from "@/shared/components/button";
 import { Spinner } from "@/shared/components/spinner";
 
 import { useSignUp } from "../api";
-import { SignUpAdressDetails } from "./sign-up-adress-details";
-import { SignUpPersonalDetails } from "./sign-up-personal-details";
-
-const SignUpFormSchema = z.object({
-  username: z
-    .string()
-    .min(3, "Username should be at least 3 characters long")
-    .max(20, "Username should be at max 20 characters long"),
-  email: z.string().email(),
-  password: z.string().min(5, "Password should be at least 5 characters long"),
-  firstName: z
-    .string()
-    .min(3, "First name should be at least 3 characters long"),
-  lastName: z.string().min(3, "Last name should be at least 3 characters long"),
-  postalCode: z
-    .string()
-    .min(2, "Postal code should be at least 2 characters long"),
-  city: z.string().min(2, "City should be at least 2 characters long"),
-  street: z.string().min(2, "Street should be at least 3 characters long"),
-  phoneNumber: z
-    .string()
-    .min(2, "Phone number should be at least 2 characters long"),
-});
+import { SignUpFormSchema } from "../utils";
+import { AccountDetailsInputs } from "./account-details-inputs";
+import { PersonalDetailsInputs } from "./personal-details-inputs";
 
 export type SignUpFormData = z.infer<typeof SignUpFormSchema>;
 
@@ -67,10 +47,10 @@ export const SignUpForm: FC<SignUpFormProps> = ({ step, setStep }) => {
     <FormProvider {...methods}>
       <form
         className="flex flex-col gap-4 w-full"
-        onSubmit={handleSubmit(onSubmit)} // eslint-disable-line @typescript-eslint/no-misused-promises
+        onSubmit={handleSubmit(onSubmit)}
       >
-        {step === 0 && <SignUpPersonalDetails />}
-        {step === 1 && <SignUpAdressDetails />}
+        {step === 0 && <AccountDetailsInputs />}
+        {step === 1 && <PersonalDetailsInputs />}
 
         <Button type="button" onClick={switchStep} className="mt-2">
           {step === 0 && "Next step"}

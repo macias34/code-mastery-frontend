@@ -12,7 +12,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/shared/components/card";
-import { useEnvironment } from "@/shared/hooks";
+import { API_URL } from "@/shared/constants";
 
 import { type CourseDto } from "../types";
 
@@ -23,13 +23,12 @@ interface Props {
 
 export const Course = ({ course, buttonText }: Props) => {
   console.log(course);
-  const { getApiUrl } = useEnvironment();
   return (
     <Card className="w-[350px] flex flex-col">
       <CardHeader className="p-0">
         <figure className="relative overflow-hidden h-40">
           <Image
-            src={`${getApiUrl()}/course/avatar/${course.id}`}
+            src={`${API_URL}/course/avatar/${course.id}`}
             alt={course.name}
             fill
             className="object-cover rounded-t-md"

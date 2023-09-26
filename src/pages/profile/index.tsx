@@ -23,7 +23,7 @@ export default function ProfilePage() {
         children: "flex flex-col items-center gap-6 justify-center grow",
       }}
     >
-      <Tabs defaultValue="account" className="w-[600px]">
+      <Tabs defaultValue="account">
         <TabsList className="grid w-full grid-cols-4">
           <TabsTrigger value="account">Account</TabsTrigger>
           <TabsTrigger value="password">Password</TabsTrigger>

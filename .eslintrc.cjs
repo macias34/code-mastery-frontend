@@ -39,6 +39,11 @@ const config = {
 	plugins: ["@typescript-eslint", "unicorn"],
 	extends: ["next/core-web-vitals", "plugin:@typescript-eslint/recommended", "plugin:unicorn/recommended"],
 	rules: {
+		"@typescript-eslint/no-misused-promises": [2, {
+			"checksVoidReturn": {
+				"attributes": false
+			}
+		}],
 		"unicorn/prevent-abbreviations": [
 			"error",
 			{
