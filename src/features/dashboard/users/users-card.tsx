@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 
-import { type GetUsersDto, UserRole } from "@/features/user";
+import { type GetUsersDto, type UserRole } from "@/features/user";
 import { type UserSearchFilters } from "@/pages/dashboard/users";
 import {
   Card,
@@ -59,13 +59,15 @@ export const UsersCard = ({ totalPages, users, isLoading }: Props) => {
       </CardHeader>
       <CardContent className="flex flex-col gap-y-6">
         {isLoading &&
-          new Array(5).fill(0).map((_, index) => <UserSkeleton key={index} />)}
+          Array.from({ length: 5 })
+            .fill(0)
+            .map((_, index) => <UserSkeleton key={index} />)}
         {users &&
           users.length > 0 &&
           users.map((user) => <User key={user.id} user={user} />)}
       </CardContent>
       <CardFooter className="flex justify-between">
-        {isLoading ? null : (
+        {isLoading ? undefined : (
           <PaginationBar
             currentPage={page}
             totalPages={totalPages ?? 1}
