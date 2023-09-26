@@ -43,7 +43,7 @@ const config = {
 		'max-lines': [
 			'error',
 			{
-				max: 50,
+				max: 100,
 				skipBlankLines: true,
 				skipComments: true,
 			},

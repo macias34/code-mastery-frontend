@@ -1,18 +1,21 @@
-import { signIn as NextAuthSignIn, SignInResponse } from "next-auth/react";
-import { UseMutationOptions, useMutation } from "react-query";
+import { signIn as NextAuthSignIn, type SignInResponse } from "next-auth/react";
+import { type UseMutationOptions, useMutation } from "react-query";
 
-import { SignInFormData } from "@/features/auth";
+import { type SignInFormData } from "@/features/auth";
 
 const signIn = async (
   data: SignInFormData & { redirect?: boolean },
 ): Promise<SignInResponse | undefined> => {
-  const res = await NextAuthSignIn("credentials", { ...data, redirect: false });
+  const response = await NextAuthSignIn("credentials", {
+    ...data,
+    redirect: false,
+  });
 
-  if (res?.error) {
-    throw new Error(res.error);
+  if (response?.error) {
+    throw new Error(response.error);
   }
 
-  return res;
+  return response;
 };
 
 export const useSignIn = (
