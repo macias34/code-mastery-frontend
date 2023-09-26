@@ -54,7 +54,7 @@ export const PersonalDetailsChangeForm = () => {
 
   return (
     <FormProvider {...methods}>
-      <Card className="w-96">
+      <Card>
         <CardHeader>
           <CardTitle>Personal Details</CardTitle>
           <CardDescription>
