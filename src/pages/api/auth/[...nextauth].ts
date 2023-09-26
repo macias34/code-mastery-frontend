@@ -34,7 +34,7 @@ export const authOptions: NextAuthOptions = {
           password,
         });
 
-        if (!accessToken || Object.keys(accessToken).length === 0) return null;
+        if (!accessToken || Object.keys(accessToken).length === 0) return;
 
         const user: { name: string; accessToken: string } = {
           name: username,
