@@ -80,7 +80,7 @@ export const CategoriesCombobox = () => {
                           category.name.toLowerCase() ===
                           currentValue.toLowerCase(),
                       )?.id;
-                      setSelectedCategoryId(selectedId ? selectedId : 0);
+                      setSelectedCategoryId(selectedId ?? 0);
                       setOpen(false);
                     }}
                   >
