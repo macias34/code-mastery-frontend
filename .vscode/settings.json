@@ -9,6 +9,7 @@
 	},
 	"hide-files.files": [],
 	"conventionalCommits.scopes": [
-		"eslint"
+		"eslint",
+		"utils"
 	]
 }
