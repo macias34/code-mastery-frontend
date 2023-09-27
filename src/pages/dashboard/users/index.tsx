@@ -2,7 +2,7 @@ import { type GetServerSideProps } from "next";
 import { FormProvider, useForm } from "react-hook-form";
 
 import { withRoleAuthorization } from "@/features/auth";
-import { UsersCard } from "@/features/dashboard/users";
+import { UsersCard } from "@/features/dashboard";
 import { type UserFilter } from "@/features/profile/types";
 import { ShopLayout } from "@/features/shop";
 import { type UserRole } from "@/features/user";
@@ -26,8 +26,6 @@ export default function UsersDashboard() {
   const page = methods.watch("page");
   const role = methods.watch("role");
   const username = methods.watch("username");
-
-  console.log(role);
 
   const { data: usersReponse, isLoading: areUsersLoading } = useUsers({
     userFilter: {
