@@ -2,13 +2,13 @@ import { type GetServerSideProps } from "next";
 import { useSession } from "next-auth/react";
 
 import { withRoleAuthorization } from "@/features/auth";
-import { ShopLayout } from "@/features/shop";
+import { DashboardLayout } from "@/features/dashboard";
 
 export default function Dashboard() {
   const session = useSession();
   console.log(session);
 
-  return <ShopLayout>dashboard</ShopLayout>;
+  return <DashboardLayout>dashboard</DashboardLayout>;
 }
 
 // @TODO - add role authorization

@@ -14,7 +14,9 @@ import {
 import { Input } from "@/shared/components/input";
 import { PaginationBar } from "@/shared/components/pagination-bar";
 
-import { RoleSelect, User, UserSkeleton } from ".";
+import { RoleSelect } from "./role-select";
+import { User } from "./user";
+import { UserSkeleton } from "./user-skeleton";
 
 interface Props extends Partial<GetUsersDto> {
   isLoading?: boolean;
