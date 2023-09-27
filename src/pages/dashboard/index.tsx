@@ -8,7 +8,7 @@ export default function Dashboard() {
   const session = useSession();
   console.log(session);
 
-  return <DashboardLayout>dashboard</DashboardLayout>;
+  return <DashboardLayout></DashboardLayout>;
 }
 
 // @TODO - add role authorization
