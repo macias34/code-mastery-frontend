@@ -1,6 +1,7 @@
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 
+import { UserRole, useUser } from "@/features/user";
 import { Logo } from "@/shared/components/logo";
 
 import { NavbarItem, NavbarItemProps } from "./navbar-item";
@@ -10,6 +11,7 @@ import { ThemeToggle } from "./theme-toggle";
 
 export const Navbar = () => {
   const session = useSession();
+  const { userData } = useUser();
 
   const noAuthNavbarItems: NavbarItemProps[] = [
     {
@@ -29,9 +31,16 @@ export const Navbar = () => {
             <NavbarItem key={href} title={title} href={href} />
           ))}
 
+          {userData?.role === UserRole.USER && (
+            <NavbarItem title="My courses" href="/my-courses" />
+          )}
+
+          {userData?.role === UserRole.ADMIN && (
+            <NavbarItem title="Dashboard" href="/dashboard" />
+          )}
+
           {session.status === "authenticated" ? (
             <>
-              <NavbarItem title="My courses" href="/my-courses" />
               <SessionAvatar className="mr-4 ml-1" />
             </>
           ) : (

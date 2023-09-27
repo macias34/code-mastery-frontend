@@ -26,12 +26,7 @@ export const DashboardLayout: FC<PropsWithChildren> = ({ children }) => {
   ];
 
   return (
-    <ShopLayout
-      classNames={{
-        root: "min-h-screen",
-        children: "grow flex",
-      }}
-    >
+    <ShopLayout>
       <Navigation links={links} />
       {children}
     </ShopLayout>

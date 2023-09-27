@@ -2,9 +2,8 @@ import { type GetServerSideProps } from "next";
 import { FormProvider, useForm } from "react-hook-form";
 
 import { withRoleAuthorization } from "@/features/auth";
-import { UsersCard } from "@/features/dashboard";
+import { DashboardLayout, UsersCard } from "@/features/dashboard";
 import { type UserFilter } from "@/features/profile/types";
-import { ShopLayout } from "@/features/shop";
 import { type UserRole } from "@/features/user";
 import { useUsers } from "@/features/user/api";
 
@@ -37,11 +36,11 @@ export default function UsersDashboard() {
   });
 
   return (
-    <ShopLayout>
+    <DashboardLayout>
       <FormProvider {...methods}>
         <UsersCard {...usersReponse} isLoading={areUsersLoading} />
       </FormProvider>
-    </ShopLayout>
+    </DashboardLayout>
   );
 }
 
