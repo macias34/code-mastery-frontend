@@ -10,7 +10,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/shared/components/card";
@@ -70,8 +69,8 @@ export const AccountDetailsChangeForm = () => {
       </CardHeader>
       <CardContent>
         <form
-          className="space-y-2 flex flex-col gap-4 w-full"
-          onSubmit={handleSubmit(onSubmit)} // eslint-disable-line @typescript-eslint/no-misused-promises
+          className="flex flex-col gap-2 w-full"
+          onSubmit={handleSubmit(onSubmit)}
         >
           {userData?.username ? (
             <InputWithLabel
@@ -99,12 +98,11 @@ export const AccountDetailsChangeForm = () => {
           ) : (
             <Skeleton className="h-10 w-96" />
           )}
-          <Button disabled={!isValid} type="submit" className="max-w-fit">
+          <Button disabled={!isValid} type="submit" className="max-w-fit mt-2">
             {isLoading ? <Spinner className="h-6 w-6" /> : "Save changes"}
           </Button>
         </form>
       </CardContent>
-      <CardFooter></CardFooter>
     </Card>
   );
 };

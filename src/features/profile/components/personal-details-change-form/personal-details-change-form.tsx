@@ -62,9 +62,9 @@ export const PersonalDetailsChangeForm = () => {
             done.
           </CardDescription>
         </CardHeader>
-        <CardContent className="flex flex-col gap-4 w-full">
+        <CardContent className="flex flex-col gap-2 w-full">
           <form
-            className="flex flex-col gap-4 w-full"
+            className="flex flex-col gap-2 w-full"
             onSubmit={handleSubmit(onSubmit)}
           >
             {userData?.personalDetails ? (
@@ -72,7 +72,11 @@ export const PersonalDetailsChangeForm = () => {
             ) : (
               <FormSkeleton />
             )}
-            <Button disabled={!isValid} type="submit" className="max-w-fit">
+            <Button
+              disabled={!isValid}
+              type="submit"
+              className="max-w-fit mt-2"
+            >
               {isLoading ? <Spinner className="h-6 w-6" /> : "Save changes"}
             </Button>
           </form>

@@ -20,11 +20,11 @@ export default function ProfilePage() {
     <ShopLayout
       classNames={{
         root: "min-h-screen",
-        children: "flex flex-col items-center gap-6 grow py-10",
+        children: "flex flex-col items-center gap-6 grow py-6",
       }}
     >
       <Tabs defaultValue="account">
-        <TabsList className="grid w-full grid-cols-4 mb-10">
+        <TabsList className="grid w-full grid-cols-4 mb-6">
           <TabsTrigger value="account">Account</TabsTrigger>
           <TabsTrigger value="password">Password</TabsTrigger>
           <TabsTrigger value="personalDetails">Personal Details</TabsTrigger>

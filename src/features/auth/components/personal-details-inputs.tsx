@@ -2,7 +2,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import React from "react";
 import { useFormContext } from "react-hook-form";
 
-import { PersonalDetailsFormData } from "@/features/profile";
+import { type PersonalDetailsFormData } from "@/features/profile";
 import { InputWithLabel } from "@/shared/components/input-with-label";
 
 export const PersonalDetailsInputs = () => {
@@ -49,6 +49,7 @@ export const PersonalDetailsInputs = () => {
       />
       <div className="flex gap-4 justify-between">
         <InputWithLabel
+          className="w-1/2"
           name="postalCode"
           labelContent="Postal code"
           input={{
@@ -59,6 +60,7 @@ export const PersonalDetailsInputs = () => {
           error={<ErrorMessage errors={errors} name="postalCode" />}
         />
         <InputWithLabel
+          className="w-1/2"
           name="city"
           labelContent="City"
           input={{

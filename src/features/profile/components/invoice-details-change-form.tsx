@@ -70,14 +70,14 @@ export const InvoiceDetailsChangeForm = () => {
             done.
           </CardDescription>
         </CardHeader>
-        <CardContent className="flex flex-col gap-4 w-full">
+        <CardContent className="flex flex-col gap-2 w-full">
           <form
-            className="flex flex-col gap-4 w-full"
-            onSubmit={handleSubmit(onSubmit)} // eslint-disable-line @typescript-eslint/no-misused-promises
+            className="flex flex-col gap-2 w-full"
+            onSubmit={handleSubmit(onSubmit)}
           >
             <PersonalDetailsInputs />
 
-            <div className="flex gap-4 justify-between">
+            <div className="flex gap-2 justify-between">
               <InputWithLabel
                 className="w-1/2"
                 name="nip"
@@ -99,7 +99,7 @@ export const InvoiceDetailsChangeForm = () => {
                 error={<ErrorMessage errors={errors} name="companyName" />}
               />
             </div>
-            <Button disabled={!isValid} type="submit" className="max-w-fit">
+            <Button disabled={!isValid} className="max-w-fit mt-2">
               {isLoading ? <Spinner className="h-6 w-6" /> : "Save changes"}
             </Button>
           </form>

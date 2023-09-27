@@ -53,7 +53,7 @@ export const SignInForm = () => {
   }
   return (
     <form
-      className="flex flex-col gap-4"
+      className="flex flex-col gap-2"
       onSubmit={handleSubmit(onSubmit)} // eslint-disable-line @typescript-eslint/no-misused-promises
     >
       <InputWithLabel

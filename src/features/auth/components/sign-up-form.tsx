@@ -46,7 +46,7 @@ export const SignUpForm: FC<SignUpFormProps> = ({ step, setStep }) => {
   return (
     <FormProvider {...methods}>
       <form
-        className="flex flex-col gap-4 w-full"
+        className="flex flex-col gap-2 w-full"
         onSubmit={handleSubmit(onSubmit)}
       >
         {step === 0 && <AccountDetailsInputs />}

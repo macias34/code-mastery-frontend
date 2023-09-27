@@ -21,7 +21,7 @@ const SignUpPage = () => {
     <ShopLayout
       classNames={{
         root: "min-h-screen",
-        children: "flex flex-col items-center gap-4 justify-center grow py-10",
+        children: "flex flex-col items-center gap-4 justify-center grow py-6",
       }}
     >
       <div className="flex flex-col">
