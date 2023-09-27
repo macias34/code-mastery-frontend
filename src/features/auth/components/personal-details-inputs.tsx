@@ -2,9 +2,8 @@ import { ErrorMessage } from "@hookform/error-message";
 import React from "react";
 import { useFormContext } from "react-hook-form";
 
+import { PersonalDetailsFormData } from "@/features/profile";
 import { InputWithLabel } from "@/shared/components/input-with-label";
-
-import { type PersonalDetailsFormData } from "../../profile/components/personal-details-change-form/personal-details-change-form";
 
 export const PersonalDetailsInputs = () => {
   const {
@@ -48,26 +47,28 @@ export const PersonalDetailsInputs = () => {
         }}
         error={<ErrorMessage errors={errors} name="phoneNumber" />}
       />
-      <InputWithLabel
-        name="postalCode"
-        labelContent="Postal code"
-        input={{
-          ...register("postalCode"),
-          type: "text",
-          placeholder: "10001",
-        }}
-        error={<ErrorMessage errors={errors} name="postalCode" />}
-      />
-      <InputWithLabel
-        name="city"
-        labelContent="City"
-        input={{
-          ...register("city"),
-          type: "text",
-          placeholder: "New York",
-        }}
-        error={<ErrorMessage errors={errors} name="city" />}
-      />
+      <div className="flex gap-4 justify-between">
+        <InputWithLabel
+          name="postalCode"
+          labelContent="Postal code"
+          input={{
+            ...register("postalCode"),
+            type: "text",
+            placeholder: "10001",
+          }}
+          error={<ErrorMessage errors={errors} name="postalCode" />}
+        />
+        <InputWithLabel
+          name="city"
+          labelContent="City"
+          input={{
+            ...register("city"),
+            type: "text",
+            placeholder: "New York",
+          }}
+          error={<ErrorMessage errors={errors} name="city" />}
+        />
+      </div>
       <InputWithLabel
         name="street"
         labelContent="Street"

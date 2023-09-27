@@ -10,6 +10,7 @@
 	"conventionalCommits.scopes": [
 		"eslint",
 		"utils",
-		"pages"
+		"pages",
+		"styles"
 	]
 }
