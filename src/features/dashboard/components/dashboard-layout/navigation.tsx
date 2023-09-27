@@ -1,16 +1,19 @@
+import { useRouter } from "next/router";
 import { type FC } from "react";
 
-import { NavigationLink, type NavigationLinkProps } from "./navigation-link";
+import { type NavigationItem, NavigationLink } from "./navigation-link";
 
 export interface NavigationProps {
-  links: NavigationLinkProps[];
+  links: NavigationItem[];
 }
 
 export const Navigation: FC<NavigationProps> = ({ links }) => {
+  const { pathname } = useRouter();
+
   return (
     <nav className="flex p-1 gap-2 bg-secondary rounded-lg h-fit">
       {links.map(({ href, children }, index) => (
-        <NavigationLink key={index} href={href}>
+        <NavigationLink pathname={pathname} key={index} href={href}>
           {children}
         </NavigationLink>
       ))}

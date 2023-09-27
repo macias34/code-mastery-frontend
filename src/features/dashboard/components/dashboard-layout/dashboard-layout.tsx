@@ -3,10 +3,10 @@ import { type FC, type PropsWithChildren } from "react";
 import { ShopLayout } from "@/features/shop";
 
 import { Navigation } from "./navigation";
-import { type NavigationLinkProps } from "./navigation-link";
+import { type NavigationItem } from "./navigation-link";
 
 export const DashboardLayout: FC<PropsWithChildren> = ({ children }) => {
-  const links: NavigationLinkProps[] = [
+  const links: NavigationItem[] = [
     {
       href: "/dashboard",
       children: "Dashboard",

@@ -4,16 +4,24 @@ import { type FC, type PropsWithChildren } from "react";
 import { buttonVariants } from "@/shared/components/button";
 import { cn } from "@/shared/utils";
 
-export type NavigationLinkProps = LinkProps & PropsWithChildren;
+export type NavigationItem = LinkProps & PropsWithChildren;
+interface NavigationLinkProps extends NavigationItem {
+  pathname: string;
+}
 
 export const NavigationLink: FC<NavigationLinkProps> = ({
   children,
+  pathname,
   ...rest
 }) => {
+  const isOnCurrentPathname = pathname === rest.href;
+
   return (
     <Link
       {...rest}
-      className={cn(buttonVariants(), "bg-secondary hover:bg-background")}
+      className={cn(buttonVariants(), "bg-secondary hover:bg-background", {
+        "bg-background": isOnCurrentPathname,
+      })}
     >
       {children}
     </Link>
