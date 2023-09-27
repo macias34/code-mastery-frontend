@@ -52,20 +52,22 @@ export const SignUpForm: FC<SignUpFormProps> = ({ step, setStep }) => {
         {step === 0 && <AccountDetailsInputs />}
         {step === 1 && <PersonalDetailsInputs />}
 
-        <Button type="button" onClick={switchStep} className="mt-2">
-          {step === 0 && "Next step"}
-          {step === 1 && "Previous step"}
-        </Button>
-
-        {step === 1 && (
-          <Button
-            title={isValid ? "" : "Please fill all fields correctly"}
-            disabled={!isValid}
-            className="mt-2"
-          >
-            {isLoading ? <Spinner className="h-6 w-6" /> : "Sign up"}
+        <div className="flex flex-col gap-2">
+          <Button type="button" onClick={switchStep} className="mt-2  ">
+            {step === 0 && "Next step"}
+            {step === 1 && "Previous step"}
           </Button>
-        )}
+
+          {step === 1 && (
+            <Button
+              title={isValid ? "" : "Please fill all fields correctly"}
+              disabled={!isValid}
+              className="mt-2"
+            >
+              {isLoading ? <Spinner className="h-6 w-6" /> : "Sign up"}
+            </Button>
+          )}
+        </div>
       </form>
     </FormProvider>
   );
