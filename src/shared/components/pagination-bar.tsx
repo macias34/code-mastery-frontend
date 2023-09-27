@@ -28,7 +28,7 @@ export const PaginationBar = ({
         <>
           {currentPage === totalPages - 1 ? null : (
             <button
-              className="rounded-r-lg flex items-center justify-center px-4 h-10 ml-0 leading-tight borderrounded-r-lg border bg-slate-900 border-slate-700 text-slate-400 hover:bg-slate-700 hover:text-white"
+              className="first:rounded-l-lg  last:rounded-r-lg  flex items-center justify-center px-4 h-10 ml-0 leading-tight borderrounded-r-lg border bg-accent border-slate-700 text-slate-400 hover:bg-background hover:text-foreground"
               onClick={nextClick}
             >
               <svg
@@ -59,7 +59,7 @@ export const PaginationBar = ({
           {currentPage === 0 ? null : (
             <button
               className={
-                "rounded-l-lg flex items-center justify-center px-4 h-10 ml-0 leading-tight borderrounded-l-lg border bg-accent border-slate-700 text-slate-400 hover:bg-background hover:text-foreground"
+                "first:rounded-l-lg last:rounded-r-lg rounded-l-lg flex items-center justify-center px-4 h-10 ml-0 leading-tight borderrounded-l-lg border bg-accent border-slate-700 text-slate-400 hover:bg-background hover:text-foreground"
               }
               onClick={previousClick}
             >
@@ -86,7 +86,7 @@ export const PaginationBar = ({
 
     if (value === PaginationItemType.DOTS) {
       return (
-        <button className=" flex items-center justify-center px-3 h-10 leading-tight text-gray-500 bg-white border border-slate-700  dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 cursor-default">
+        <button className="first:rounded-l-lg last:rounded-r-lg flex items-center justify-center px-4 h-10 leading-tight border bg-accent border-slate-700 text-slate-400 hover:bg-background hover:text-foreground cursor-default">
           ...
         </button>
       );
@@ -97,9 +97,9 @@ export const PaginationBar = ({
       <button
         ref={ref}
         className={cn(
-          "flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-slate-700 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white",
+          "first:rounded-l-lg last:rounded-r-lg flex items-center justify-center px-4 h-10 leading-tight border bg-accent border-slate-700 text-slate-400 hover:bg-background hover:text-foreground",
           isActive &&
-            "z-10 flex items-center justify-center px-4 h-10 leading-tight text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white",
+            "z-10 flex items-center justify-center px-4 h-10 leading-tight  border bg-primary border-slate-700 text-white hover:bg-background hover:text-foreground",
         )}
         onClick={() => setPage && setPage(value - 1)}
       >
@@ -121,7 +121,7 @@ export const PaginationBar = ({
         renderItem={renderItem}
         variant="light"
         classNames={{
-          wrapper: "flex items-center -space-x-px h-8 text-sm gap-0",
+          wrapper: "flex items-center -space-x-px h-8 text-sm gap-0 ",
         }}
       />
       <p className="text-slate-300">
