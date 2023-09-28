@@ -9,9 +9,13 @@ interface AsideProps {
 
 export const Aside: FC<AsideProps> = ({ linkItems }) => {
   return (
-    <aside className="flex flex-col gap-6 pt-10">
+    <aside className="flex flex-col gap-6">
       {linkItems.map(({ children, ...rest }, index) => (
-        <Link className=" font-semibold text-lg" key={index} {...rest}>
+        <Link
+          className=" font-semibold hover:text-white/80 transition"
+          key={index}
+          {...rest}
+        >
           {children}
         </Link>
       ))}

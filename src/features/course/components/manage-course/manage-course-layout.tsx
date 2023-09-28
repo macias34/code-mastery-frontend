@@ -21,20 +21,24 @@ export const ManageCourseLayout: FC<PropsWithChildren> = ({ children }) => {
     );
   }
 
-  const pathname = `/dashboard/courses/${id}`;
+  const rootPathname = `/dashboard/courses/${id}`;
 
   const linkGroups: LinkItem[] = [
     {
+      children: "Home",
+      href: rootPathname,
+    },
+    {
       children: "Content",
-      href: pathname + "/content",
+      href: rootPathname + "/content",
     },
     {
       children: "Students",
-      href: pathname + "/students",
+      href: rootPathname + "/students",
     },
     {
       children: "Pricing",
-      href: pathname + "/pricing",
+      href: rootPathname + "/pricing",
     },
   ];
 
@@ -43,7 +47,7 @@ export const ManageCourseLayout: FC<PropsWithChildren> = ({ children }) => {
   return (
     <main className="flex flex-col">
       <Navbar courseName={name} />
-      <div className="container flex gap-20 py-6 max-w-7xl">
+      <div className="container flex gap-32 pt-16 pb-6 max-w-7xl">
         <Aside linkItems={linkGroups} />
         {children}
       </div>
