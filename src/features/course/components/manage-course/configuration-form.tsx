@@ -4,10 +4,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { TOAST_ERROR_TITLE, TOAST_SUCCESS_TITLE } from "@/libs/toast";
-import { Button } from "@/shared/components/button";
-import { InputWithLabel } from "@/shared/components/input-with-label";
-import { Spinner } from "@/shared/components/spinner";
-import { toast } from "@/shared/components/use-toast";
+import { Button, InputWithLabel, Spinner, toast } from "@/shared/components";
 
 import { usePatchCourse } from "../../api";
 import { useGetPathnameCourse, useInvalidatePathnameCourse } from "../../hooks";
