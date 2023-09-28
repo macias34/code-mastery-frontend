@@ -22,8 +22,8 @@ import { useUpdateUser } from "../api";
 const AccountDetailsFormSchema = z.object({
   username: z
     .string()
-    .min(3, "Username must contain at least 3 characters")
-    .max(20, "Username must contain 20 characters maximum"),
+    .min(3, "Username should be at least 3 characters")
+    .max(20, "Username should be 20 characters maximum"),
   email: z.string().email("Invalid email address"),
 });
 

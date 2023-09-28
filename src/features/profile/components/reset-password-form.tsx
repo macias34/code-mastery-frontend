@@ -17,10 +17,10 @@ import { Spinner } from "@/shared/components/spinner";
 
 const PasswordResetFormSchema = z
   .object({
-    password: z.string().min(5, "Password must contain at least 5 characters"),
+    password: z.string().min(5, "Password should be at least 5 characters"),
     confirmPassword: z
       .string()
-      .min(5, "Password must contain at least 5 characters"),
+      .min(5, "Password should be at least 5 characters"),
   })
   .superRefine(({ confirmPassword, password }, context) => {
     if (confirmPassword !== password) {

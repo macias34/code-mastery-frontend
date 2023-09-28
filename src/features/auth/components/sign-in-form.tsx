@@ -14,9 +14,9 @@ import { toast } from "@/shared/components/use-toast";
 const SignInFormSchema = z.object({
   username: z
     .string()
-    .min(3, "Username must contain at least 3 characters")
-    .max(20, "Username must contain 20 characters maximum"),
-  password: z.string().min(5, "Password must contain at least 5 characters"),
+    .min(3, "Username should be at least 3 characters")
+    .max(20, "Username should be 20 characters maximum"),
+  password: z.string().min(5, "Password should be at least 5 characters"),
 });
 
 export type SignInFormData = z.infer<typeof SignInFormSchema>;

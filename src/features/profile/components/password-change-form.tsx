@@ -17,8 +17,8 @@ import { InputWithLabel } from "@/shared/components/input-with-label";
 import { Spinner } from "@/shared/components/spinner";
 
 const PasswordChangeFormSchema = z.object({
-  oldPassword: z.string().min(5, "Password must contain at least 5 characters"),
-  newPassword: z.string().min(5, "Password must contain at least 5 characters"),
+  oldPassword: z.string().min(5, "Password should be at least 5 characters"),
+  newPassword: z.string().min(5, "Password should be at least 5 characters"),
 });
 
 export type PasswordChangeFormData = z.infer<typeof PasswordChangeFormSchema>;
