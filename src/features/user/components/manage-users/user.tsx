@@ -1,5 +1,6 @@
-import { ShieldCheck } from "lucide-react";
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { type UserDto, UserRole } from "@/features/user";
 import {
   Avatar,

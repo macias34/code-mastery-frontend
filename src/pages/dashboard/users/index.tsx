@@ -3,7 +3,7 @@ import { FormProvider, useForm } from "react-hook-form";
 
 import { withRoleAuthorization } from "@/features/auth";
 import { DashboardLayout } from "@/features/dashboard";
-import { type UserFilter } from "@/features/profile/types";
+import { type UserFilter } from "@/features/profile";
 import { type UserRole, UsersCard } from "@/features/user";
 import { useUsers } from "@/features/user";
 
