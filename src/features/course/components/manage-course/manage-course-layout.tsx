@@ -1,18 +1,12 @@
-import { useRouter } from "next/router";
 import React, { type FC, type PropsWithChildren } from "react";
 
-import { useGetCourse } from "../../api";
+import { useGetPathnameCourse } from "../../hooks";
 import { Aside, type LinkItem } from "./aside";
 import { Navbar } from "./navbar";
 
 export const ManageCourseLayout: FC<PropsWithChildren> = ({ children }) => {
-  const { query } = useRouter();
-  const id = Number.parseInt(query?.id as string);
-
-  const { data: course, isLoading } = useGetCourse(id, {
-    enabled: !!id,
-  });
-
+  const { courseUseQueryResult, id } = useGetPathnameCourse();
+  const { data: course, isLoading } = courseUseQueryResult;
   if (isLoading || !course) {
     return (
       <main>
