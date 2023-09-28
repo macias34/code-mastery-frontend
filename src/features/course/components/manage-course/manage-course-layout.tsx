@@ -43,7 +43,7 @@ export const ManageCourseLayout: FC<PropsWithChildren> = ({ children }) => {
   return (
     <main className="flex flex-col">
       <Navbar courseName={name} />
-      <div className="container py-6 max-w-7xl">
+      <div className="container flex gap-20 py-6 max-w-7xl">
         <Aside linkItems={linkGroups} />
         {children}
       </div>
