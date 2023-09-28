@@ -29,6 +29,10 @@ export const ManageCourseLayout: FC<PropsWithChildren> = ({ children }) => {
       href: rootPathname,
     },
     {
+      children: "Configuration",
+      href: rootPathname + "/configuration",
+    },
+    {
       children: "Content",
       href: rootPathname + "/content",
     },
