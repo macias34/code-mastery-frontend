@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 
-import { DashboardLayout, useCreateCourse } from "@/features/dashboard";
+import { useCreateCourse } from "@/features/course";
+import { DashboardLayout } from "@/features/dashboard";
 import { TOAST_ERROR_TITLE, TOAST_SUCCESS_TITLE } from "@/libs/toast";
 import { Button } from "@/shared/components/button";
 import { Spinner } from "@/shared/components/spinner";

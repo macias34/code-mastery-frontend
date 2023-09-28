@@ -2,10 +2,10 @@ import { type GetServerSideProps } from "next";
 import { FormProvider, useForm } from "react-hook-form";
 
 import { withRoleAuthorization } from "@/features/auth";
-import { DashboardLayout, UsersCard } from "@/features/dashboard";
+import { DashboardLayout } from "@/features/dashboard";
 import { type UserFilter } from "@/features/profile/types";
-import { type UserRole } from "@/features/user";
-import { useUsers } from "@/features/user/api";
+import { type UserRole, UsersCard } from "@/features/user";
+import { useUsers } from "@/features/user";
 
 export type UserSearchFilters = Omit<Required<UserFilter>, "role"> & {
   role: UserRole | "ALL";

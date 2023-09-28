@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 
-import { DashboardLayout, useGetCourse } from "@/features/dashboard";
+import { useGetCourse } from "@/features/course";
 
 export default function CourseDashboardPage() {
   const router = useRouter();
@@ -10,5 +10,5 @@ export default function CourseDashboardPage() {
     enabled: !!id,
   });
 
-  return <DashboardLayout>Course: {course?.id}</DashboardLayout>;
+  return <main>Course: {course?.id}</main>;
 }
