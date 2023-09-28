@@ -19,7 +19,7 @@ export const ManageCard: FC<ManageCardProps> = ({
   children,
 }) => {
   return (
-    <Card className="w-full">
+    <Card className="w-full h-fit">
       <CardHeader>
         <CardTitle className="text-2xl">{title}</CardTitle>
         {description && (
