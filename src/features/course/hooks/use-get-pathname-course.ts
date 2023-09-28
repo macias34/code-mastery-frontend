@@ -1,10 +1,8 @@
-import { useRouter } from "next/router";
-
 import { type UseGetCourseOptions, useGetCourse } from "../api";
+import { useGetPathnameId } from "./use-get-pathname-id";
 
 export const useGetPathnameCourse = (options?: UseGetCourseOptions) => {
-  const { query } = useRouter();
-  const id = Number.parseInt(query?.id as string);
+  const id = useGetPathnameId();
 
   return {
     courseUseQueryResult: useGetCourse(id, {

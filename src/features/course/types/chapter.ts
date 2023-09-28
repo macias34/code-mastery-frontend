@@ -1,4 +1,4 @@
-import { type LessonDto } from ".";
+import { type LessonDto } from "./lesson";
 
 export interface ChapterDto {
   id: number;
