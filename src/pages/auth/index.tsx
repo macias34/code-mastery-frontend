@@ -1,10 +1,11 @@
-import { GetServerSideProps } from "next";
+import { type GetServerSideProps } from "next";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
 import { SignInForm } from "@/features/auth";
+import { ResetPasswordDialog } from "@/features/auth/components/reset-password-dialog";
 import { ShopLayout } from "@/features/shop";
 import { TOAST_SUCCESS_TITLE } from "@/libs/toast";
 import {
@@ -62,6 +63,7 @@ const SignInPage = ({ emailConfirmed }: SignInPageProps) => {
           Sign up
         </Link>
       </p>
+      <ResetPasswordDialog />
     </ShopLayout>
   );
 };

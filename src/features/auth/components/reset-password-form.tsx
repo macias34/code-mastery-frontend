@@ -1,8 +1,10 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { useResetPassword } from "@/features/auth";
 import { Button } from "@/shared/components/button";
 import {
   Card,
@@ -44,8 +46,14 @@ export const ResetPasswordForm = () => {
     resolver: zodResolver(PasswordResetFormSchema),
   });
 
+  const searchParams = useSearchParams();
+  const { mutate, isLoading } = useResetPassword();
+
   const onSubmit = (formData: PasswordResetFormData) => {
-    console.log(formData);
+    mutate({
+      newPassword: formData.password,
+      token: searchParams.get("token") ?? "",
+    });
   };
 
   return (
@@ -81,11 +89,10 @@ export const ResetPasswordForm = () => {
             error={<ErrorMessage errors={errors} name="confirmPassword" />}
           />
           <Button disabled={!isValid} type="submit" className="max-w-fit">
-            {false ? <Spinner className="h-6 w-6" /> : "Save changes"}
+            {isLoading ? <Spinner className="h-6 w-6" /> : "Save passoword"}
           </Button>
         </form>
       </CardContent>
-      <CardFooter></CardFooter>
     </Card>
   );
 };
