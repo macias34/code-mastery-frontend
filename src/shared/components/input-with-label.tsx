@@ -1,15 +1,16 @@
 import { LabelProps } from "@radix-ui/react-label";
+import { VariantProps } from "class-variance-authority";
 import { FC, ReactElement } from "react";
 
 import { PropsWithClassname } from "../types";
 import { cn } from "../utils";
 import { Input, InputProps } from "./input";
-import { Label } from "./label";
+import { Label, labelVariants } from "./label";
 
-interface InputWithLabelProps extends PropsWithClassname {
+export interface InputWithLabelProps extends PropsWithClassname {
   name: string;
   labelContent: string;
-  label?: LabelProps;
+  label?: LabelProps & VariantProps<typeof labelVariants>;
   input?: InputProps;
   error?: ReactElement | string;
 }
