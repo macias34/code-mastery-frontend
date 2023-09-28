@@ -3,10 +3,14 @@ import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { TOAST_ERROR_TITLE, TOAST_SUCCESS_TITLE } from "@/libs/toast";
 import { Button } from "@/shared/components/button";
 import { InputWithLabel } from "@/shared/components/input-with-label";
+import { Spinner } from "@/shared/components/spinner";
+import { toast } from "@/shared/components/use-toast";
 
-import { useGetPathnameCourse } from "../../hooks";
+import { usePatchCourse } from "../../api";
+import { useGetPathnameCourse, useInvalidatePathnameCourse } from "../../hooks";
 
 const ConfigurationFormSchema = z.object({
   name: z
@@ -27,15 +31,36 @@ type ConfigurationFormData = z.infer<typeof ConfigurationFormSchema>;
 
 export const ConfigurationForm = () => {
   const { courseUseQueryResult } = useGetPathnameCourse();
-
   const { data: course } = courseUseQueryResult;
+
+  const { invalidateCourse } = useInvalidatePathnameCourse();
+  const { mutate, isLoading } = usePatchCourse();
 
   const { setValue, register, handleSubmit } = useForm<ConfigurationFormData>({
     mode: "onBlur",
     resolver: zodResolver(ConfigurationFormSchema),
   });
 
-  const onSubmit = (formData: ConfigurationFormData) => {};
+  const onSubmit = (formData: ConfigurationFormData) => {
+    mutate(formData, {
+      onSuccess() {
+        toast({
+          title: TOAST_SUCCESS_TITLE,
+          description: "Course configuration has been saved.",
+        });
+      },
+      onError() {
+        toast({
+          title: TOAST_ERROR_TITLE,
+          description: "Course configuration hasn't been saved.",
+          variant: "destructive",
+        });
+      },
+      async onSettled() {
+        await invalidateCourse();
+      },
+    });
+  };
 
   useEffect(() => {
     if (course) {
@@ -47,7 +72,7 @@ export const ConfigurationForm = () => {
   }, [course, setValue]);
 
   return (
-    <form className="flex flex-col gap-6">
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
       <InputWithLabel
         label={{ size: "lg" }}
         labelContent="Course name"
@@ -73,14 +98,9 @@ export const ConfigurationForm = () => {
           placeholder: "Dawid Żmudzki",
         }}
       />
-      {/* <InputWithLabel
-          label={{ size: "lg" }}
-          labelContent="Course categories"
-          name="instructorName"
-        /> */}
 
-      <Button size="lg" className="w-max self-end">
-        Save
+      <Button size="lg" className="self-end w-24">
+        {isLoading ? <Spinner /> : "Save"}
       </Button>
     </form>
   );
