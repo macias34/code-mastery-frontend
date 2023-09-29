@@ -1,9 +1,5 @@
-import { Button } from "@/shared/ui/button";
+import { ShopLayout } from "@/features/shop";
 
 export default function Home() {
-  return (
-    <main className=" min-h-screen bg-foreground">
-      <Button>Kup kursa</Button>
-    </main>
-  );
+  return <ShopLayout></ShopLayout>;
 }
