@@ -10,7 +10,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/shared/components/card";
@@ -46,13 +45,13 @@ export const ResetPasswordForm = () => {
     resolver: zodResolver(PasswordResetFormSchema),
   });
 
-  const searchParams = useSearchParams();
+  const searchParameters = useSearchParams();
   const { mutate, isLoading } = useResetPassword();
 
   const onSubmit = (formData: PasswordResetFormData) => {
     mutate({
       newPassword: formData.password,
-      token: searchParams.get("token") ?? "",
+      token: searchParameters.get("token") ?? "",
     });
   };
 
