@@ -1,11 +1,10 @@
-import { type GetServerSideProps } from "next";
 import { FormProvider, useForm } from "react-hook-form";
 
-import { withRoleAuthorization } from "@/features/auth";
 import { DashboardLayout } from "@/features/dashboard";
 import { type UserFilter } from "@/features/profile";
-import { type UserRole, UsersCard } from "@/features/user";
+import { UserRole, UsersCard } from "@/features/user";
 import { useUsers } from "@/features/user";
+import { useRoleAuthorization } from "@/shared/utils";
 
 export type UserSearchFilters = Omit<Required<UserFilter>, "role"> & {
   role: UserRole | "ALL";
@@ -13,6 +12,8 @@ export type UserSearchFilters = Omit<Required<UserFilter>, "role"> & {
 };
 
 export default function UsersDashboard() {
+  useRoleAuthorization({ userRoleToExclude: UserRole.USER });
+
   const methods = useForm<UserSearchFilters>({
     defaultValues: {
       email: "",
@@ -43,8 +44,3 @@ export default function UsersDashboard() {
     </DashboardLayout>
   );
 }
-
-// @TODO - add role authorization
-export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-  return withRoleAuthorization({ req, res });
-};

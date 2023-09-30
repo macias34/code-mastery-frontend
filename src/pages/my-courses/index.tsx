@@ -1,12 +1,12 @@
-import { type GetServerSideProps } from "next";
-
-import { withRoleAuthorization } from "@/features/auth";
 import { Course } from "@/features/course";
 import { ShopLayout } from "@/features/shop";
 import { useUser } from "@/features/user";
+import { useRoleAuthorization } from "@/shared/utils";
 
 export default function MyCoursesPage() {
   const { userData } = useUser();
+
+  useRoleAuthorization({});
 
   return (
     <ShopLayout>
@@ -25,7 +25,3 @@ export default function MyCoursesPage() {
     </ShopLayout>
   );
 }
-
-export const getServerSideProps: GetServerSideProps = ({ req, res }) => {
-  return withRoleAuthorization({ req, res });
-};

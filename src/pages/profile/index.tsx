@@ -1,6 +1,3 @@
-import { type GetServerSideProps } from "next";
-
-import { withRoleAuthorization } from "@/features/auth";
 import {
   AccountDetailsChangeForm,
   InvoiceDetailsChangeForm,
@@ -14,8 +11,11 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/shared/components/tabs";
+import { useRoleAuthorization } from "@/shared/utils";
 
 export default function ProfilePage() {
+  useRoleAuthorization({});
+
   return (
     <ShopLayout
       classNames={{
@@ -46,7 +46,3 @@ export default function ProfilePage() {
     </ShopLayout>
   );
 }
-
-export const getServerSideProps: GetServerSideProps = ({ req, res }) => {
-  return withRoleAuthorization({ req, res });
-};

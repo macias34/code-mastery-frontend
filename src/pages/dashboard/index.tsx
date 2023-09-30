@@ -1,18 +1,18 @@
-import { type GetServerSideProps } from "next";
 import { useSession } from "next-auth/react";
 
-import { withRoleAuthorization } from "@/features/auth";
 import { DashboardLayout } from "@/features/dashboard";
+import { UserRole } from "@/features/user";
+import { withRoleAuthorization } from "@/shared/utils";
 
-export default function Dashboard() {
+function Dashboard() {
   const session = useSession();
   console.log(session);
 
   return <DashboardLayout></DashboardLayout>;
 }
 
-// @TODO - add role authorization
-
-export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-  return withRoleAuthorization({ req, res });
-};
+// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+export default withRoleAuthorization(Dashboard, {
+  userRoleToExclude: UserRole.USER,
+  redirectDestination: "/",
+});

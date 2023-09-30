@@ -39,6 +39,8 @@ const config = {
 	plugins: ["@typescript-eslint", "unicorn", "sonarjs"],
 	extends: ["next/core-web-vitals", "plugin:@typescript-eslint/recommended", "plugin:unicorn/recommended", "plugin:sonarjs/recommended"],
 	rules: {
+		"unicorn/no-null": "off",
+		"@typescript-eslint/no-unsafe-call": "warn",
 		"@typescript-eslint/no-misused-promises": [2, {
 			"checksVoidReturn": {
 				"attributes": false
