@@ -4,16 +4,14 @@ import { DashboardLayout } from "@/features/dashboard";
 import { type UserFilter } from "@/features/profile";
 import { UserRole, UsersCard } from "@/features/user";
 import { useUsers } from "@/features/user";
-import { useRoleAuthorization } from "@/shared/utils";
+import { withRoleAuthorization } from "@/shared/utils";
 
 export type UserSearchFilters = Omit<Required<UserFilter>, "role"> & {
   role: UserRole | "ALL";
   page: number;
 };
 
-export default function UsersDashboard() {
-  useRoleAuthorization({ userRoleToExclude: UserRole.USER });
-
+function UsersDashboard() {
   const methods = useForm<UserSearchFilters>({
     defaultValues: {
       email: "",
@@ -44,3 +42,9 @@ export default function UsersDashboard() {
     </DashboardLayout>
   );
 }
+
+// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+export default withRoleAuthorization(UsersDashboard, {
+  userRolesToExclude: [UserRole.USER],
+  redirectDestination: "/",
+});

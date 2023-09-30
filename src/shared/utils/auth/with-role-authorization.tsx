@@ -2,33 +2,19 @@ import * as jose from "jose";
 import { useRouter } from "next/router";
 import { type ReactNode, useEffect } from "react";
 
-import { ShopLayout } from "@/features/shop";
 import { type UserRole, useUser } from "@/features/user";
-import { Spinner } from "@/shared/components";
 
-interface UseRoleAuthorizationArguments {
-  userRoleToExclude?: UserRole;
+import { DefaultLoadingElement } from "./default-loading-element";
+
+interface WithRoleAuthorizationArguments {
+  userRolesToExclude?: UserRole[];
   redirectDestination?: string;
   loadingElement?: ReactNode;
 }
 
-interface UseRoleAuthorizationArguments {
-  userRoleToExclude?: UserRole;
-  redirectDestination?: string;
-  loadingElement?: React.ReactNode;
-}
-
-const DefaultLoadingElement = () => {
-  return (
-    <ShopLayout>
-      <Spinner className="absolute top-1/2 left-1/2 h-8 w-8" />
-    </ShopLayout>
-  );
-};
-
 export const withRoleAuthorization = (
   WrappedComponent: React.ComponentType,
-  options: UseRoleAuthorizationArguments,
+  options: WithRoleAuthorizationArguments,
 ) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return function WithRoleAuthorization(props: any) {
@@ -49,7 +35,7 @@ export const withRoleAuthorization = (
 
       const userRole = jose.decodeJwt(accessToken)?.role as UserRole;
 
-      if (userRole === options.userRoleToExclude) {
+      if (options.userRolesToExclude?.includes(userRole)) {
         void router.push(options.redirectDestination || "/");
       }
     }, [accessToken, isLoading, router]);
@@ -64,7 +50,7 @@ export const withRoleAuthorization = (
 
     const userRole = jose.decodeJwt(accessToken)?.role as UserRole;
 
-    if (userRole === options.userRoleToExclude) {
+    if (options.userRolesToExclude?.includes(userRole)) {
       return loadingElement;
     }
 

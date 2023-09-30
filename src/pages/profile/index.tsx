@@ -11,11 +11,9 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/shared/components/tabs";
-import { useRoleAuthorization } from "@/shared/utils";
+import { withRoleAuthorization } from "@/shared/utils";
 
-export default function ProfilePage() {
-  useRoleAuthorization({});
-
+function ProfilePage() {
   return (
     <ShopLayout
       classNames={{
@@ -46,3 +44,9 @@ export default function ProfilePage() {
     </ShopLayout>
   );
 }
+
+// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+export default withRoleAuthorization(ProfilePage, {
+  userRolesToExclude: [],
+  redirectDestination: "/auth",
+});

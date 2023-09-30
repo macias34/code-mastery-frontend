@@ -13,6 +13,6 @@ function Dashboard() {
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-call
 export default withRoleAuthorization(Dashboard, {
-  userRoleToExclude: UserRole.USER,
+  userRolesToExclude: [UserRole.USER],
   redirectDestination: "/",
 });

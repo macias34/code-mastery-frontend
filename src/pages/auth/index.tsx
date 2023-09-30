@@ -1,13 +1,8 @@
-import { type GetServerSideProps } from "next";
-import { getServerSession } from "next-auth";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
 
 import { SignInForm } from "@/features/auth";
 import { ResetPasswordDialog } from "@/features/auth/components/reset-password-dialog";
 import { ShopLayout } from "@/features/shop";
-import { TOAST_SUCCESS_TITLE } from "@/libs/toast";
 import {
   Card,
   CardContent,
@@ -15,29 +10,23 @@ import {
   CardHeader,
   CardTitle,
 } from "@/shared/components/card";
-import { toast } from "@/shared/components/use-toast";
+import { withNoRoleAuthorization } from "@/shared/utils";
 
-import { authOptions } from "../api/auth/[...nextauth]";
+const SignInPage = () => {
+  // const router = useRouter();
 
-interface SignInPageProps {
-  emailConfirmed: boolean;
-}
+  // // if (emailConfirmed) {
+  // //   toast({
+  // //     title: TOAST_SUCCESS_TITLE,
+  // //     description: "Your email has been confirmed. You can sign in now.",
+  // //   });
+  // // }
 
-const SignInPage = ({ emailConfirmed }: SignInPageProps) => {
-  const router = useRouter();
-
-  if (emailConfirmed) {
-    toast({
-      title: TOAST_SUCCESS_TITLE,
-      description: "Your email has been confirmed. You can sign in now.",
-    });
-  }
-
-  useEffect(() => {
-    if (emailConfirmed) {
-      void router.replace("/auth");
-    }
-  }, []);
+  // // useEffect(() => {
+  // //   if (emailConfirmed) {
+  // //     void router.replace("/auth");
+  // //   }
+  // // }, []);
 
   return (
     <ShopLayout
@@ -68,28 +57,7 @@ const SignInPage = ({ emailConfirmed }: SignInPageProps) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({
-  req,
-  res,
-  query,
-}) => {
-  const session = await getServerSession(req, res, authOptions);
-  if (session) {
-    return {
-      redirect: {
-        destination: "/",
-        statusCode: 302,
-      },
-    };
-  }
-
-  const emailConfirmed = (query.emailConfirmed as string | undefined) === "";
-
-  return {
-    props: {
-      emailConfirmed,
-    },
-  };
-};
-
-export default SignInPage;
+// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+export default withNoRoleAuthorization(SignInPage, {
+  redirectDestination: "/",
+});
