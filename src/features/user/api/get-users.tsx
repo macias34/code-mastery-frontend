@@ -19,15 +19,13 @@ const createSearchParameters = ({
   page,
   userFilter: { email, role, username },
 }: CreateSearchParametersArguments) => {
-  const searchParameters = new URLSearchParams({
+  return new URLSearchParams({
     page: page.toString(),
     size: "5",
     email: email ?? "",
     role: role ?? "",
     username: username ?? "",
   });
-
-  return searchParameters;
 };
 
 export const getUsers = async ({

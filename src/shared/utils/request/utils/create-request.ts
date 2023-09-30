@@ -16,10 +16,8 @@ export const createRequest = (
     };
   }
 
-  const response = fetch(API_URL + url, {
+  return fetch(API_URL + url, {
     ...config,
     headers,
   });
-
-  return response;
 };
