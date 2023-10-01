@@ -1,7 +1,12 @@
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 import { SignInForm } from "@/features/auth";
 import { ShopLayout } from "@/features/shop";
+import { TOAST_SUCCESS_TITLE } from "@/libs/toast";
+import { toast } from "@/shared/components";
 import {
   Card,
   CardContent,
@@ -12,20 +17,22 @@ import {
 import { withNoRoleAuthorization } from "@/shared/utils";
 
 const SignInPage = () => {
-  // const router = useRouter();
+  const { replace } = useRouter();
+  const searchParameters = useSearchParams();
+  const emailConfirmed = searchParameters.get("emailConfirmed");
 
-  // // if (emailConfirmed) {
-  // //   toast({
-  // //     title: TOAST_SUCCESS_TITLE,
-  // //     description: "Your email has been confirmed. You can sign in now.",
-  // //   });
-  // // }
+  if (emailConfirmed != null) {
+    toast({
+      title: TOAST_SUCCESS_TITLE,
+      description: "Your email has been confirmed. You can sign in now.",
+    });
+  }
 
-  // // useEffect(() => {
-  // //   if (emailConfirmed) {
-  // //     void router.replace("/auth");
-  // //   }
-  // // }, []);
+  useEffect(() => {
+    if (emailConfirmed != null) {
+      void replace("/auth");
+    }
+  }, [emailConfirmed, replace]);
 
   return (
     <ShopLayout
