@@ -8,7 +8,7 @@ export interface UserDto {
   id: number;
   username: string;
   email: string;
-  note: string | null;
+  note?: string;
   createdAt: string;
   role: UserRole;
   personalDetails: PersonalDetailsDto | null;

@@ -56,7 +56,7 @@ export const UsersCard = ({ totalPages, users, isLoading }: Props) => {
         <CardDescription>Explore and edit users from shop</CardDescription>
         <div className="flex gap-x-5">
           <Input placeholder="Search by username" {...register("username")} />
-          <RoleSelect role={role} setRole={setRole} />
+          <RoleSelect role={role} setRole={setRole} displayAllOption />
         </div>
       </CardHeader>
       <CardContent className="flex flex-col gap-y-6">

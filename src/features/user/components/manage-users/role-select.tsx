@@ -10,25 +10,35 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/shared/components/select";
+import { cn } from "@/shared/utils";
 
 interface RoleSelectProps {
   role: UserRole | "ALL";
   setRole: Dispatch<SetStateAction<UserRole | "ALL">>;
+  trigger?: {
+    className?: string;
+  };
+  displayAllOption?: boolean;
 }
 
-export const RoleSelect = ({ role, setRole }: RoleSelectProps) => {
+export const RoleSelect = ({
+  role,
+  setRole,
+  displayAllOption,
+  trigger,
+}: RoleSelectProps) => {
   return (
     <Select
       value={role}
       onValueChange={(value) => setRole(value as UserRole | "ALL")}
     >
-      <SelectTrigger className="w-[180px]">
+      <SelectTrigger className={cn("w-[180px]", trigger?.className)}>
         <SelectValue placeholder="Select a role" />
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent className="border-primary">
         <SelectGroup>
-          <SelectLabel>Role</SelectLabel>
-          <SelectItem value="ALL">All</SelectItem>
+          <SelectLabel className="font-bold">Role</SelectLabel>
+          {displayAllOption && <SelectItem value="ALL">All</SelectItem>}
           <SelectItem value={UserRole.USER}>User</SelectItem>
           <SelectItem value={UserRole.WORKER}>Worker</SelectItem>
           <SelectItem value={UserRole.ADMIN}>Admin</SelectItem>
