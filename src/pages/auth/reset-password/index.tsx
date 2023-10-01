@@ -1,7 +1,8 @@
 import { ResetPasswordForm } from "@/features/auth";
 import { ShopLayout } from "@/features/shop";
+import { withNoRoleAuthorization } from "@/shared/utils";
 
-export default function ResetPasswordPage() {
+function ResetPasswordPage() {
   return (
     <ShopLayout
       classNames={{
@@ -13,3 +14,7 @@ export default function ResetPasswordPage() {
     </ShopLayout>
   );
 }
+
+export default withNoRoleAuthorization(ResetPasswordPage, {
+  redirectDestination: "/",
+});

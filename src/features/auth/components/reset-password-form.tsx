@@ -1,6 +1,8 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -44,15 +46,27 @@ export const ResetPasswordForm = () => {
     resolver: zodResolver(PasswordResetFormSchema),
   });
 
+  const { push } = useRouter();
+
   const searchParameters = useSearchParams();
   const { mutate, isLoading } = useResetPassword();
+
+  const resetPasswordToken = searchParameters.get("token") ?? "";
 
   const onSubmit = (formData: PasswordResetFormData) => {
     mutate({
       newPassword: formData.password,
-      token: searchParameters.get("token") ?? "",
+      token: resetPasswordToken,
     });
   };
+
+  useEffect(() => {
+    const isTokenUUID = z.string().uuid().safeParse(resetPasswordToken).success;
+
+    if (!resetPasswordToken || !isTokenUUID) {
+      void push("/");
+    }
+  }, [push, resetPasswordToken]);
 
   return (
     <Card className="max-w-md">
