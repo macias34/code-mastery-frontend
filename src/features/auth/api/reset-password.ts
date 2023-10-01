@@ -27,7 +27,7 @@ export const useSendResetPasswordLink = () => {
     onSuccess: () => {
       toast({
         title: TOAST_SUCCESS_TITLE,
-        description: "Email link has been send",
+        description: "Reset password link has been send on your email.",
       });
     },
   });

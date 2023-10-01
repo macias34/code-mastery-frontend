@@ -68,8 +68,8 @@ export const ResetPasswordDialog = () => {
             }}
             error={<ErrorMessage errors={errors} name="email" />}
           />
-          <Button type="submit" className="w-fit self-end" disabled={!isValid}>
-            {isLoading ? <Spinner className="h-6 w-6" /> : "Send link"}
+          <Button type="submit" className="self-end w-24" disabled={!isValid}>
+            {isLoading ? <Spinner className="h-6 w-6" /> : "Sent link"}
           </Button>
         </form>
       </DialogContent>
