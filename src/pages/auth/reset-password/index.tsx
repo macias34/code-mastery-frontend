@@ -1,4 +1,4 @@
-import { ResetPasswordForm } from "@/features/auth/components";
+import { ResetPasswordForm } from "@/features/auth";
 import { ShopLayout } from "@/features/shop";
 
 export default function ResetPasswordPage() {

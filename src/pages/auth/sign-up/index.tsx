@@ -36,7 +36,7 @@ const SignUpPage = () => {
           </CardContent>
         </Card>
       </div>
-      <p className="text-muted-foreground text-sm text-center">
+      <p className="text-muted-foreground text-sm text-center mt-4">
         Already have an account?{" "}
         <Link className="text-primary font-semibold" href="/auth">
           Sign in
