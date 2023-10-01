@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { useResetPassword } from "@/features/auth";
+import { InputWithLabel, Spinner } from "@/shared/components/";
 import { Button } from "@/shared/components/button";
 import {
   Card,
@@ -13,8 +14,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/shared/components/card";
-import { InputWithLabel } from "@/shared/components/input-with-label";
-import { Spinner } from "@/shared/components/spinner";
 
 const PasswordResetFormSchema = z
   .object({
@@ -87,8 +86,8 @@ export const ResetPasswordForm = () => {
             }}
             error={<ErrorMessage errors={errors} name="confirmPassword" />}
           />
-          <Button disabled={!isValid} type="submit" className="max-w-fit">
-            {isLoading ? <Spinner className="h-6 w-6" /> : "Save passoword"}
+          <Button disabled={!isValid} type="submit" className=" w-36">
+            {isLoading ? <Spinner className="h-6 w-6" /> : "Save password"}
           </Button>
         </form>
       </CardContent>
