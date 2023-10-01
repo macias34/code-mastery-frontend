@@ -36,9 +36,11 @@ const config = {
 		"ecmaVersion": "latest",
 		"sourceType": "module",
 	},
-	plugins: ["@typescript-eslint", "unicorn"],
-	extends: ["next/core-web-vitals", "plugin:@typescript-eslint/recommended", "plugin:unicorn/recommended"],
+	plugins: ["@typescript-eslint", "unicorn", "sonarjs"],
+	extends: ["next/core-web-vitals", "plugin:@typescript-eslint/recommended", "plugin:unicorn/recommended", "plugin:sonarjs/recommended"],
 	rules: {
+		"unicorn/no-null": "off",
+		"@typescript-eslint/no-unsafe-call": "warn",
 		"@typescript-eslint/no-misused-promises": [2, {
 			"checksVoidReturn": {
 				"attributes": false

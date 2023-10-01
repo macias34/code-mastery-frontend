@@ -1,11 +1,8 @@
-import { GetServerSideProps } from "next";
-import { getServerSession } from "next-auth";
 import Link from "next/link";
 import { useState } from "react";
 
 import { SignUpForm } from "@/features/auth";
 import { ShopLayout } from "@/features/shop";
-import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import {
   Card,
   CardContent,
@@ -13,6 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/shared/components/card";
+import { withNoRoleAuthorization } from "@/shared/utils";
 
 const SignUpPage = () => {
   const [step, setStep] = useState(0);
@@ -38,7 +36,7 @@ const SignUpPage = () => {
           </CardContent>
         </Card>
       </div>
-      <p className="text-muted-foreground text-sm text-center">
+      <p className="text-muted-foreground text-sm text-center mt-4">
         Already have an account?{" "}
         <Link className="text-primary font-semibold" href="/auth">
           Sign in
@@ -48,20 +46,7 @@ const SignUpPage = () => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-  const session = await getServerSession(req, res, authOptions);
-  if (session) {
-    return {
-      redirect: {
-        destination: "/",
-        statusCode: 302,
-      },
-    };
-  }
-
-  return {
-    props: {},
-  };
-};
-
-export default SignUpPage;
+// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+export default withNoRoleAuthorization(SignUpPage, {
+  redirectDestination: "/",
+});

@@ -43,7 +43,9 @@ export const ResetPasswordDialog = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Forgot password?</Button>
+        <span className="text-muted-foreground text-xs transition hover:text-primary cursor-pointer">
+          Forgot password?
+        </span>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
@@ -66,8 +68,8 @@ export const ResetPasswordDialog = () => {
             }}
             error={<ErrorMessage errors={errors} name="email" />}
           />
-          <Button type="submit" className="w-fit self-end" disabled={!isValid}>
-            {isLoading ? <Spinner className="h-6 w-6" /> : "Send link"}
+          <Button type="submit" className="self-end w-24" disabled={!isValid}>
+            {isLoading ? <Spinner className="h-6 w-6" /> : "Sent link"}
           </Button>
         </form>
       </DialogContent>

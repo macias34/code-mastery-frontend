@@ -1,11 +1,9 @@
-import { type GetServerSideProps } from "next";
-
-import { withRoleAuthorization } from "@/features/auth";
 import { Course } from "@/features/course";
 import { ShopLayout } from "@/features/shop";
 import { useUser } from "@/features/user";
+import { withRoleAuthorization } from "@/shared/utils";
 
-export default function MyCoursesPage() {
+function MyCoursesPage() {
   const { userData } = useUser();
 
   return (
@@ -26,6 +24,8 @@ export default function MyCoursesPage() {
   );
 }
 
-export const getServerSideProps: GetServerSideProps = ({ req, res }) => {
-  return withRoleAuthorization({ req, res });
-};
+// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+export default withRoleAuthorization(MyCoursesPage, {
+  userRolesToExclude: [],
+  redirectDestination: "/auth",
+});

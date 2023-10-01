@@ -1,6 +1,3 @@
-import { type GetServerSideProps } from "next";
-
-import { withRoleAuthorization } from "@/features/auth";
 import {
   AccountDetailsChangeForm,
   InvoiceDetailsChangeForm,
@@ -14,8 +11,9 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/shared/components/tabs";
+import { withRoleAuthorization } from "@/shared/utils";
 
-export default function ProfilePage() {
+function ProfilePage() {
   return (
     <ShopLayout
       classNames={{
@@ -47,6 +45,8 @@ export default function ProfilePage() {
   );
 }
 
-export const getServerSideProps: GetServerSideProps = ({ req, res }) => {
-  return withRoleAuthorization({ req, res });
-};
+// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+export default withRoleAuthorization(ProfilePage, {
+  userRolesToExclude: [],
+  redirectDestination: "/auth",
+});

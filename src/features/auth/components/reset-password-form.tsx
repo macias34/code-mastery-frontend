@@ -1,10 +1,13 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { useResetPassword } from "@/features/auth";
+import { InputWithLabel, Spinner } from "@/shared/components/";
 import { Button } from "@/shared/components/button";
 import {
   Card,
@@ -13,8 +16,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/shared/components/card";
-import { InputWithLabel } from "@/shared/components/input-with-label";
-import { Spinner } from "@/shared/components/spinner";
 
 const PasswordResetFormSchema = z
   .object({
@@ -45,15 +46,27 @@ export const ResetPasswordForm = () => {
     resolver: zodResolver(PasswordResetFormSchema),
   });
 
+  const { push } = useRouter();
+
   const searchParameters = useSearchParams();
   const { mutate, isLoading } = useResetPassword();
+
+  const resetPasswordToken = searchParameters.get("token") ?? "";
 
   const onSubmit = (formData: PasswordResetFormData) => {
     mutate({
       newPassword: formData.password,
-      token: searchParameters.get("token") ?? "",
+      token: resetPasswordToken,
     });
   };
+
+  useEffect(() => {
+    const isTokenUUID = z.string().uuid().safeParse(resetPasswordToken).success;
+
+    if (!resetPasswordToken || !isTokenUUID) {
+      void push("/");
+    }
+  }, [push, resetPasswordToken]);
 
   return (
     <Card className="max-w-md">
@@ -87,8 +100,8 @@ export const ResetPasswordForm = () => {
             }}
             error={<ErrorMessage errors={errors} name="confirmPassword" />}
           />
-          <Button disabled={!isValid} type="submit" className="max-w-fit">
-            {isLoading ? <Spinner className="h-6 w-6" /> : "Save passoword"}
+          <Button disabled={!isValid} type="submit" className=" w-36">
+            {isLoading ? <Spinner className="h-6 w-6" /> : "Save password"}
           </Button>
         </form>
       </CardContent>

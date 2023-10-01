@@ -4,7 +4,7 @@ import Link from "next/link";
 import { UserRole, useUser } from "@/features/user";
 import { Logo } from "@/shared/components/logo";
 
-import { NavbarItem, NavbarItemProps } from "./navbar-item";
+import { NavbarItem, type NavbarItemProps } from "./navbar-item";
 import { SessionAvatar } from "./session-avatar";
 import { SignUpLink } from "./sign-up-link";
 import { ThemeToggle } from "./theme-toggle";
