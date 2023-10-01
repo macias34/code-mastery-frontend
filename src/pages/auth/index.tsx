@@ -1,7 +1,6 @@
 import Link from "next/link";
 
 import { SignInForm } from "@/features/auth";
-import { ResetPasswordDialog } from "@/features/auth/components/reset-password-dialog";
 import { ShopLayout } from "@/features/shop";
 import {
   Card,
@@ -46,13 +45,12 @@ const SignInPage = () => {
           <SignInForm />
         </CardContent>
       </Card>
-      <p className="text-muted-foreground text-sm text-center p-4">
+      <p className="text-muted-foreground text-sm text-center mt-4">
         No account?{" "}
         <Link className="text-primary font-semibold" href="/auth/sign-up">
           Sign up
         </Link>
       </p>
-      <ResetPasswordDialog />
     </ShopLayout>
   );
 };

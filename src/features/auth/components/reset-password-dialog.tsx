@@ -43,7 +43,9 @@ export const ResetPasswordDialog = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Forgot password?</Button>
+        <span className="text-muted-foreground text-sm transition hover:text-primary cursor-pointer">
+          Forgot password?
+        </span>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
