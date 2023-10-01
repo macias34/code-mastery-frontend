@@ -11,6 +11,8 @@ import { InputWithLabel } from "@/shared/components/input-with-label";
 import { Spinner } from "@/shared/components/spinner";
 import { toast } from "@/shared/components/use-toast";
 
+import { ResetPasswordDialog } from "./reset-password-dialog";
+
 const SignInFormSchema = z.object({
   username: z
     .string()
@@ -73,6 +75,7 @@ export const SignInForm = () => {
         }}
         error={<ErrorMessage errors={errors} name="password" />}
       />
+      <ResetPasswordDialog />
 
       <Button className="mt-2">
         {isLoading ? <Spinner className="h-6 w-6" /> : "Sign in"}

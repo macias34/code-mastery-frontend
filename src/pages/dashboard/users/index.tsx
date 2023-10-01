@@ -1,18 +1,17 @@
-import { type GetServerSideProps } from "next";
 import { FormProvider, useForm } from "react-hook-form";
 
-import { withRoleAuthorization } from "@/features/auth";
 import { DashboardLayout } from "@/features/dashboard";
 import { type UserFilter } from "@/features/profile";
-import { type UserRole, UsersCard } from "@/features/user";
+import { UserRole, UsersCard } from "@/features/user";
 import { useUsers } from "@/features/user";
+import { withRoleAuthorization } from "@/shared/utils";
 
 export type UserSearchFilters = Omit<Required<UserFilter>, "role"> & {
   role: UserRole | "ALL";
   page: number;
 };
 
-export default function UsersDashboard() {
+function UsersDashboard() {
   const methods = useForm<UserSearchFilters>({
     defaultValues: {
       email: "",
@@ -44,7 +43,8 @@ export default function UsersDashboard() {
   );
 }
 
-// @TODO - add role authorization
-export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-  return withRoleAuthorization({ req, res });
-};
+// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+export default withRoleAuthorization(UsersDashboard, {
+  userRolesToExclude: [UserRole.USER],
+  redirectDestination: "/",
+});
