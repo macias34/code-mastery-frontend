@@ -49,6 +49,7 @@ export const AccountDetailsChangeForm = () => {
     reset({ email: userData?.email, username: userData?.username });
   }, [userData?.email, userData?.username, reset]);
 
+  // @TODO: Logout after changing  email or username
   const onSubmit = (formData: AccountDetailsFormData) => {
     if (userData?.id) {
       mutate({

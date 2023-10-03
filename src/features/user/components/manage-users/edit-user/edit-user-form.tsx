@@ -17,6 +17,8 @@ interface Props {
   userId: number;
 }
 
+// @TODO: Logout after changing own proflie
+
 export const EditUserForm = ({ userId }: Props) => {
   const {
     register,
