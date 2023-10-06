@@ -21,7 +21,6 @@ export default function CourseContentDashboardPage() {
       >
         {showCreateChapterForm && (
           <CreateChapterForm
-            showCreateChapterForm={showCreateChapterForm}
             setShowCreateChapterForm={setShowCreateChapterForm}
           />
         )}
