@@ -1,12 +1,15 @@
-import { Pencil, Trash } from "lucide-react";
+import { useState } from "react";
 
-import { Card, CardHeader, CardTitle, Spinner } from "@/shared/components";
-import { ICON_SIZE } from "@/shared/constants";
+import { Spinner } from "@/shared/components";
 
 import { useGetPathnameCourse } from "../../hooks";
+import { type ChapterDto } from "../../types";
+import { Chapter } from "./chapter";
+import { DeleteChapterAlertDialog } from "./delete-chapter-alert-dialog";
 
 export const ChaptersList = () => {
   const { data: course, isLoading } = useGetPathnameCourse();
+  const [chapterToDelete, setChapterToDelete] = useState<ChapterDto>();
 
   const chapters = course?.chapters;
 
@@ -15,24 +18,26 @@ export const ChaptersList = () => {
   }
 
   return (
-    <div className="flex flex-col gap-10">
-      {chapters
-        ? chapters.map((chapter, index) => (
-            <Card key={chapter.id}>
-              <CardHeader>
-                <CardTitle>
-                  <span className="font-bold">Chapter {index + 1}:</span>{" "}
-                  {chapter.title}
-                </CardTitle>
+    <>
+      {chapterToDelete && (
+        <DeleteChapterAlertDialog
+          chapterToDelete={chapterToDelete}
+          setChapterToDelete={setChapterToDelete}
+        />
+      )}
 
-                <div className="flex">
-                  <Pencil size={ICON_SIZE.SMALL} />
-                  <Trash size={ICON_SIZE.SMALL} />
-                </div>
-              </CardHeader>
-            </Card>
-          ))
-        : "No chapters were found, try adding one!"}
-    </div>
+      <div className="flex flex-col gap-10">
+        {chapters
+          ? chapters.map((chapter, index) => (
+              <Chapter
+                key={chapter.id}
+                chapter={chapter}
+                setChapterToDelete={setChapterToDelete}
+                index={index}
+              />
+            ))
+          : "No chapters were found, try adding one!"}
+      </div>
+    </>
   );
 };
