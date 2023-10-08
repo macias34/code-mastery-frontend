@@ -2,8 +2,8 @@ import { Plus } from "lucide-react";
 import { useState } from "react";
 
 import {
+  ChapterForm,
   ChaptersList,
-  CreateChapterForm,
   ManageCard,
   ManageCourseLayout,
 } from "@/features/course";
@@ -22,7 +22,8 @@ export default function CourseContentDashboardPage() {
       >
         <ChaptersList showCreateChapterForm={showCreateChapterForm} />
         {showCreateChapterForm && (
-          <CreateChapterForm
+          <ChapterForm
+            variant="create"
             setShowCreateChapterForm={setShowCreateChapterForm}
           />
         )}
