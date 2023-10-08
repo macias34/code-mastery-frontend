@@ -18,13 +18,15 @@ export default function CourseContentDashboardPage() {
       <ManageCard
         title="Content"
         description="Control content of your course"
-        childrenClassName="flex flex-col gap-6"
+        classNames={{
+          children: "flex flex-col gap-6",
+        }}
       >
         <ChaptersList showCreateChapterForm={showCreateChapterForm} />
         {showCreateChapterForm && (
           <ChapterForm
             variant="create"
-            setShowCreateChapterForm={setShowCreateChapterForm}
+            setShowChapterForm={setShowCreateChapterForm}
           />
         )}
 

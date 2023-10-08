@@ -5,12 +5,14 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { Button, InputWithLabel, Spinner } from "@/shared/components";
+import { type PropsWithClassname } from "@/shared/types";
 
 import { useCreateChapter, useEditChapter } from "../../api";
 import {
   useChapterFormMutationOptions,
   useGetPathnameCourse,
 } from "../../hooks";
+import { type ChapterDto } from "../../types";
 import { ManageCard } from "./manage-card";
 
 const ChapterFormSchema = z.object({
@@ -24,17 +26,24 @@ type ChapterFormData = z.infer<typeof ChapterFormSchema>;
 
 export type ChapterFormVariant = "create" | "edit";
 
-interface ChapterFormProps {
-  setShowCreateChapterForm: Dispatch<SetStateAction<boolean>>;
+interface ChapterFormProps extends PropsWithClassname {
+  setShowChapterForm: Dispatch<SetStateAction<boolean>>;
   variant: ChapterFormVariant;
-  chapterId?: number;
+  chapter?: ChapterDto;
 }
 
 export const ChapterForm: FC<ChapterFormProps> = ({
-  setShowCreateChapterForm,
+  setShowChapterForm,
   variant,
-  chapterId,
+  chapter,
 }) => {
+  const { mutate: createChapter, isLoading: isCreateChapterLoading } =
+    useCreateChapter();
+  const { mutate: editChapter, isLoading: isEditChapterLoading } =
+    useEditChapter();
+
+  const isLoading = isCreateChapterLoading || isEditChapterLoading;
+
   const {
     register,
     handleSubmit,
@@ -43,24 +52,22 @@ export const ChapterForm: FC<ChapterFormProps> = ({
   } = useForm<ChapterFormData>({
     resolver: zodResolver(ChapterFormSchema),
     mode: "onBlur",
+    defaultValues: {
+      title: chapter?.title ?? "",
+    },
   });
 
   const title = watch("title");
   const { data: course } = useGetPathnameCourse();
+  const chapterId = chapter?.id ?? -1;
   const courseId = course?.id ?? -1;
 
-  const { mutate: createChapter, isLoading: isCreateChapterLoading } =
-    useCreateChapter();
-  const { mutate: editChapter, isLoading: isEditChapterLoading } =
-    useEditChapter();
-
-  const isLoading = isCreateChapterLoading || isEditChapterLoading;
-
   const chapterFormMutationOptions = useChapterFormMutationOptions({
-    title,
-    setShowCreateChapterForm,
+    setShowChapterForm,
     variant,
   });
+
+  const cardTitle = variant === "create" ? "Create chapter" : "Edit chapter";
 
   const onSubmit = () => {
     if (variant === "create") {
@@ -72,7 +79,12 @@ export const ChapterForm: FC<ChapterFormProps> = ({
   };
 
   return (
-    <ManageCard title="New chapter">
+    <ManageCard
+      classNames={{
+        container: "mt-6",
+      }}
+      title={cardTitle}
+    >
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
         <InputWithLabel
           name="title"
@@ -85,14 +97,14 @@ export const ChapterForm: FC<ChapterFormProps> = ({
         />
         <div className="flex gap-2 self-end">
           <Button
-            onClick={() => setShowCreateChapterForm(false)}
+            onClick={() => setShowChapterForm(false)}
             type="button"
             variant="destructive"
           >
             Cancel
           </Button>
           <Button className="w-32" variant="secondary">
-            {isLoading ? <Spinner /> : "Create chapter"}
+            {isLoading ? <Spinner /> : cardTitle}
           </Button>
         </div>
       </form>
