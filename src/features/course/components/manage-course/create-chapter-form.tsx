@@ -4,10 +4,11 @@ import { type Dispatch, type FC, type SetStateAction } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { Button, InputWithLabel, Spinner } from "@/shared/components";
+import { TOAST_ERROR_TITLE, TOAST_SUCCESS_TITLE } from "@/libs/toast";
+import { Button, InputWithLabel, Spinner, toast } from "@/shared/components";
 
 import { useCreateChapter } from "../../api";
-import { useGetPathnameCourse } from "../../hooks";
+import { useGetPathnameCourse, useInvalidatePathnameCourse } from "../../hooks";
 import { ManageCard } from "./manage-card";
 
 const CreateChapterFormSchema = z.object({
@@ -36,6 +37,7 @@ export const CreateChapterForm: FC<CreateChapterFormProps> = ({
   });
 
   const { data: course } = useGetPathnameCourse();
+  const { invalidateCourse } = useInvalidatePathnameCourse();
   const courseId = course?.id ?? -1;
 
   const { mutate, isLoading } = useCreateChapter();
@@ -43,7 +45,29 @@ export const CreateChapterForm: FC<CreateChapterFormProps> = ({
   const onSubmit = (formData: CreateChapterFormData) => {
     const { title } = formData;
 
-    mutate({ title, courseId });
+    mutate(
+      { title, courseId },
+      {
+        onSuccess() {
+          toast({
+            title: TOAST_SUCCESS_TITLE,
+            description: `Chapter "${title}" has been successfuly created.`,
+          });
+          setShowCreateChapterForm(false);
+        },
+        onError() {
+          toast({
+            title: TOAST_ERROR_TITLE,
+            description: `Chapter "${title}" hasn't been created.`,
+            variant: "destructive",
+          });
+        },
+
+        async onSettled() {
+          await invalidateCourse();
+        },
+      },
+    );
   };
 
   return (
