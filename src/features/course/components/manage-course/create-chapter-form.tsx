@@ -4,8 +4,10 @@ import { type Dispatch, type FC, type SetStateAction } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { Button, InputWithLabel } from "@/shared/components";
+import { Button, InputWithLabel, Spinner } from "@/shared/components";
 
+import { useCreateChapter } from "../../api";
+import { useGetPathnameCourse } from "../../hooks";
 import { ManageCard } from "./manage-card";
 
 const CreateChapterFormSchema = z.object({
@@ -33,8 +35,13 @@ export const CreateChapterForm: FC<CreateChapterFormProps> = ({
     mode: "onBlur",
   });
 
+  const { id } = useGetPathnameCourse();
+  const { mutate, isLoading } = useCreateChapter();
+
   const onSubmit = (formData: CreateChapterFormData) => {
-    console.log(formData);
+    const { title } = formData;
+
+    mutate({ title, courseId: id });
   };
 
   return (
@@ -57,7 +64,9 @@ export const CreateChapterForm: FC<CreateChapterFormProps> = ({
           >
             Cancel
           </Button>
-          <Button variant="secondary">Create chapter</Button>
+          <Button className="w-32" variant="secondary">
+            {isLoading ? <Spinner /> : "Create chapter"}
+          </Button>
         </div>
       </form>
     </ManageCard>
