@@ -1,13 +1,21 @@
-import { useState } from "react";
+import { FileTerminal } from "lucide-react";
+import { type FC, useState } from "react";
 
-import { Spinner } from "@/shared/components";
+import { EmptyStateCard, Spinner } from "@/shared/components";
+import { ICON_SIZE } from "@/shared/constants";
 
 import { useGetPathnameCourse } from "../../hooks";
 import { type ChapterDto } from "../../types";
 import { Chapter } from "./chapter";
 import { DeleteChapterAlertDialog } from "./delete-chapter-alert-dialog";
 
-export const ChaptersList = () => {
+interface ChaptersListProps {
+  showCreateChapterForm: boolean;
+}
+
+export const ChaptersList: FC<ChaptersListProps> = ({
+  showCreateChapterForm,
+}) => {
   const { data: course, isLoading } = useGetPathnameCourse();
   const [chapterToDelete, setChapterToDelete] = useState<ChapterDto>();
 
@@ -16,6 +24,9 @@ export const ChaptersList = () => {
   if (isLoading) {
     return <Spinner />;
   }
+
+  const showChapters = chapters && chapters.length > 0;
+  const showEmptyState = chapters?.length === 0 && !showCreateChapterForm;
 
   return (
     <>
@@ -27,16 +38,23 @@ export const ChaptersList = () => {
       )}
 
       <div className="flex flex-col gap-10">
-        {chapters
-          ? chapters.map((chapter, index) => (
-              <Chapter
-                key={chapter.id}
-                chapter={chapter}
-                setChapterToDelete={setChapterToDelete}
-                index={index}
-              />
-            ))
-          : "No chapters were found, try adding one!"}
+        {showChapters &&
+          chapters.map((chapter, index) => (
+            <Chapter
+              key={chapter.id}
+              chapter={chapter}
+              setChapterToDelete={setChapterToDelete}
+              index={index}
+            />
+          ))}
+
+        {showEmptyState && (
+          <EmptyStateCard
+            icon={<FileTerminal size={ICON_SIZE.LG} />}
+            headerContent="No chapters were found"
+            paragraphContent="Try adding one."
+          />
+        )}
       </div>
     </>
   );

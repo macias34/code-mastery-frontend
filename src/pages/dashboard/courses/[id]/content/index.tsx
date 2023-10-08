@@ -20,7 +20,7 @@ export default function CourseContentDashboardPage() {
         description="Control content of your course"
         childrenClassName="flex flex-col gap-6"
       >
-        <ChaptersList />
+        <ChaptersList showCreateChapterForm={showCreateChapterForm} />
         {showCreateChapterForm && (
           <CreateChapterForm
             setShowCreateChapterForm={setShowCreateChapterForm}
