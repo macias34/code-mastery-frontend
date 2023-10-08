@@ -35,13 +35,15 @@ export const CreateChapterForm: FC<CreateChapterFormProps> = ({
     mode: "onBlur",
   });
 
-  const { id } = useGetPathnameCourse();
+  const { data: course } = useGetPathnameCourse();
+  const courseId = course?.id ?? -1;
+
   const { mutate, isLoading } = useCreateChapter();
 
   const onSubmit = (formData: CreateChapterFormData) => {
     const { title } = formData;
 
-    mutate({ title, courseId: id });
+    mutate({ title, courseId });
   };
 
   return (

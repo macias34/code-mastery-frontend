@@ -27,8 +27,7 @@ const ConfigurationFormSchema = z.object({
 type ConfigurationFormData = z.infer<typeof ConfigurationFormSchema>;
 
 export const ConfigurationForm = () => {
-  const { courseUseQueryResult } = useGetPathnameCourse();
-  const { data: course } = courseUseQueryResult;
+  const { data: course } = useGetPathnameCourse();
 
   const { invalidateCourse } = useInvalidatePathnameCourse();
   const { mutate, isLoading } = usePatchCourse();

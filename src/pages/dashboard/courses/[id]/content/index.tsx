@@ -2,6 +2,7 @@ import { Plus } from "lucide-react";
 import { useState } from "react";
 
 import {
+  ChaptersList,
   CreateChapterForm,
   ManageCard,
   ManageCourseLayout,
@@ -19,6 +20,7 @@ export default function CourseContentDashboardPage() {
         description="Control content of your course"
         childrenClassName="flex flex-col gap-6"
       >
+        <ChaptersList />
         {showCreateChapterForm && (
           <CreateChapterForm
             setShowCreateChapterForm={setShowCreateChapterForm}

@@ -5,8 +5,7 @@ import { Aside, type LinkItem } from "./aside";
 import { Navbar } from "./navbar";
 
 export const ManageCourseLayout: FC<PropsWithChildren> = ({ children }) => {
-  const { courseUseQueryResult, id } = useGetPathnameCourse();
-  const { data: course, isLoading } = courseUseQueryResult;
+  const { data: course, isLoading } = useGetPathnameCourse();
   if (isLoading || !course) {
     return (
       <main>
@@ -15,7 +14,9 @@ export const ManageCourseLayout: FC<PropsWithChildren> = ({ children }) => {
     );
   }
 
-  const rootPathname = `/dashboard/courses/${id}`;
+  const courseId = course.id;
+
+  const rootPathname = `/dashboard/courses/${courseId}`;
 
   const linkGroups: LinkItem[] = [
     {
