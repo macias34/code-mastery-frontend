@@ -1,10 +1,7 @@
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  Spinner,
-} from "@/shared/components";
+import { Pencil, Trash } from "lucide-react";
+
+import { Card, CardHeader, CardTitle, Spinner } from "@/shared/components";
+import { ICON_SIZE } from "@/shared/constants";
 
 import { useGetPathnameCourse } from "../../hooks";
 
@@ -27,10 +24,12 @@ export const ChaptersList = () => {
                   <span className="font-bold">Chapter {index + 1}:</span>{" "}
                   {chapter.title}
                 </CardTitle>
+
+                <div className="flex">
+                  <Pencil size={ICON_SIZE.SMALL} />
+                  <Trash size={ICON_SIZE.SMALL} />
+                </div>
               </CardHeader>
-              <CardContent>
-                <p>Card Content</p>
-              </CardContent>
             </Card>
           ))
         : "No chapters were found, try adding one!"}
