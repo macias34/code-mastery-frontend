@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import {
   ChapterForm,
-  ChaptersList,
+  ChapterList,
   ManageCard,
   ManageCourseLayout,
 } from "@/features/course";
@@ -19,10 +19,10 @@ export default function CourseContentDashboardPage() {
         title="Content"
         description="Control content of your course"
         classNames={{
-          children: "flex flex-col gap-6",
+          children: "flex flex-col",
         }}
       >
-        <ChaptersList showCreateChapterForm={showCreateChapterForm} />
+        <ChapterList showCreateChapterForm={showCreateChapterForm} />
         {showCreateChapterForm && (
           <ChapterForm
             variant="create"
@@ -34,7 +34,7 @@ export default function CourseContentDashboardPage() {
           <Button
             onClick={() => setShowCreateChapterForm(true)}
             variant="secondary"
-            className="w-fit"
+            className="w-fit mt-6"
           >
             <Plus size={16} className="mr-2" /> Chapter
           </Button>

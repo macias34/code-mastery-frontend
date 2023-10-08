@@ -9,11 +9,11 @@ import { type ChapterDto } from "../../types";
 import { Chapter } from "./chapter";
 import { DeleteChapterAlertDialog } from "./delete-chapter-alert-dialog";
 
-interface ChaptersListProps {
+interface ChapterListProps {
   showCreateChapterForm: boolean;
 }
 
-export const ChaptersList: FC<ChaptersListProps> = ({
+export const ChapterList: FC<ChapterListProps> = ({
   showCreateChapterForm,
 }) => {
   const { data: course, isLoading } = useGetPathnameCourse();
@@ -37,7 +37,7 @@ export const ChaptersList: FC<ChaptersListProps> = ({
         />
       )}
 
-      <div className="flex flex-col gap-10">
+      <div className="flex flex-col gap-6">
         {showChapters &&
           chapters.map((chapter, index) => (
             <Chapter
