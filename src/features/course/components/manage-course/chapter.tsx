@@ -1,12 +1,19 @@
-import { Pencil, Trash } from "lucide-react";
+import { Pencil, Plus, Trash } from "lucide-react";
 import { type Dispatch, type FC, type SetStateAction, useState } from "react";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/shared/components";
+import {
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/shared/components";
 import { ICON_SIZE } from "@/shared/constants";
 import { cn } from "@/shared/utils";
 
 import { type ChapterDto } from "../../types";
 import { ChapterForm } from "./chapter-form";
+import { LessonForm } from "./lesson-form";
 
 interface ChapterProps {
   chapter: ChapterDto;
@@ -22,13 +29,16 @@ export const Chapter: FC<ChapterProps> = ({
   const [showEditChapterForm, setShowEditChapterForm] =
     useState<boolean>(false);
 
+  const [showLessonForm, setShowLessonForm] = useState<boolean>(false);
+
+  const { lessons, title } = chapter;
+
   return (
-    <Card>
+    <Card className="pb-6">
       {!showEditChapterForm && (
         <CardHeader className="group flex flex-row items-center gap-4 space-y-0">
           <CardTitle>
-            <span className="font-bold">Chapter {index + 1}:</span>{" "}
-            {chapter.title}
+            <span className="font-bold">Chapter {index + 1}:</span> {title}
           </CardTitle>
 
           <div className="hidden gap-2 items-center group-hover:flex">
@@ -46,7 +56,11 @@ export const Chapter: FC<ChapterProps> = ({
         </CardHeader>
       )}
 
-      <CardContent className={cn({ "pb-0": Boolean(!showEditChapterForm) })}>
+      <CardContent
+        className={cn("flex flex-col gap-6", {
+          "pb-0": Boolean(!showEditChapterForm),
+        })}
+      >
         {showEditChapterForm && (
           <ChapterForm
             className="mt-6"
@@ -54,6 +68,22 @@ export const Chapter: FC<ChapterProps> = ({
             variant="edit"
             chapter={chapter}
           />
+        )}
+
+        {lessons.map((lesson) => (
+          <div key={lesson.id}>{lesson.name}</div>
+        ))}
+
+        {showLessonForm && <LessonForm setShowLessonForm={setShowLessonForm} />}
+
+        {!showLessonForm && (
+          <Button
+            onClick={() => setShowLessonForm(true)}
+            className="w-fit"
+            variant="secondary"
+          >
+            <Plus size={16} className="mr-2" /> Lesson
+          </Button>
         )}
       </CardContent>
     </Card>

@@ -5,3 +5,5 @@ export * from "./patch-course";
 export * from "./create-chapter";
 export * from "./delete-chapter";
 export * from "./edit-chapter";
+export * from "./create-lesson";
+export * from "./upload-lesson-video";
