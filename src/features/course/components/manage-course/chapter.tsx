@@ -13,6 +13,7 @@ import { cn } from "@/shared/utils";
 
 import { type ChapterDto } from "../../types";
 import { ChapterForm } from "./chapter-form";
+import { Lesson } from "./lesson";
 import { LessonForm } from "./lesson-form";
 
 interface ChapterProps {
@@ -70,8 +71,8 @@ export const Chapter: FC<ChapterProps> = ({
           />
         )}
 
-        {lessons.map((lesson) => (
-          <div key={lesson.id}>{lesson.name}</div>
+        {lessons.map((lesson, index) => (
+          <Lesson key={lesson.id} index={index} lesson={lesson} />
         ))}
 
         {showLessonForm && (
