@@ -3,8 +3,6 @@ import { type UseMutationOptions, useMutation } from "react-query";
 import { useUser } from "@/features/user";
 import { type AccessToken, type ApiError, request } from "@/shared/utils";
 
-import { type LessonDto } from "../types";
-
 interface UploadLessonVideoDto {
   lessonId: number;
   file: File;
@@ -21,7 +19,7 @@ export const uploadLessonVideo = ({
   formData.append("file", file);
   formData.append("lessonId", lessonId.toString());
 
-  return request<LessonDto>(
+  return request(
     "/lesson/upload-video",
     {
       method: "POST",
@@ -33,14 +31,14 @@ export const uploadLessonVideo = ({
 
 export const useUploadLessonVideo = (
   options?: UseMutationOptions<
-    LessonDto,
+    unknown,
     ApiError,
     UploadLessonVideoDto,
     unknown
   >,
 ) => {
   const { accessToken } = useUser();
-  return useMutation<LessonDto, ApiError, UploadLessonVideoDto, unknown>({
+  return useMutation<unknown, ApiError, UploadLessonVideoDto, unknown>({
     mutationFn: ({ lessonId, file }) =>
       uploadLessonVideo({ lessonId, file, accessToken }),
     ...options,
