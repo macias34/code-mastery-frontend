@@ -31,7 +31,7 @@ export const Chapter: FC<ChapterProps> = ({
 
   const [showLessonForm, setShowLessonForm] = useState<boolean>(false);
 
-  const { lessons, title } = chapter;
+  const { lessons, title, id } = chapter;
 
   return (
     <Card className="pb-6">
@@ -74,7 +74,9 @@ export const Chapter: FC<ChapterProps> = ({
           <div key={lesson.id}>{lesson.name}</div>
         ))}
 
-        {showLessonForm && <LessonForm setShowLessonForm={setShowLessonForm} />}
+        {showLessonForm && (
+          <LessonForm chapterId={id} setShowLessonForm={setShowLessonForm} />
+        )}
 
         {!showLessonForm && (
           <Button

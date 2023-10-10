@@ -4,15 +4,16 @@ import React, { type Dispatch, type FC, type SetStateAction } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { Button, InputWithLabel } from "@/shared/components";
+import { Button, InputWithLabel, Spinner } from "@/shared/components";
 
+import { useCreateLesson, useUploadLessonVideo } from "../../api";
 import { ManageCard } from "./manage-card";
 
 const ACCEPTED_VIDEO_TYPES = new Set(["video/mp4", "video/x-m4v", "video/*"]);
 
 const LessonFormSchema = z.object({
   title: z.string().min(3, "Title should be at least 3 characters"),
-  file: z
+  files: z
     .custom<FileList>()
     .refine((files) => files?.length == 1, "Video is required.")
     .refine(
@@ -25,9 +26,20 @@ type LessonFormData = z.infer<typeof LessonFormSchema>;
 
 interface LessonFormProps {
   setShowLessonForm: Dispatch<SetStateAction<boolean>>;
+  chapterId: number;
 }
 
-export const LessonForm: FC<LessonFormProps> = ({ setShowLessonForm }) => {
+export const LessonForm: FC<LessonFormProps> = ({
+  setShowLessonForm,
+  chapterId,
+}) => {
+  const { mutate: createLesson, isLoading: isCreateLessonLoading } =
+    useCreateLesson();
+  const { mutate: uploadVideo, isLoading: isUploadVideoLoading } =
+    useUploadLessonVideo();
+
+  const isLoading = isCreateLessonLoading || isUploadVideoLoading;
+
   const {
     register,
     handleSubmit,
@@ -37,7 +49,24 @@ export const LessonForm: FC<LessonFormProps> = ({ setShowLessonForm }) => {
     mode: "onBlur",
   });
 
-  const onSubmit = (formData: LessonFormData) => {};
+  const onSubmit = (formData: LessonFormData) => {
+    const { title, files } = formData;
+    const file = files[0];
+
+    if (!file) {
+      return;
+    }
+
+    createLesson(
+      { title, chapterId },
+      {
+        onSuccess(lesson) {
+          const lessonId = lesson.id;
+          uploadVideo({ lessonId, file });
+        },
+      },
+    );
+  };
 
   return (
     <ManageCard title={"Create lesson"}>
@@ -52,14 +81,14 @@ export const LessonForm: FC<LessonFormProps> = ({ setShowLessonForm }) => {
           error={<ErrorMessage errors={errors} name="title" />}
         />
         <InputWithLabel
-          name="file"
+          name="files"
           labelContent="Chapter video"
           input={{
-            ...register("file"),
+            ...register("files"),
             type: "file",
             accept: "video/mp4,video/x-m4v,video/*",
           }}
-          error={<ErrorMessage errors={errors} name="file" />}
+          error={<ErrorMessage errors={errors} name="files" />}
         />
         <div className="flex gap-2 self-end">
           <Button
@@ -70,8 +99,7 @@ export const LessonForm: FC<LessonFormProps> = ({ setShowLessonForm }) => {
             Cancel
           </Button>
           <Button className="w-32" variant="secondary">
-            {/* {isLoading ? <Spinner /> : cardTitle} */}
-            Create lesson
+            {isLoading ? <Spinner /> : "Create lesson"}
           </Button>
         </div>
       </form>

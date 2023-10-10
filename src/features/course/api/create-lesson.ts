@@ -1,5 +1,6 @@
 import { type UseMutationOptions, useMutation } from "react-query";
 
+import { useUser } from "@/features/user";
 import { type AccessToken, type ApiError, request } from "@/shared/utils";
 
 import { type LessonDto } from "../types";
@@ -24,21 +25,22 @@ export const createLesson = ({
         title,
         chapterId,
       }),
+      headers: {
+        "Content-type": "application/json",
+      },
     },
     { accessToken },
   );
 };
 
 export const useCreateLesson = (
-  options?: UseMutationOptions<
-    LessonDto,
-    ApiError,
-    CreateLessonArguments,
-    unknown
-  >,
+  options?: UseMutationOptions<LessonDto, ApiError, CreateLessonDto, unknown>,
 ) => {
-  return useMutation<LessonDto, ApiError, CreateLessonArguments, unknown>({
-    mutationFn: createLesson,
+  const { accessToken } = useUser();
+
+  return useMutation<LessonDto, ApiError, CreateLessonDto, unknown>({
+    mutationFn: ({ title, chapterId }) =>
+      createLesson({ title, chapterId, accessToken }),
     ...options,
   });
 };
