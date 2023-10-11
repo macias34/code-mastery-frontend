@@ -15,7 +15,7 @@ export const Lesson: FC<LessonProps> = ({ lesson, index }) => {
   return (
     <Card>
       <CardHeader className="flex-row gap-1">
-        <span className="font-semibold">{index + 1}.</span>
+        <span className="font-semibold">Lesson {index + 1}:</span>
         {title}
       </CardHeader>
     </Card>

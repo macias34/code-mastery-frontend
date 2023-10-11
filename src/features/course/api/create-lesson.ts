@@ -5,7 +5,7 @@ import { type AccessToken, type ApiError, request } from "@/shared/utils";
 
 import { type LessonDto } from "../types";
 
-interface CreateLessonDto {
+export interface CreateLessonDto {
   title: string;
   chapterId: number;
 }

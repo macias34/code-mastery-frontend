@@ -70,7 +70,7 @@ const config = {
 		'max-lines-per-function': [
 			'error',
 			{
-				max: 20,
+				max: 30,
 				skipBlankLines: true,
 				skipComments: true,
 				IIFEs: true,

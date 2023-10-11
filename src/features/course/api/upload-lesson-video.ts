@@ -3,7 +3,7 @@ import { type UseMutationOptions, useMutation } from "react-query";
 import { useUser } from "@/features/user";
 import { type AccessToken, type ApiError, request } from "@/shared/utils";
 
-interface UploadLessonVideoDto {
+export interface UploadLessonVideoDto {
   lessonId: number;
   file: File;
 }

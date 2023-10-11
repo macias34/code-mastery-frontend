@@ -1,25 +1,14 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React, { Dispatch, type FC, SetStateAction } from "react";
+import React, { type Dispatch, type FC, type SetStateAction } from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { type z } from "zod";
 
 import { Button, InputWithLabel, Spinner } from "@/shared/components";
 
 import { useCreateLesson, useUploadLessonVideo } from "../../api";
-
-const ACCEPTED_VIDEO_TYPES = new Set(["video/mp4", "video/x-m4v", "video/*"]);
-
-const LessonFormSchema = z.object({
-  title: z.string().min(3, "Title should be at least 3 characters"),
-  files: z
-    .custom<FileList>()
-    .refine((files) => files?.length == 1, "Video is required.")
-    .refine(
-      (files) => ACCEPTED_VIDEO_TYPES.has(files?.[0]?.type ?? ""),
-      ".mp4 and other video files are accepted.",
-    ),
-});
+import { useInvalidatePathnameCourse } from "../../hooks";
+import { LessonFormSchema } from "../../utils";
 
 type LessonFormData = z.infer<typeof LessonFormSchema>;
 
@@ -36,6 +25,8 @@ export const LessonForm: FC<LessonFormProps> = ({
     useCreateLesson();
   const { mutate: uploadVideo, isLoading: isUploadVideoLoading } =
     useUploadLessonVideo();
+
+  const { invalidateCourse } = useInvalidatePathnameCourse();
 
   const isLoading = isCreateLessonLoading || isUploadVideoLoading;
 
@@ -65,10 +56,13 @@ export const LessonForm: FC<LessonFormProps> = ({
             { lessonId, file },
             {
               onSuccess() {
-                setShowLessonDialog(true);
+                setShowLessonDialog(false);
               },
             },
           );
+        },
+        async onSettled() {
+          await invalidateCourse();
         },
       },
     );
