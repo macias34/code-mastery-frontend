@@ -1,5 +1,5 @@
 import { FileTerminal } from "lucide-react";
-import { type FC, useState } from "react";
+import { useState } from "react";
 
 import { EmptyStateCard, Spinner } from "@/shared/components";
 import { ICON_SIZE } from "@/shared/constants";
@@ -9,13 +9,7 @@ import { type ChapterDto } from "../../types";
 import { Chapter } from "./chapter";
 import { DeleteChapterAlertDialog } from "./delete-chapter-alert-dialog";
 
-interface ChapterListProps {
-  showCreateChapterForm: boolean;
-}
-
-export const ChapterList: FC<ChapterListProps> = ({
-  showCreateChapterForm,
-}) => {
+export const ChapterList = () => {
   const { data: course, isLoading } = useGetPathnameCourse();
   const [chapterToDelete, setChapterToDelete] = useState<ChapterDto>();
 
@@ -26,7 +20,7 @@ export const ChapterList: FC<ChapterListProps> = ({
   }
 
   const showChapters = chapters && chapters.length > 0;
-  const showEmptyState = chapters?.length === 0 && !showCreateChapterForm;
+  const showEmptyState = chapters?.length === 0;
 
   return (
     <>

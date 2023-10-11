@@ -3,7 +3,7 @@ import { type Dispatch, type SetStateAction, useMemo } from "react";
 import { TOAST_SUCCESS_TITLE } from "@/libs/toast";
 import { toast } from "@/shared/components";
 
-import { type ChapterFormVariant } from "../components";
+import { ChapterFormVariant } from "../components";
 import { useInvalidatePathnameCourse } from "./use-invalidate-pathname-course";
 
 const onSuccess = (
@@ -29,22 +29,23 @@ const onSettled = async (invalidateCourse: () => Promise<void>) => {
 };
 
 interface GetChapterFormMutationOptionsArguments {
-  setShowChapterForm: Dispatch<SetStateAction<boolean>>;
+  setShowChapterDialog: Dispatch<SetStateAction<boolean>>;
   variant: ChapterFormVariant;
 }
 
 export const useChapterFormMutationOptions = ({
-  setShowChapterForm,
+  setShowChapterDialog,
   variant,
 }: GetChapterFormMutationOptionsArguments) => {
-  const actionWord = variant === "create" ? "created" : "edited";
+  const actionWord =
+    variant === ChapterFormVariant.CREATE ? "created" : "edited";
   const { invalidateCourse } = useInvalidatePathnameCourse();
 
   return useMemo(() => {
     return {
-      onSuccess: () => onSuccess(actionWord, setShowChapterForm),
+      onSuccess: () => onSuccess(actionWord, setShowChapterDialog),
       onError: () => onError(actionWord),
       onSettled: () => onSettled(invalidateCourse),
     };
-  }, [actionWord, setShowChapterForm, invalidateCourse]);
+  }, [actionWord, setShowChapterDialog, invalidateCourse]);
 };

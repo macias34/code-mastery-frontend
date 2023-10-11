@@ -5,3 +5,4 @@ export * from "./manage-card";
 export * from "./configuration-form";
 export * from "./chapter-form";
 export * from "./chapter-list";
+export * from "./chapter-dialog";

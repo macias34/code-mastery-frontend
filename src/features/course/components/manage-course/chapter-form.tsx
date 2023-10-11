@@ -13,7 +13,6 @@ import {
   useGetPathnameCourse,
 } from "../../hooks";
 import { type ChapterDto } from "../../types";
-import { ManageCard } from "./manage-card";
 
 const ChapterFormSchema = z.object({
   title: z
@@ -24,16 +23,19 @@ const ChapterFormSchema = z.object({
 
 type ChapterFormData = z.infer<typeof ChapterFormSchema>;
 
-export type ChapterFormVariant = "create" | "edit";
+export enum ChapterFormVariant {
+  CREATE = "CREATE",
+  EDIT = "EDIT",
+}
 
 interface ChapterFormProps extends PropsWithClassname {
-  setShowChapterForm: Dispatch<SetStateAction<boolean>>;
+  setShowChapterDialog: Dispatch<SetStateAction<boolean>>;
   variant: ChapterFormVariant;
   chapter?: ChapterDto;
 }
 
 export const ChapterForm: FC<ChapterFormProps> = ({
-  setShowChapterForm,
+  setShowChapterDialog,
   variant,
   chapter,
 }) => {
@@ -63,51 +65,45 @@ export const ChapterForm: FC<ChapterFormProps> = ({
   const courseId = course?.id ?? -1;
 
   const chapterFormMutationOptions = useChapterFormMutationOptions({
-    setShowChapterForm,
+    setShowChapterDialog,
     variant,
   });
 
-  const cardTitle = variant === "create" ? "Create chapter" : "Edit chapter";
+  const cardTitle =
+    variant === ChapterFormVariant.CREATE ? "Create chapter" : "Edit chapter";
 
   const onSubmit = () => {
-    if (variant === "create") {
+    if (variant === ChapterFormVariant.CREATE) {
       createChapter({ courseId, title }, chapterFormMutationOptions);
     }
-    if (variant === "edit" && chapterId) {
+    if (variant === ChapterFormVariant.EDIT && chapterId) {
       editChapter({ chapterId, title }, chapterFormMutationOptions);
     }
   };
 
   return (
-    <ManageCard
-      classNames={{
-        container: "mt-6",
-      }}
-      title={cardTitle}
-    >
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
-        <InputWithLabel
-          name="title"
-          labelContent="Chapter title"
-          input={{
-            ...register("title"),
-            placeholder: "Passing props between Svelte components",
-          }}
-          error={<ErrorMessage errors={errors} name="title" />}
-        />
-        <div className="flex gap-2 self-end">
-          <Button
-            onClick={() => setShowChapterForm(false)}
-            type="button"
-            variant="destructive"
-          >
-            Cancel
-          </Button>
-          <Button className="w-32" variant="secondary">
-            {isLoading ? <Spinner /> : cardTitle}
-          </Button>
-        </div>
-      </form>
-    </ManageCard>
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
+      <InputWithLabel
+        name="title"
+        labelContent="Chapter title"
+        input={{
+          ...register("title"),
+          placeholder: "Passing props between Svelte components",
+        }}
+        error={<ErrorMessage errors={errors} name="title" />}
+      />
+      <div className="flex gap-2 self-end">
+        <Button
+          onClick={() => setShowChapterDialog(false)}
+          type="button"
+          variant="destructive"
+        >
+          Cancel
+        </Button>
+        <Button className="w-32" variant="secondary">
+          {isLoading ? <Spinner /> : cardTitle}
+        </Button>
+      </div>
+    </form>
   );
 };

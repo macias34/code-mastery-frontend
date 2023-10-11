@@ -1,16 +1,15 @@
-import { Plus } from "lucide-react";
 import { useState } from "react";
 
 import {
-  ChapterForm,
+  ChapterDialog,
+  ChapterFormVariant,
   ChapterList,
   ManageCard,
   ManageCourseLayout,
 } from "@/features/course";
-import { Button } from "@/shared/components";
 
 export default function CourseContentDashboardPage() {
-  const [showCreateChapterForm, setShowCreateChapterForm] =
+  const [showCreateChapterDialog, setShowCreateChapterDialog] =
     useState<boolean>(false);
 
   return (
@@ -22,23 +21,12 @@ export default function CourseContentDashboardPage() {
           children: "flex flex-col",
         }}
       >
-        <ChapterList showCreateChapterForm={showCreateChapterForm} />
-        {showCreateChapterForm && (
-          <ChapterForm
-            variant="create"
-            setShowChapterForm={setShowCreateChapterForm}
-          />
-        )}
-
-        {!showCreateChapterForm && (
-          <Button
-            onClick={() => setShowCreateChapterForm(true)}
-            variant="secondary"
-            className="w-fit mt-6"
-          >
-            <Plus size={16} className="mr-2" /> Chapter
-          </Button>
-        )}
+        <ChapterList />
+        <ChapterDialog
+          variant={ChapterFormVariant.CREATE}
+          showChapterDialog={showCreateChapterDialog}
+          setShowChapterDialog={setShowCreateChapterDialog}
+        />
       </ManageCard>
     </ManageCourseLayout>
   );
