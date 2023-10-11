@@ -1,20 +1,14 @@
-import { Pencil, Plus, Trash } from "lucide-react";
+import { Pencil, Trash } from "lucide-react";
 import { type Dispatch, type FC, type SetStateAction, useState } from "react";
 
-import {
-  Button,
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/shared/components";
+import { Card, CardContent, CardHeader, CardTitle } from "@/shared/components";
 import { ICON_SIZE } from "@/shared/constants";
 import { cn } from "@/shared/utils";
 
 import { type ChapterDto } from "../../types";
 import { ChapterForm } from "./chapter-form";
 import { Lesson } from "./lesson";
-import { LessonForm } from "./lesson-form";
+import { LessonDialog } from "./lesson-dialog";
 
 interface ChapterProps {
   chapter: ChapterDto;
@@ -30,9 +24,9 @@ export const Chapter: FC<ChapterProps> = ({
   const [showEditChapterForm, setShowEditChapterForm] =
     useState<boolean>(false);
 
-  const [showLessonForm, setShowLessonForm] = useState<boolean>(false);
+  const [showLessonDialog, setShowLessonDialog] = useState<boolean>(false);
 
-  const { lessons, title, id } = chapter;
+  const { lessons, title } = chapter;
 
   return (
     <Card className="pb-6">
@@ -75,19 +69,11 @@ export const Chapter: FC<ChapterProps> = ({
           <Lesson key={lesson.id} index={index} lesson={lesson} />
         ))}
 
-        {showLessonForm && (
-          <LessonForm chapterId={id} setShowLessonForm={setShowLessonForm} />
-        )}
-
-        {!showLessonForm && (
-          <Button
-            onClick={() => setShowLessonForm(true)}
-            className="w-fit"
-            variant="secondary"
-          >
-            <Plus size={16} className="mr-2" /> Lesson
-          </Button>
-        )}
+        <LessonDialog
+          showLessonDialog={showLessonDialog}
+          setShowLessonDialog={setShowLessonDialog}
+          chapter={chapter}
+        />
       </CardContent>
     </Card>
   );
