@@ -4,3 +4,7 @@ export interface InformationPageDto {
   content: string;
   slug: string;
 }
+export interface UpdateInformationPageDto {
+  title?: string;
+  content?: string;
+}

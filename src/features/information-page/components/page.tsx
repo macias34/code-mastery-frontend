@@ -4,6 +4,7 @@ import { Button } from "@/shared/components";
 import { FRONTEND_URL } from "@/shared/constants";
 
 import { type InformationPageDto } from "../types";
+import { DeletePageAlert } from "./delete-page-alert";
 
 interface Props {
   page: InformationPageDto;
@@ -19,12 +20,12 @@ export const Page = ({ page }: Props) => {
           {link}
         </Link>
       </div>
-      <Link
-        className="ml-auto"
-        href={`/dashboard/information-pages/${page.slug}`}
-      >
-        <Button className="px-6">Edit</Button>
-      </Link>
+      <div className="ml-auto flex justify-center gap-4 items-center">
+        <Link href={`/dashboard/information-pages/${page.slug}`}>
+          <Button className="px-6 min-w-[100px]">Edit</Button>
+        </Link>
+        <DeletePageAlert pageId={page.id} />
+      </div>
     </div>
   );
 };

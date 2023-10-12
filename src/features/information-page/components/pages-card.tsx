@@ -14,7 +14,7 @@ import { Page } from "./page";
 export const PagesCard = () => {
   const { data: pages, isLoading } = usePages();
   return (
-    <Card className="w-3/4 max-w-lg mx-auto my-6">
+    <Card className="w-fit  mx-auto my-6">
       <CardHeader>
         <CardTitle>Information pages</CardTitle>
         <CardDescription>
