@@ -14,7 +14,7 @@ import { CreatePageDialog } from "./create-page-dialog";
 import { Page } from "./page";
 
 export const PagesCard = () => {
-  const { data: pages, isLoading } = usePages();
+  const { data: pages, isLoading, error } = usePages();
   return (
     <Card className="w-fit  mx-auto my-6">
       <CardHeader className="flex flex-row justify-between">
@@ -27,6 +27,7 @@ export const PagesCard = () => {
         <CreatePageDialog />
       </CardHeader>
       <CardContent className="flex flex-col gap-y-6">
+        {error && <p className="text-red-500">{error.message}</p>}
         {isLoading &&
           Array.from({ length: 5 })
             .fill(0)

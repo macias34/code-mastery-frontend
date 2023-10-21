@@ -99,11 +99,7 @@ export default function EditInformationPage() {
           value={content}
           onChange={(value) => setValue("content", value)}
         />
-        <ButtonWithLoader
-          className="w-fit"
-          isLoading={isLoading}
-          disabled={!isValid}
-        >
+        <ButtonWithLoader className="w-fit" isLoading={isLoading}>
           Save changes
         </ButtonWithLoader>
       </form>
