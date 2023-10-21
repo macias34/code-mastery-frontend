@@ -1,4 +1,5 @@
 import {
+  Button,
   Card,
   CardContent,
   CardDescription,
@@ -9,17 +10,21 @@ import {
 } from "@/shared/components";
 
 import { usePages } from "../api";
+import { CreatePageDialog } from "./create-page-dialog";
 import { Page } from "./page";
 
 export const PagesCard = () => {
   const { data: pages, isLoading } = usePages();
   return (
     <Card className="w-fit  mx-auto my-6">
-      <CardHeader>
-        <CardTitle>Information pages</CardTitle>
-        <CardDescription>
-          Explore and edit your information pages
-        </CardDescription>
+      <CardHeader className="flex flex-row justify-between">
+        <div className="flex flex-col w-fit">
+          <CardTitle className="w-fit">Information pages</CardTitle>
+          <CardDescription className="w-fit">
+            Explore and edit your information pages
+          </CardDescription>
+        </div>
+        <CreatePageDialog />
       </CardHeader>
       <CardContent className="flex flex-col gap-y-6">
         {isLoading &&
