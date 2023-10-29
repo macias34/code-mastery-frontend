@@ -8,6 +8,6 @@ export const handleResponseError = async (response: Response) => {
     }
 
     const error = (await response.json()) as ApiError;
-    throw new Error(JSON.stringify(error));
+    throw new Error(error.message);
   }
 };

@@ -1,3 +1,7 @@
+import { type MutateOptions } from "react-query";
+
+import { type ApiError } from "@/shared/utils";
+
 import { type CreateLessonDto, useCreateLesson } from "./create-lesson";
 import {
   type UploadLessonVideoDto,
@@ -7,6 +11,12 @@ import {
 type CreateLessonWithVideoDto = CreateLessonDto & {
   file: UploadLessonVideoDto["file"];
 };
+
+interface CreateLessonWithVideoArguments extends CreateLessonWithVideoDto {
+  options:
+    | MutateOptions<unknown, ApiError, UploadLessonVideoDto, unknown>
+    | undefined;
+}
 
 export const useCreateLessonWithVideo = () => {
   const createLesson = useCreateLesson();
@@ -18,13 +28,14 @@ export const useCreateLessonWithVideo = () => {
     title,
     chapterId,
     file,
-  }: CreateLessonWithVideoDto) => {
+    options,
+  }: CreateLessonWithVideoArguments) => {
     return createLesson.mutateAsync(
       { title, chapterId },
       {
         async onSuccess(lesson) {
           const lessonId = lesson.id;
-          await uploadVideo.mutateAsync({ lessonId, file });
+          await uploadVideo.mutateAsync({ lessonId, file }, options);
         },
       },
     );

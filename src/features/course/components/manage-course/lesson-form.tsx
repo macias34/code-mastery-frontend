@@ -10,9 +10,21 @@ import React, {
 import { useForm } from "react-hook-form";
 import { type z } from "zod";
 
-import { Button, InputWithLabel, Label, Spinner } from "@/shared/components";
+import { TOAST_ERROR_TITLE, TOAST_SUCCESS_TITLE } from "@/libs/toast";
+import {
+  Button,
+  InputWithLabel,
+  Label,
+  Spinner,
+  toast,
+} from "@/shared/components";
 
-import { useCreateLessonWithVideo, useGetLesson } from "../../api";
+import {
+  useCreateLessonWithVideo,
+  useGetLesson,
+  useInvalidateLesson,
+  usePatchLesson,
+} from "../../api";
 import { useInvalidatePathnameCourse } from "../../hooks";
 import { type LessonDto } from "../../types";
 import { LessonFormSchema } from "../../utils";
@@ -37,6 +49,9 @@ export const LessonForm: FC<LessonFormProps> = ({
 }) => {
   const { createLessonWithVideo, isLoading, uploadVideo } =
     useCreateLessonWithVideo();
+  const lessonId = lesson?.id ?? -1;
+  const { mutate: patchLesson } = usePatchLesson();
+  const { invalidateLesson } = useInvalidateLesson(lessonId);
 
   const [videoFile, setVideoFile] = useState<File>();
   const [showVideo, setShowVideo] = useState<boolean>(true);
@@ -61,6 +76,8 @@ export const LessonForm: FC<LessonFormProps> = ({
     },
   });
 
+  console.log(errors);
+
   useEffect(() => {
     if (lessonWithVideoSource && lessonWithVideoSource.videoSrc) {
       const { videoSrc } = lessonWithVideoSource;
@@ -82,23 +99,65 @@ export const LessonForm: FC<LessonFormProps> = ({
 
   const onSubmit = async (formData: LessonFormData) => {
     const { title, files } = formData;
-    const file = files[0];
-
-    if (!file) {
-      return;
-    }
+    const file = files?.[0];
 
     if (variant === LessonFormVariant.CREATE) {
-      try {
-        await createLessonWithVideo({ title, chapterId, file });
-        setShowLessonDialog(false);
-        await invalidateCourse();
-      } catch (error) {
-        console.error(error);
+      if (!file) {
+        return;
       }
+
+      await createLessonWithVideo({
+        title,
+        chapterId,
+        file,
+        options: {
+          onSuccess() {
+            toast({
+              title: TOAST_SUCCESS_TITLE,
+              description: "Lesson has been succesfully created.",
+            });
+            setShowLessonDialog(false);
+          },
+          onError(error) {
+            toast({
+              title: TOAST_ERROR_TITLE,
+              description: error,
+              variant: "destructive",
+            });
+          },
+          async onSettled() {
+            await invalidateCourse();
+            await invalidateLesson();
+          },
+        },
+      });
+    } else if (variant === LessonFormVariant.EDIT) {
+      if (file) {
+        uploadVideo({ lessonId, file });
+      }
+      patchLesson(
+        { lessonId, patchableArguments: { title } },
+        {
+          onSuccess() {
+            toast({
+              title: TOAST_SUCCESS_TITLE,
+              description: "Lesson has been succesfully edited.",
+            });
+            setShowLessonDialog(false);
+          },
+          onError(error) {
+            toast({
+              title: TOAST_ERROR_TITLE,
+              description: error as string,
+              variant: "destructive",
+            });
+          },
+          async onSettled() {
+            await invalidateCourse();
+          },
+        },
+      );
     }
-    // if (variant === LessonFormVariant.EDIT) {
-    // }
   };
 
   return (
@@ -117,6 +176,7 @@ export const LessonForm: FC<LessonFormProps> = ({
         <div className="flex gap-2 items-center">
           <Label>Video</Label>{" "}
           <button
+            type="button"
             onClick={() => setShowVideo((previousState) => !previousState)}
             className=" text-secondary-foreground/60 text-sm"
           >

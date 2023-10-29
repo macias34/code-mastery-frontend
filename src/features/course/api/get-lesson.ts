@@ -1,4 +1,9 @@
-import { type QueryKey, type UseQueryOptions, useQuery } from "react-query";
+import {
+  type QueryKey,
+  type UseQueryOptions,
+  useQuery,
+  useQueryClient,
+} from "react-query";
 
 import { type LessonDto } from "@/features/course";
 import { useUser } from "@/features/user";
@@ -23,4 +28,16 @@ export const useGetLesson = (id: number, options?: UseGetLessonOptions) => {
     queryKey: ["lesson", id],
     ...options,
   });
+};
+
+export const useInvalidateLesson = (id: number) => {
+  const queryClient = useQueryClient();
+
+  const invalidateLesson = async () => {
+    await queryClient.invalidateQueries(["lesson", id]);
+  };
+
+  return {
+    invalidateLesson,
+  };
 };
