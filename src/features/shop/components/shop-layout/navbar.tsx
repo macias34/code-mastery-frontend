@@ -1,6 +1,7 @@
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 
+import { usePages } from "@/features/information-page/api";
 import { UserRole, useUser } from "@/features/user";
 import { Logo } from "@/shared/components/logo";
 
@@ -20,6 +21,8 @@ export const Navbar = () => {
     },
   ];
 
+  const { data: pages } = usePages();
+
   return (
     <nav className="py-4 border-b border-border w-full">
       <div className="container flex justify-between items-center">
@@ -38,6 +41,11 @@ export const Navbar = () => {
           {userData?.role === UserRole.ADMIN && (
             <NavbarItem title="Dashboard" href="/dashboard" />
           )}
+
+          {pages &&
+            pages?.map(({ title, slug }) => (
+              <NavbarItem key={slug} title={title} href={`/page/${slug}`} />
+            ))}
 
           {session.status === "authenticated" ? (
             <>

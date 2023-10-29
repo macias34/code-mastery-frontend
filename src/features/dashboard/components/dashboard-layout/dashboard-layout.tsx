@@ -23,6 +23,10 @@ export const DashboardLayout: FC<PropsWithChildren> = ({ children }) => {
       href: "/dashboard/users",
       children: "Users",
     },
+    {
+      href: "/dashboard/information-pages",
+      children: "Information pages",
+    },
   ];
 
   return (

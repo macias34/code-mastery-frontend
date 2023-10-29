@@ -11,6 +11,8 @@ export type UserSearchFilters = Omit<Required<UserFilter>, "role"> & {
   page: number;
 };
 
+// @TODO: Move useForm to component
+
 function UsersDashboard() {
   const methods = useForm<UserSearchFilters>({
     defaultValues: {

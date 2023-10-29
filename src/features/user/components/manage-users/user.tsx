@@ -1,13 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { type UserDto, UserRole } from "@/features/user";
+import { EditUserDialog, type UserDto, UserRole } from "@/features/user";
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
 } from "@/shared/components/avatar";
-import { Button } from "@/shared/components/button";
 import { FRONTEND_URL } from "@/shared/constants";
 
 import adminIcon from "../../../../../public/admin.svg";
@@ -42,7 +41,7 @@ export const User = ({ user }: Props) => {
           {user.email}
         </p>
       </div>
-      <Button className="ml-auto px-6">Edit</Button>
+      <EditUserDialog userId={user.id} />
     </div>
   );
 };
