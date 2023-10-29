@@ -59,14 +59,6 @@ const config = {
 		"unicorn/no-keyword-prefix": "off",
 		"unicorn/no-array-for-each": "off",
 		"unicorn/better-regex": "error",
-		'max-lines': [
-			'error',
-			{
-				max: 100,
-				skipBlankLines: true,
-				skipComments: true,
-			},
-		],
 		'max-lines-per-function': [
 			'error',
 			{

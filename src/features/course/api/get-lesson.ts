@@ -1,10 +1,11 @@
 import { type QueryKey, type UseQueryOptions, useQuery } from "react-query";
 
 import { type LessonDto } from "@/features/course";
+import { useUser } from "@/features/user";
 import { type ApiError, request } from "@/shared/utils";
 
-export const getLesson = (id: number) => {
-  return request<LessonDto>(`/lesson/${id.toString()}`);
+export const getLesson = (id: number, accessToken: string) => {
+  return request<LessonDto>(`/lesson/${id.toString()}`, {}, { accessToken });
 };
 
 export type UseGetLessonOptions = UseQueryOptions<
@@ -15,8 +16,10 @@ export type UseGetLessonOptions = UseQueryOptions<
 >;
 
 export const useGetLesson = (id: number, options?: UseGetLessonOptions) => {
+  const { accessToken } = useUser();
+
   return useQuery<LessonDto, ApiError>({
-    queryFn: () => getLesson(id),
+    queryFn: () => getLesson(id, accessToken),
     queryKey: ["lesson", id],
     ...options,
   });

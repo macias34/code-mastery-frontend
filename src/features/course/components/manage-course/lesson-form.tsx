@@ -5,18 +5,17 @@ import React, {
   type FC,
   type SetStateAction,
   useEffect,
+  useState,
 } from "react";
 import { useForm } from "react-hook-form";
 import { type z } from "zod";
 
-import { Button, InputWithLabel, Spinner } from "@/shared/components";
+import { Button, InputWithLabel, Label, Spinner } from "@/shared/components";
 
 import { useCreateLessonWithVideo, useGetLesson } from "../../api";
 import { useInvalidatePathnameCourse } from "../../hooks";
 import { type LessonDto } from "../../types";
 import { LessonFormSchema } from "../../utils";
-
-type LessonFormData = z.infer<typeof LessonFormSchema>;
 
 export enum LessonFormVariant {
   CREATE = "CREATE",
@@ -36,14 +35,18 @@ export const LessonForm: FC<LessonFormProps> = ({
   variant,
   lesson,
 }) => {
-  const { createLessonWithVideo, isLoading, createLesson, uploadVideo } =
+  const { createLessonWithVideo, isLoading, uploadVideo } =
     useCreateLessonWithVideo();
 
-  // const { data: lessonWithVideoSource } = useGetLesson(lesson?.id ?? -1, {
-  //   enabled: Boolean(lesson?.id),
-  // });
+  const [videoFile, setVideoFile] = useState<File>();
+  const [showVideo, setShowVideo] = useState<boolean>(true);
 
-  // console.log(lessonWithVideoSource);
+  const { data: lessonWithVideoSource } = useGetLesson(lesson?.id ?? -1, {
+    enabled: Boolean(lesson?.id),
+  });
+
+  const lessonFormSchema = LessonFormSchema(variant);
+  type LessonFormData = z.infer<typeof lessonFormSchema>;
 
   const { invalidateCourse } = useInvalidatePathnameCourse();
   const {
@@ -51,7 +54,7 @@ export const LessonForm: FC<LessonFormProps> = ({
     handleSubmit,
     formState: { errors },
   } = useForm<LessonFormData>({
-    resolver: zodResolver(LessonFormSchema),
+    resolver: zodResolver(lessonFormSchema),
     mode: "onBlur",
     defaultValues: {
       title: lesson?.title ?? "",
@@ -59,9 +62,23 @@ export const LessonForm: FC<LessonFormProps> = ({
   });
 
   useEffect(() => {
-    if (lesson) {
+    if (lessonWithVideoSource && lessonWithVideoSource.videoSrc) {
+      const { videoSrc } = lessonWithVideoSource;
+      const fetchVideoBlobFromSource = async () => {
+        const video: Response = await fetch(videoSrc);
+        const videoBlob: Blob = await video.blob();
+
+        const options: FilePropertyBag = {
+          type: videoBlob.type,
+          lastModified: Date.now(),
+        };
+        const videoFile = new File([videoBlob], videoSrc, options);
+        setVideoFile(videoFile);
+      };
+
+      void fetchVideoBlobFromSource();
     }
-  }, [lesson]);
+  }, [lessonWithVideoSource]);
 
   const onSubmit = async (formData: LessonFormData) => {
     const { title, files } = formData;
@@ -95,16 +112,36 @@ export const LessonForm: FC<LessonFormProps> = ({
         }}
         error={<ErrorMessage errors={errors} name="title" />}
       />
-      <InputWithLabel
-        name="files"
-        labelContent="Video"
-        input={{
-          ...register("files"),
-          type: "file",
-          accept: "video/mp4,video/x-m4v,video/*",
-        }}
-        error={<ErrorMessage errors={errors} name="files" />}
-      />
+
+      <div className="flex flex-col gap-2">
+        <div className="flex gap-2 items-center">
+          <Label>Video</Label>{" "}
+          <button
+            onClick={() => setShowVideo((previousState) => !previousState)}
+            className=" text-secondary-foreground/60 text-sm"
+          >
+            {showVideo ? "Change video" : "Preview video"}
+          </button>
+        </div>
+        {showVideo && videoFile ? (
+          <video controls>
+            <source src={videoFile.name} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        ) : (
+          <InputWithLabel
+            name="files"
+            labelContent=""
+            input={{
+              ...register("files"),
+              type: "file",
+              accept: "video/mp4,video/x-m4v,video/*",
+            }}
+            error={<ErrorMessage errors={errors} name="files" />}
+          />
+        )}
+      </div>
+
       <div className="flex gap-2 self-end">
         <Button
           onClick={() => setShowLessonDialog(false)}
