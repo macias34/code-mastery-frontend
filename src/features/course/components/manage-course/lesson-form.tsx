@@ -1,35 +1,51 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React, { type Dispatch, type FC, type SetStateAction } from "react";
+import React, {
+  type Dispatch,
+  type FC,
+  type SetStateAction,
+  useEffect,
+} from "react";
 import { useForm } from "react-hook-form";
 import { type z } from "zod";
 
 import { Button, InputWithLabel, Spinner } from "@/shared/components";
 
-import { useCreateLesson, useUploadLessonVideo } from "../../api";
+import { useCreateLessonWithVideo, useGetLesson } from "../../api";
 import { useInvalidatePathnameCourse } from "../../hooks";
+import { type LessonDto } from "../../types";
 import { LessonFormSchema } from "../../utils";
 
 type LessonFormData = z.infer<typeof LessonFormSchema>;
 
+export enum LessonFormVariant {
+  CREATE = "CREATE",
+  EDIT = "EDIT",
+}
+
 export interface LessonFormProps {
   chapterId: number;
   setShowLessonDialog: Dispatch<SetStateAction<boolean>>;
+  variant: LessonFormVariant;
+  lesson?: LessonDto;
 }
 
 export const LessonForm: FC<LessonFormProps> = ({
   chapterId,
   setShowLessonDialog,
+  variant,
+  lesson,
 }) => {
-  const { mutate: createLesson, isLoading: isCreateLessonLoading } =
-    useCreateLesson();
-  const { mutate: uploadVideo, isLoading: isUploadVideoLoading } =
-    useUploadLessonVideo();
+  const { createLessonWithVideo, isLoading, createLesson, uploadVideo } =
+    useCreateLessonWithVideo();
+
+  // const { data: lessonWithVideoSource } = useGetLesson(lesson?.id ?? -1, {
+  //   enabled: Boolean(lesson?.id),
+  // });
+
+  // console.log(lessonWithVideoSource);
 
   const { invalidateCourse } = useInvalidatePathnameCourse();
-
-  const isLoading = isCreateLessonLoading || isUploadVideoLoading;
-
   const {
     register,
     handleSubmit,
@@ -37,9 +53,17 @@ export const LessonForm: FC<LessonFormProps> = ({
   } = useForm<LessonFormData>({
     resolver: zodResolver(LessonFormSchema),
     mode: "onBlur",
+    defaultValues: {
+      title: lesson?.title ?? "",
+    },
   });
 
-  const onSubmit = (formData: LessonFormData) => {
+  useEffect(() => {
+    if (lesson) {
+    }
+  }, [lesson]);
+
+  const onSubmit = async (formData: LessonFormData) => {
     const { title, files } = formData;
     const file = files[0];
 
@@ -47,25 +71,17 @@ export const LessonForm: FC<LessonFormProps> = ({
       return;
     }
 
-    createLesson(
-      { title, chapterId },
-      {
-        onSuccess(lesson) {
-          const lessonId = lesson.id;
-          uploadVideo(
-            { lessonId, file },
-            {
-              onSuccess() {
-                setShowLessonDialog(false);
-              },
-            },
-          );
-        },
-        async onSettled() {
-          await invalidateCourse();
-        },
-      },
-    );
+    if (variant === LessonFormVariant.CREATE) {
+      try {
+        await createLessonWithVideo({ title, chapterId, file });
+        setShowLessonDialog(false);
+        await invalidateCourse();
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    // if (variant === LessonFormVariant.EDIT) {
+    // }
   };
 
   return (
@@ -98,7 +114,10 @@ export const LessonForm: FC<LessonFormProps> = ({
           Cancel
         </Button>
         <Button className="w-32" variant="secondary">
-          {isLoading ? <Spinner /> : "Create lesson"}
+          {isLoading && <Spinner />}
+          {!isLoading && variant === LessonFormVariant.CREATE
+            ? "Create lesson"
+            : "Edit lesson"}
         </Button>
       </div>
     </form>

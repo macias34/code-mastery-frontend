@@ -1,17 +1,11 @@
-import { useState } from "react";
-
 import {
-  ChapterDialog,
-  ChapterFormVariant,
   ChapterList,
+  CreateChapterDialog,
   ManageCard,
   ManageCourseLayout,
 } from "@/features/course";
 
 export default function CourseContentDashboardPage() {
-  const [showCreateChapterDialog, setShowCreateChapterDialog] =
-    useState<boolean>(false);
-
   return (
     <ManageCourseLayout>
       <ManageCard
@@ -22,11 +16,7 @@ export default function CourseContentDashboardPage() {
         }}
       >
         <ChapterList />
-        <ChapterDialog
-          variant={ChapterFormVariant.CREATE}
-          showChapterDialog={showCreateChapterDialog}
-          setShowChapterDialog={setShowCreateChapterDialog}
-        />
+        <CreateChapterDialog />
       </ManageCard>
     </ManageCourseLayout>
   );

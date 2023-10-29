@@ -7,11 +7,6 @@ import { z } from "zod";
 import { Button, InputWithLabel, Spinner } from "@/shared/components";
 import { type PropsWithClassname } from "@/shared/types";
 
-import { useCreateChapter, useEditChapter } from "../../api";
-import {
-  useChapterFormMutationOptions,
-  useGetPathnameCourse,
-} from "../../hooks";
 import { type ChapterDto } from "../../types";
 
 const ChapterFormSchema = z.object({
@@ -30,26 +25,22 @@ export enum ChapterFormVariant {
 
 interface ChapterFormProps extends PropsWithClassname {
   setShowChapterDialog: Dispatch<SetStateAction<boolean>>;
-  variant: ChapterFormVariant;
   chapter?: ChapterDto;
+  onSubmit: (formData: ChapterFormData) => void;
+  isLoading: boolean;
+  submitButtonLabel: string;
 }
 
 export const ChapterForm: FC<ChapterFormProps> = ({
   setShowChapterDialog,
-  variant,
   chapter,
+  onSubmit,
+  isLoading,
+  submitButtonLabel,
 }) => {
-  const { mutate: createChapter, isLoading: isCreateChapterLoading } =
-    useCreateChapter();
-  const { mutate: editChapter, isLoading: isEditChapterLoading } =
-    useEditChapter();
-
-  const isLoading = isCreateChapterLoading || isEditChapterLoading;
-
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<ChapterFormData>({
     resolver: zodResolver(ChapterFormSchema),
@@ -59,27 +50,27 @@ export const ChapterForm: FC<ChapterFormProps> = ({
     },
   });
 
-  const title = watch("title");
-  const { data: course } = useGetPathnameCourse();
-  const chapterId = chapter?.id ?? -1;
-  const courseId = course?.id ?? -1;
+  // const title = watch("title");
+  // const { data: course } = useGetPathnameCourse();
+  // const chapterId = chapter?.id ?? -1;
+  // const courseId = course?.id ?? -1;
 
-  const chapterFormMutationOptions = useChapterFormMutationOptions({
-    setShowChapterDialog,
-    variant,
-  });
+  // const chapterFormMutationOptions = useChapterFormMutationOptions({
+  //   setShowChapterDialog,
+  //   variant,
+  // });
 
-  const cardTitle =
-    variant === ChapterFormVariant.CREATE ? "Create chapter" : "Edit chapter";
+  // const cardTitle =
+  //   variant === ChapterFormVariant.CREATE ? "Create chapter" : "Edit chapter";
 
-  const onSubmit = () => {
-    if (variant === ChapterFormVariant.CREATE) {
-      createChapter({ courseId, title }, chapterFormMutationOptions);
-    }
-    if (variant === ChapterFormVariant.EDIT && chapterId) {
-      editChapter({ chapterId, title }, chapterFormMutationOptions);
-    }
-  };
+  // const onSubmit = () => {
+  //   if (variant === ChapterFormVariant.CREATE) {
+  //     createChapter({ courseId, title }, chapterFormMutationOptions);
+  //   }
+  //   if (variant === ChapterFormVariant.EDIT && chapterId) {
+  //     editChapter({ chapterId, title }, chapterFormMutationOptions);
+  //   }
+  // };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
@@ -101,7 +92,7 @@ export const ChapterForm: FC<ChapterFormProps> = ({
           Cancel
         </Button>
         <Button className="w-32" variant="secondary">
-          {isLoading ? <Spinner /> : cardTitle}
+          {isLoading ? <Spinner /> : submitButtonLabel}
         </Button>
       </div>
     </form>

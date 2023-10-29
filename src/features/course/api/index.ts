@@ -7,3 +7,5 @@ export * from "./delete-chapter";
 export * from "./edit-chapter";
 export * from "./create-lesson";
 export * from "./upload-lesson-video";
+export * from "./create-lesson-with-video";
+export * from "./get-lesson";
