@@ -121,7 +121,7 @@ export const LessonForm: FC<LessonFormProps> = ({
           onError(error) {
             toast({
               title: TOAST_ERROR_TITLE,
-              description: error,
+              description: error.message,
               variant: "destructive",
             });
           },
@@ -175,13 +175,15 @@ export const LessonForm: FC<LessonFormProps> = ({
       <div className="flex flex-col gap-2">
         <div className="flex gap-2 items-center">
           <Label>Video</Label>{" "}
-          <button
-            type="button"
-            onClick={() => setShowVideo((previousState) => !previousState)}
-            className=" text-secondary-foreground/60 text-sm"
-          >
-            {showVideo ? "Change video" : "Preview video"}
-          </button>
+          {variant === LessonFormVariant.EDIT && (
+            <button
+              type="button"
+              onClick={() => setShowVideo((previousState) => !previousState)}
+              className=" text-secondary-foreground/60 text-sm"
+            >
+              {showVideo ? "Change video" : "Preview video"}
+            </button>
+          )}
         </div>
         {showVideo && videoFile ? (
           <video controls>
@@ -211,10 +213,14 @@ export const LessonForm: FC<LessonFormProps> = ({
           Cancel
         </Button>
         <Button className="w-32" variant="secondary">
-          {isLoading && <Spinner />}
-          {!isLoading && variant === LessonFormVariant.CREATE
-            ? "Create lesson"
-            : "Edit lesson"}
+          {isLoading ? (
+            <Spinner />
+          ) : // eslint-disable-next-line unicorn/no-nested-ternary
+          variant === LessonFormVariant.CREATE ? (
+            "Create lesson"
+          ) : (
+            "Edit lesson"
+          )}
         </Button>
       </div>
     </form>

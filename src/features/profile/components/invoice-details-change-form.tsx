@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { PersonalDetailsInputs, PersonalDetailsSchema } from "@/features/auth";
+import { PersonalDetailsInputs } from "@/features/auth";
 import { useUpdateUser } from "@/features/profile/api";
 import { useUser } from "@/features/user";
 import { Button } from "@/shared/components/button";
@@ -20,7 +20,19 @@ import { Spinner } from "@/shared/components/spinner";
 
 import { resetPersonalDetailsForm } from "../utils";
 
-const InvoiceDetailsFormSchema = PersonalDetailsSchema.extend({
+const InvoiceDetailsFormSchema = z.object({
+  firstName: z
+    .string()
+    .min(3, "First name should be at least 3 characters long"),
+  lastName: z.string().min(3, "Last name should be at least 3 characters long"),
+  postalCode: z
+    .string()
+    .min(2, "Postal code should be at least 2 characters long"),
+  city: z.string().min(2, "City should be at least 2 characters long"),
+  street: z.string().min(2, "Street should be at least 3 characters long"),
+  phoneNumber: z
+    .string()
+    .min(2, "Phone number should be at least 2 characters long"),
   nip: z.string().optional(),
   companyName: z.string().optional(),
 });
