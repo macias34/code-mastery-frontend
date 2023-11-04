@@ -55,7 +55,7 @@ export default function EditInformationPage() {
   const {
     register,
     setValue,
-    formState: { errors, isValid },
+    formState: { errors },
     handleSubmit,
     watch,
   } = useForm<InformationPageFormData>({
@@ -97,6 +97,7 @@ export default function EditInformationPage() {
           className="w-full text-[#222] bg-slate-200 min-h-[75vh] flex flex-col"
           modules={modules}
           value={content}
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
           onChange={(value) => setValue("content", value)}
         />
         <ButtonWithLoader className="w-fit" isLoading={isLoading}>

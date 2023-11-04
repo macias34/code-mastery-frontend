@@ -26,6 +26,7 @@ export const Chapter: FC<ChapterProps> = ({
   index,
   setChapterToDelete,
 }) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [showEditChapterDialog, setShowEditChapterDialog] =
     useState<boolean>(false);
 

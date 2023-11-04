@@ -7,7 +7,6 @@ export const handleResponseError = async (response: Response) => {
       throw new Error("No application/json content type provided in headers");
     }
 
-    const error = (await response.json()) as ApiError;
-    throw new Error(error.message);
+    return (await response.json()) as ApiError;
   }
 };

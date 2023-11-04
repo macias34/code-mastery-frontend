@@ -17,7 +17,6 @@ import {
 import { type ChapterDto, type LessonDto } from "../../types";
 import {
   LessonForm,
-  LessonFormLessonFormVariant,
   LessonFormVariant,
 } from "./lesson-form";
 

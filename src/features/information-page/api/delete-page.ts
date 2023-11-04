@@ -1,6 +1,5 @@
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 
-import { useUser } from "@/features/user";
 import { TOAST_ERROR_TITLE, TOAST_SUCCESS_TITLE } from "@/libs/toast";
 import { toast } from "@/shared/components";
 import { type ApiError, request } from "@/shared/utils";
