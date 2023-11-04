@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { LessonFormVariant } from "../components/manage-course/lesson-form";
+import { LessonFormVariant } from "../components/manage-course/edit-lesson-dialog";
 
 const ACCEPTED_VIDEO_TYPES = new Set(["video/mp4", "video/x-m4v", "video/*"]);
 

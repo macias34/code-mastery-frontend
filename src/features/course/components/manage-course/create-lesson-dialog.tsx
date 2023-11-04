@@ -22,7 +22,7 @@ import {
 import { useCreateLessonWithVideo } from "../../api";
 import { useInvalidatePathnameCourse } from "../../hooks";
 import { LessonFormSchema } from "../../utils";
-import { LessonFormVariant } from "./lesson-form";
+import { LessonFormVariant } from "./edit-lesson-dialog";
 
 interface CreateLessonDialogProps {
   chapterId: number;
