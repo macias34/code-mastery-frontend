@@ -1,6 +1,6 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Plus } from "lucide-react";
+import { Pencil } from "lucide-react";
 import React, { type FC, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { type z } from "zod";
@@ -18,6 +18,7 @@ import {
   Spinner,
   toast,
 } from "@/shared/components";
+import { ICON_SIZE } from "@/shared/constants";
 
 import {
   useCreateLessonWithVideo,
@@ -124,10 +125,13 @@ export const EditLessonDialog: FC<LessonFormProps> = ({ lesson }) => {
       <DialogTrigger asChild>
         <Button
           onClick={() => setShowDialog(true)}
-          className="w-fit mb-6"
-          variant="secondary"
+          variant="outline"
+          size="icon"
         >
-          <Plus size={16} className="mr-2" /> Lesson
+          <Pencil
+            className=" hover:text-white/80 transition"
+            size={ICON_SIZE.SMALL}
+          />
         </Button>
       </DialogTrigger>
       <DialogContent onInteractOutside={() => setShowDialog(false)}>

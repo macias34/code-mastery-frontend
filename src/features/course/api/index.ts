@@ -10,3 +10,4 @@ export * from "./upload-lesson-video";
 export * from "./create-lesson-with-video";
 export * from "./get-lesson";
 export * from "./patch-lesson";
+export * from "./delete-lesson";

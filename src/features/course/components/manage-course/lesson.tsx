@@ -1,20 +1,17 @@
-import { Pencil, Trash } from "lucide-react";
 import React, { type FC } from "react";
 
-import { Button, Card, CardHeader } from "@/shared/components";
-import { ICON_SIZE } from "@/shared/constants";
+import { Card, CardHeader } from "@/shared/components";
 
-import { type ChapterDto, type LessonDto } from "../../types";
-import { LessonDialog } from "./lesson-dialog";
-import { LessonFormVariant } from "./lesson-form";
+import { type LessonDto } from "../../types";
+import { DeleteLessonAlertDialog } from "./delete-lesson-alert-dialog";
+import { EditLessonDialog } from "./edit-lesson-dialog";
 
 interface LessonProps {
   lesson: LessonDto;
-  chapter: ChapterDto;
   index: number;
 }
 
-export const Lesson: FC<LessonProps> = ({ lesson, index, chapter }) => {
+export const Lesson: FC<LessonProps> = ({ lesson, index }) => {
   const { title } = lesson;
 
   return (
@@ -25,26 +22,8 @@ export const Lesson: FC<LessonProps> = ({ lesson, index, chapter }) => {
             <span className="font-semibold">Lesson {index + 1}:</span> {title}
           </p>
           <div className="ml-4 hidden gap-2 items-center group-hover:flex">
-            <LessonDialog
-              chapter={chapter}
-              variant={LessonFormVariant.EDIT}
-              lesson={lesson}
-              trigger={(setShowLessonDialog) => (
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={() => setShowLessonDialog(true)}
-                >
-                  <Pencil size={ICON_SIZE.SMALL} />
-                </Button>
-              )}
-            />
-            <Button variant="outline" size="icon">
-              <Trash
-                className="cursor-pointer hover:text-white/80 transition"
-                size={ICON_SIZE.SMALL}
-              />
-            </Button>
+            <EditLessonDialog lesson={lesson} />
+            <DeleteLessonAlertDialog lesson={lesson} />
           </div>
         </CardHeader>
       </Card>
