@@ -186,7 +186,7 @@ export const LessonForm: FC<LessonFormProps> = ({
           )}
         </div>
         {showVideo && videoFile ? (
-          <video controls>
+          <video controls className=" max-h-72">
             <source src={videoFile.name} type="video/mp4" />
             Your browser does not support the video tag.
           </video>

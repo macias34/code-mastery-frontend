@@ -1,4 +1,4 @@
-import { ChevronDown, Plus, Trash } from "lucide-react";
+import { ChevronDown, Trash } from "lucide-react";
 import { type Dispatch, type FC, type SetStateAction, useState } from "react";
 
 import {
@@ -11,10 +11,9 @@ import {
 import { ICON_SIZE } from "@/shared/constants";
 
 import { type ChapterDto } from "../../types";
+import { CreateLessonDialog } from "./create-lesson-dialog";
 import { EditChapterDialog } from "./edit-chapter-dialog";
 import { Lesson } from "./lesson";
-import { LessonDialog } from "./lesson-dialog";
-import { LessonFormVariant } from "./lesson-form";
 
 interface ChapterProps {
   chapter: ChapterDto;
@@ -75,19 +74,7 @@ export const Chapter: FC<ChapterProps> = ({
               />
             ))}
 
-            <LessonDialog
-              chapter={chapter}
-              variant={LessonFormVariant.CREATE}
-              trigger={(setShowLessonDialog) => (
-                <Button
-                  onClick={() => setShowLessonDialog(true)}
-                  className="w-fit mb-6"
-                  variant="secondary"
-                >
-                  <Plus size={16} className="mr-2" /> Lesson
-                </Button>
-              )}
-            />
+            <CreateLessonDialog chapterId={id} />
           </CardContent>
         )}
       </Card>
