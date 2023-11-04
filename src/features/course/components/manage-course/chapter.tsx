@@ -66,12 +66,7 @@ export const Chapter: FC<ChapterProps> = ({
         {showLessons && (
           <CardContent className="flex flex-col gap-6 pb-0">
             {lessons.map((lesson, index) => (
-              <Lesson
-                chapter={chapter}
-                key={lesson.id}
-                index={index}
-                lesson={lesson}
-              />
+              <Lesson key={lesson.id} index={index} lesson={lesson} />
             ))}
 
             <CreateLessonDialog chapterId={id} />
