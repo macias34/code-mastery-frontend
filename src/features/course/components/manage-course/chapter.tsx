@@ -1,4 +1,4 @@
-import { ChevronDown, Pencil, Plus, Trash } from "lucide-react";
+import { ChevronDown, Plus, Trash } from "lucide-react";
 import { type Dispatch, type FC, type SetStateAction, useState } from "react";
 
 import {
@@ -11,6 +11,7 @@ import {
 import { ICON_SIZE } from "@/shared/constants";
 
 import { type ChapterDto } from "../../types";
+import { EditChapterDialog } from "./edit-chapter-dialog";
 import { Lesson } from "./lesson";
 import { LessonDialog } from "./lesson-dialog";
 import { LessonFormVariant } from "./lesson-form";
@@ -27,12 +28,10 @@ export const Chapter: FC<ChapterProps> = ({
   setChapterToDelete,
 }) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [showEditChapterDialog, setShowEditChapterDialog] =
-    useState<boolean>(false);
 
   const [showLessons, setShowLessons] = useState<boolean>(false);
 
-  const { lessons, title } = chapter;
+  const { lessons, title, id } = chapter;
 
   return (
     <>
@@ -43,16 +42,7 @@ export const Chapter: FC<ChapterProps> = ({
           </CardTitle>
 
           <div className="hidden gap-2 items-center group-hover:flex">
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={() => setShowEditChapterDialog(true)}
-            >
-              <Pencil
-                className=" hover:text-white/80 transition"
-                size={ICON_SIZE.SMALL}
-              />
-            </Button>
+            <EditChapterDialog chapterId={id} />
 
             <Button
               variant="outline"

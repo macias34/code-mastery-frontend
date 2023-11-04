@@ -1,7 +1,7 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Plus } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import { Pencil } from "lucide-react";
+import React, { type FC, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -17,48 +17,57 @@ import {
   Spinner,
   toast,
 } from "@/shared/components";
+import { ICON_SIZE } from "@/shared/constants";
 
-import { useCreateChapter } from "../../api";
+import { useEditChapter } from "../../api";
 import { useGetPathnameCourse, useInvalidatePathnameCourse } from "../../hooks";
 
-const CreateChapterFormSchema = z.object({
+const EditChapterFormSchema = z.object({
   title: z.string().min(3, "Title should be at least 3 characters"),
 });
 
-type CreateChapterData = z.infer<typeof CreateChapterFormSchema>;
+type EditChapterData = z.infer<typeof EditChapterFormSchema>;
 
-export const CreateChapterDialog = () => {
+interface EditChapterDialogProps {
+  chapterId: number;
+}
+
+export const EditChapterDialog: FC<EditChapterDialogProps> = ({
+  chapterId,
+}) => {
   const [showDialog, setShowDialog] = useState<boolean>(false);
   const { data: course } = useGetPathnameCourse();
   const { invalidateCourse } = useInvalidatePathnameCourse();
 
+  const chapter = course?.chapters.find((chapter) => chapter.id === chapterId);
+
   const {
     register,
     handleSubmit,
-    reset,
+    setValue,
     formState: { errors },
-  } = useForm<CreateChapterData>({
+  } = useForm<EditChapterData>({
     mode: "onBlur",
-    resolver: zodResolver(CreateChapterFormSchema),
+    resolver: zodResolver(EditChapterFormSchema),
   });
 
-  const { mutate, isLoading } = useCreateChapter();
+  const { mutate, isLoading } = useEditChapter();
 
-  const onSubmit = ({ title }: CreateChapterData) => {
+  const onSubmit = ({ title }: EditChapterData) => {
     mutate(
-      { title, courseId: course?.id ?? -1 },
+      { title, chapterId },
       {
         onSuccess() {
           toast({
             title: TOAST_SUCCESS_TITLE,
-            description: "Chapter has been added successfuly.",
+            description: "Chapter has been edited successfuly.",
           });
           setShowDialog(false);
         },
         onError() {
           toast({
             title: TOAST_ERROR_TITLE,
-            description: "Chapter hasn't been added.",
+            description: "Chapter hasn't been edited.",
             variant: "destructive",
           });
         },
@@ -70,25 +79,28 @@ export const CreateChapterDialog = () => {
   };
 
   useEffect(() => {
-    if (!showDialog) {
-      reset();
+    if (chapter) {
+      setValue("title", chapter.title);
     }
-  }, [reset, showDialog]);
+  }, [setValue, chapter]);
 
   return (
     <Dialog open={showDialog}>
       <DialogTrigger asChild>
         <Button
           onClick={() => setShowDialog(true)}
-          variant="secondary"
-          className="w-fit mt-6"
+          variant="outline"
+          size="icon"
         >
-          <Plus size={16} className="mr-2" /> Chapter
+          <Pencil
+            className=" hover:text-white/80 transition"
+            size={ICON_SIZE.SMALL}
+          />
         </Button>
       </DialogTrigger>
       <DialogContent onInteractOutside={() => setShowDialog(false)}>
         <DialogHeader className="mb-2">
-          <DialogTitle>Create Chapter</DialogTitle>
+          <DialogTitle>Edit Chapter</DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
           <InputWithLabel
@@ -109,7 +121,7 @@ export const CreateChapterDialog = () => {
               Cancel
             </Button>
             <Button className="w-32" variant="secondary">
-              {isLoading ? <Spinner /> : "Create chapter"}
+              {isLoading ? <Spinner /> : "Edit chapter"}
             </Button>
           </div>
         </form>
