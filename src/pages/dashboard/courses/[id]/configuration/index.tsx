@@ -1,8 +1,5 @@
-import {
-  ConfigurationForm,
-  ManageCard,
-  ManageCourseLayout,
-} from "@/features/course";
+import { ConfigurationForm, ManageCourseLayout } from "@/features/course";
+import { ManageCard } from "@/features/dashboard";
 
 export default function CourseConfigurationDashboardPage() {
   return (

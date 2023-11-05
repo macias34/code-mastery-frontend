@@ -1,9 +1,9 @@
 import {
   ChapterList,
   CreateChapterDialog,
-  ManageCard,
   ManageCourseLayout,
 } from "@/features/course";
+import { ManageCard } from "@/features/dashboard";
 
 export default function CourseContentDashboardPage() {
   return (

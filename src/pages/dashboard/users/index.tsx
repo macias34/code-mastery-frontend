@@ -45,6 +45,9 @@ function UsersDashboard() {
         },
         pageTitle: "Users",
       }}
+      classNames={{
+        container: "justify-center",
+      }}
     >
       <FormProvider {...methods}>
         <UsersCard {...usersResponse} isLoading={areUsersLoading} />
