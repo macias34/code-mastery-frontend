@@ -37,10 +37,7 @@ const modules = {
   },
 };
 
-const QuillNoSSRWrapper = dynamic(import("react-quill"), {
-  ssr: false,
-  loading: () => <p>Loading ...</p>,
-});
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 export type InformationPageFormData = z.infer<typeof InformationPageFormSchema>;
 
@@ -111,7 +108,7 @@ export default function EditInformationPage() {
             }}
             error={<ErrorMessage errors={errors} name="title" />}
           />
-          <QuillNoSSRWrapper
+          <ReactQuill
             className="w-full text-[#222] bg-slate-200 min-h-[75vh] flex flex-col"
             modules={modules}
             value={content}

@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 
-import { Course, useCreateCourse, useGetCourse } from "@/features/course";
+import { Course, useCreateCourse, useGetCourses } from "@/features/course";
 import { DashboardLayout } from "@/features/dashboard";
 import { TOAST_ERROR_TITLE, TOAST_SUCCESS_TITLE } from "@/libs/toast";
 import {
@@ -13,11 +13,11 @@ import {
 import { Button } from "@/shared/components/button";
 import { Spinner } from "@/shared/components/spinner";
 import { toast } from "@/shared/components/use-toast";
+import { useState } from "react";
 
 export default function CoursesDashboardPage() {
-  // const [page, setPage] = useState<number>(1);
-  // const { data } = useGetCourses(page);
-  const { data: course } = useGetCourse(2);
+  const [page] = useState<number>(1);
+  const { data } = useGetCourses(page);
   const router = useRouter();
 
   const { mutate, isLoading } = useCreateCourse({
@@ -70,10 +70,7 @@ export default function CoursesDashboardPage() {
           </Button>
         </CardHeader>
         <CardContent className="flex flex-col gap-y-6">
-          {course && <Course course={course} />}
-          {course && <Course course={course} />}
-          {course && <Course course={course} />}
-          {course && <Course course={course} />}
+          {data && data.courses && data.courses.map(course=> <Course key={course.id} course={course} />)}
         </CardContent>
       </Card>
     </DashboardLayout>
