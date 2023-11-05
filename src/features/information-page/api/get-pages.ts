@@ -10,6 +10,6 @@ export const getPages = () =>
 export const usePages = () => {
   return useQuery<InformationPageDto[], ApiError>({
     queryFn: getPages,
-    queryKey: ["information-pages"],
+    queryKey: ["pages"],
   });
 };

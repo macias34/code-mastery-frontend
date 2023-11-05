@@ -35,10 +35,20 @@ export default function CoursesDashboardPage() {
   };
 
   return (
-    <DashboardLayout>
-      <Button onClick={createCourse} className="w-40" size="lg">
-        {isLoading ? <Spinner /> : "Create course"}
-      </Button>
+    <DashboardLayout
+      navbar={{
+        backLink: {
+          href: "/dashboard",
+          label: "Go back to dashboard",
+        },
+        pageTitle: "Courses",
+      }}
+    >
+      <section className="mt-16">
+        <Button onClick={createCourse} className="w-40" size="lg">
+          {isLoading ? <Spinner /> : "Create course"}
+        </Button>
+      </section>
     </DashboardLayout>
   );
 }

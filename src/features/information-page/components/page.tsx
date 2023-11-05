@@ -21,7 +21,7 @@ export const Page = ({ page }: Props) => {
         </Link>
       </div>
       <div className="ml-auto flex justify-center gap-4 items-end ">
-        <Link href={`/dashboard/information-pages/${page.slug}`}>
+        <Link href={`/dashboard/pages/${page.slug}`}>
           <Button className="px-6 min-w-[100px]">Edit</Button>
         </Link>
         <DeletePageAlert pageId={page.id} />

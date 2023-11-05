@@ -82,7 +82,15 @@ export default function EditInformationPage() {
   }, [page, setValue]);
 
   return (
-    <DashboardLayout>
+    <DashboardLayout
+      navbar={{
+        backLink: {
+          href: "/dashboard/pages",
+          label: "Go back to pages",
+        },
+        pageTitle: slug,
+      }}
+    >
       <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
         <InputWithLabel
           labelContent="Page title"
