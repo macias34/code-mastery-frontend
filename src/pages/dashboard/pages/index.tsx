@@ -1,7 +1,9 @@
 import { DashboardLayout } from "@/features/dashboard";
 import { PagesCard } from "@/features/information-page/components";
+import { UserRole } from "@/features/user";
+import { withRoleAuthorization } from "@/shared/utils";
 
-export default function PagesDashboard() {
+export function PagesDashboard() {
   return (
     <DashboardLayout
       navbar={{
@@ -19,3 +21,8 @@ export default function PagesDashboard() {
     </DashboardLayout>
   );
 }
+// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+export default withRoleAuthorization(PagesDashboard, {
+  userRolesToExclude: [UserRole.USER],
+  redirectDestination: "/",
+});

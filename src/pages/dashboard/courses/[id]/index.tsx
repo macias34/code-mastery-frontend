@@ -1,12 +1,21 @@
-import { ManageCourseLayout } from "@/features/course";
+import { ManageCourseLayout, useGetPathnameCourse } from "@/features/course";
 import { ManageCard } from "@/features/dashboard";
+import { UserRole } from "@/features/user";
+import { withRoleAuthorization } from "@/shared/utils";
 
-export default function CourseDashboardPage() {
+export function CourseDashboardPage() {
+  const { data: course } = useGetPathnameCourse();
+
   return (
     <ManageCourseLayout>
       <ManageCard title="Home" description="Control center for your course">
-        32 stopnie
+        {course?.name ?? ""}
       </ManageCard>
     </ManageCourseLayout>
   );
 }
+// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+export default withRoleAuthorization(CourseDashboardPage, {
+  userRolesToExclude: [UserRole.USER],
+  redirectDestination: "/",
+});

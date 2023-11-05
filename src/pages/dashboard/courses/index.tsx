@@ -6,6 +6,7 @@ import { z } from "zod";
 
 import { Course, useCreateCourse, useGetCourses } from "@/features/course";
 import { DashboardLayout } from "@/features/dashboard";
+import { UserRole } from "@/features/user";
 import { TOAST_ERROR_TITLE, TOAST_SUCCESS_TITLE } from "@/libs/toast";
 import {
   Card,
@@ -19,6 +20,7 @@ import {
 import { Button } from "@/shared/components/button";
 import { Spinner } from "@/shared/components/spinner";
 import { toast } from "@/shared/components/use-toast";
+import { withRoleAuthorization } from "@/shared/utils";
 
 const SearchFiltersSchema = z.object({
   courseName: z.string(),
@@ -27,7 +29,7 @@ const SearchFiltersSchema = z.object({
 
 type SearchFiltersData = z.infer<typeof SearchFiltersSchema>;
 
-export default function CoursesDashboardPage() {
+function CoursesDashboardPage() {
   const { setValue, watch } = useForm<SearchFiltersData>({
     resolver: zodResolver(SearchFiltersSchema),
     defaultValues: {
@@ -138,3 +140,9 @@ export default function CoursesDashboardPage() {
     </DashboardLayout>
   );
 }
+
+// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+export default withRoleAuthorization(CoursesDashboardPage, {
+  userRolesToExclude: [UserRole.USER],
+  redirectDestination: "/",
+});

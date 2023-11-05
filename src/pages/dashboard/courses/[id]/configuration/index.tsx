@@ -1,7 +1,9 @@
 import { ConfigurationForm, ManageCourseLayout } from "@/features/course";
 import { ManageCard } from "@/features/dashboard";
+import { UserRole } from "@/features/user";
+import { withRoleAuthorization } from "@/shared/utils";
 
-export default function CourseConfigurationDashboardPage() {
+export function CourseConfigurationDashboardPage() {
   return (
     <ManageCourseLayout>
       <ManageCard
@@ -13,3 +15,9 @@ export default function CourseConfigurationDashboardPage() {
     </ManageCourseLayout>
   );
 }
+
+// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+export default withRoleAuthorization(CourseConfigurationDashboardPage, {
+  userRolesToExclude: [UserRole.USER],
+  redirectDestination: "/",
+});

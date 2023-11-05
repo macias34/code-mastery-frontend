@@ -9,8 +9,9 @@ import { z } from "zod";
 
 import { DashboardLayout, ManageCard } from "@/features/dashboard";
 import { usePage, useUpdatePage } from "@/features/information-page/api";
-import { useUser } from "@/features/user";
+import { UserRole, useUser } from "@/features/user";
 import { ButtonWithLoader, InputWithLabel } from "@/shared/components";
+import { withRoleAuthorization } from "@/shared/utils";
 
 const InformationPageFormSchema = z.object({
   title: z
@@ -41,7 +42,7 @@ const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 export type InformationPageFormData = z.infer<typeof InformationPageFormSchema>;
 
-export default function EditInformationPage() {
+export function EditInformationPage() {
   const router = useRouter();
   const slug = router.query.slug as string;
   const { data: page } = usePage(slug);
@@ -123,3 +124,9 @@ export default function EditInformationPage() {
     </DashboardLayout>
   );
 }
+
+// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+export default withRoleAuthorization(EditInformationPage, {
+  userRolesToExclude: [UserRole.USER],
+  redirectDestination: "/",
+});
