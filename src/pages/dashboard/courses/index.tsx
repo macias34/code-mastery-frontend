@@ -16,10 +16,10 @@ import { Spinner } from "@/shared/components/spinner";
 import { toast } from "@/shared/components/use-toast";
 
 export default function CoursesDashboardPage() {
-  const [page] = useState<number>(1);
+  const [page] = useState<number>(0);
   const { data } = useGetCourses(page);
   const router = useRouter();
-
+  console.log(data);
   const { mutate, isLoading } = useCreateCourse({
     onSuccess(course) {
       const { id } = course;

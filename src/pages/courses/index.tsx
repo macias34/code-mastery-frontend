@@ -37,7 +37,7 @@ export default function CoursesPage({
 
 export const getServerSideProps = (async () => {
   try {
-    const courseResponse = await request<GetCoursesDto>("/course/");
+    const courseResponse = await request<GetCoursesDto>("/course");
     return { props: { courseResponse } };
   } catch {
     return {
