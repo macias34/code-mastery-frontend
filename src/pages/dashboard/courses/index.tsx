@@ -1,4 +1,8 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/router";
+import { useCallback } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 import { Course, useCreateCourse, useGetCourses } from "@/features/course";
 import { DashboardLayout } from "@/features/dashboard";
@@ -9,16 +13,54 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
+  PaginationBar,
+  Skeleton,
 } from "@/shared/components";
 import { Button } from "@/shared/components/button";
 import { Spinner } from "@/shared/components/spinner";
 import { toast } from "@/shared/components/use-toast";
-import { useState } from "react";
+
+const SearchFiltersSchema = z.object({
+  courseName: z.string(),
+  page: z.number(),
+});
+
+type SearchFiltersData = z.infer<typeof SearchFiltersSchema>;
 
 export default function CoursesDashboardPage() {
-  const [page] = useState<number>(1);
-  const { data } = useGetCourses(page);
+  const { setValue, watch } = useForm<SearchFiltersData>({
+    resolver: zodResolver(SearchFiltersSchema),
+    defaultValues: {
+      page: 0,
+    },
+  });
+
+  const page = watch("page");
+
+  const { data, isLoading: areCoursesLoading } = useGetCourses(page);
   const router = useRouter();
+
+  const courses = data?.courses ?? [];
+  const totalPages = data?.totalPages ?? -1;
+
+  const showCourses = courses && !areCoursesLoading;
+
+  const handleNextClick = useCallback(() => {
+    setValue("page", page + 1);
+  }, [setValue, page]);
+
+  const handlePreviousClick = useCallback(() => {
+    if (page > 0) {
+      setValue("page", page - 1);
+    }
+  }, [setValue, page]);
+
+  const handlePageSelect = useCallback(
+    (page: number) => {
+      setValue("page", page);
+    },
+    [setValue],
+  );
 
   const { mutate, isLoading } = useCreateCourse({
     onSuccess(course) {
@@ -69,8 +111,28 @@ export default function CoursesDashboardPage() {
             {isLoading ? <Spinner /> : "Create course"}
           </Button>
         </CardHeader>
+
         <CardContent className="flex flex-col gap-y-6">
-          {data && data.courses && data.courses.map(course=> <Course key={course.id} course={course} />)}
+          {areCoursesLoading &&
+            // eslint-disable-next-line unicorn/new-for-builtins
+            Array(4)
+              .fill(1)
+              .map((_, index) => (
+                <Skeleton key={index} className="w-full h-24" />
+              ))}
+
+          {showCourses &&
+            courses.map((course) => <Course key={course.id} course={course} />)}
+
+          {areCoursesLoading ? undefined : (
+            <PaginationBar
+              currentPage={page}
+              totalPages={totalPages}
+              nextClick={handleNextClick}
+              previousClick={handlePreviousClick}
+              setPage={handlePageSelect}
+            />
+          )}
         </CardContent>
       </Card>
     </DashboardLayout>

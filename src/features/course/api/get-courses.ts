@@ -4,7 +4,7 @@ import { type GetCoursesDto } from "@/features/course";
 import { type ApiError, request } from "@/shared/utils";
 
 export const getCourses = (page: number) => {
-  return request<GetCoursesDto>(`/course?page=${page}`);
+  return request<GetCoursesDto>(`/course?page=${page}&size=4`);
 };
 
 export type UseGetCoursesOptions = UseQueryOptions<
