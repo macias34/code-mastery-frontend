@@ -25,7 +25,7 @@ export const ManageCard: FC<ManageCardProps> = ({
   classNames,
 }) => {
   return (
-    <Card className={cn("w-full h-fit", classNames?.container)}>
+    <Card className={cn("w-full max-w-5xl my-6 h-fit", classNames?.container)}>
       <CardHeader>
         <CardTitle className="text-2xl">{title}</CardTitle>
         {description && (

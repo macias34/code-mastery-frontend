@@ -12,3 +12,4 @@ export * from "./get-lesson";
 export * from "./patch-lesson";
 export * from "./delete-lesson";
 export * from "./override-properties";
+export * from "./get-courses";

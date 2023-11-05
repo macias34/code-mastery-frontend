@@ -29,7 +29,7 @@ export const useDeletePage = () => {
         title: TOAST_SUCCESS_TITLE,
         description: "You have successfully deleted page!",
       });
-      void queryClient.invalidateQueries(["information-pages"]);
+      void queryClient.invalidateQueries(["pages"]);
     },
     onError: (error: ApiError) => {
       toast({

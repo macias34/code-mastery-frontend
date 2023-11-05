@@ -39,7 +39,7 @@ export const useUpdatePage = () => {
 
   return useMutation(updatePage, {
     onSuccess: (data) => {
-      void router.push(`/dashboard/information-pages/${data.slug}`);
+      void router.push(`/dashboard/pages/${data.slug}`);
       toast({
         title: TOAST_SUCCESS_TITLE,
         description: "You have successfully updated page!",

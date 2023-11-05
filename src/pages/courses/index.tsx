@@ -1,13 +1,13 @@
 import { type GetServerSideProps } from "next";
 
-import { Course, type CourseResponseDto, FilterBar } from "@/features/course";
+import { Course, FilterBar, type GetCoursesDto } from "@/features/course";
 import { ShopLayout } from "@/features/shop";
 import { request } from "@/shared/utils";
 
 export default function CoursesPage({
   courseResponse,
 }: {
-  courseResponse: CourseResponseDto;
+  courseResponse: GetCoursesDto;
 }) {
   const { courses } = courseResponse;
 
@@ -37,7 +37,7 @@ export default function CoursesPage({
 
 export const getServerSideProps = (async () => {
   try {
-    const courseResponse = await request<CourseResponseDto>("/course/");
+    const courseResponse = await request<GetCoursesDto>("/course/");
     return { props: { courseResponse } };
   } catch {
     return {
@@ -52,5 +52,5 @@ export const getServerSideProps = (async () => {
     };
   }
 }) satisfies GetServerSideProps<{
-  courseResponse: CourseResponseDto;
+  courseResponse: GetCoursesDto;
 }>;
