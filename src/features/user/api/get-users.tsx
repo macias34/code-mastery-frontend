@@ -19,13 +19,21 @@ const createSearchParameters = ({
   page,
   userFilter: { email, role, username },
 }: CreateSearchParametersArguments) => {
-  return new URLSearchParams({
-    page: page.toString(),
-    size: "5",
-    email: email ?? "",
-    role: role ?? "",
-    username: username ?? "",
-  });
+  const searchParameters = new URLSearchParams();
+
+  if (email) {
+    searchParameters.append("email", email);
+  }
+  if (role) {
+    searchParameters.append("role", role);
+  }
+  if (username) {
+    searchParameters.append("username", username);
+  }
+  searchParameters.append("page", page.toString());
+  searchParameters.append("size", "5");
+
+  return searchParameters;
 };
 
 export const getUsers = async ({
@@ -56,7 +64,13 @@ export const useUsers = ({
 }) => {
   const { accessToken } = useUser();
   return useQuery({
-    queryKey: ["users", page, userFilter],
+    queryKey: [
+      "users",
+      page,
+      userFilter.email,
+      userFilter.role,
+      userFilter.username,
+    ],
     queryFn: () => getUsers({ accessToken, page, userFilter }),
   });
 };

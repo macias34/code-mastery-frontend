@@ -21,7 +21,7 @@ interface Props {
   buttonText?: string;
 }
 
-export const Course = ({ course, buttonText }: Props) => {
+export const ShopCourse = ({ course, buttonText }: Props) => {
   console.log(course);
   return (
     <Card className="w-[350px] flex flex-col">

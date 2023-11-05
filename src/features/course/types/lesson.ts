@@ -1,5 +1,8 @@
 export interface LessonDto {
   id: number;
-  name: string;
+  title: string;
   chapterId: number;
+  createdAt: string;
+  updatedAt: string;
+  videoSrc: string | null;
 }

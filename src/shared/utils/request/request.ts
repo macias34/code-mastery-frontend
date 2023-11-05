@@ -1,9 +1,5 @@
 import { type AccessToken } from "./types";
-import {
-  createRequest,
-  handleResponseError,
-  handleValidResponse,
-} from "./utils";
+import { createRequest } from "./utils";
 
 export async function request<TResponse>(
   url: string,
@@ -13,11 +9,18 @@ export async function request<TResponse>(
   const request = createRequest(url, config, session);
   const response = await request;
 
-  await handleResponseError(response);
+  if (!response.ok) {
+    const contentType = response.headers.get("content-type");
+    if (!contentType || !contentType.includes("application/json")) {
+      return {} as TResponse;
+    }
 
-  const validResponse = await handleValidResponse<TResponse>(response);
-  if (validResponse) {
-    return validResponse;
+    throw await response.json();
+  }
+
+  const contentType = response.headers.get("content-type");
+  if (contentType && contentType.includes("application/json")) {
+    return (await response.json()) as TResponse;
   }
 
   return {} as TResponse;

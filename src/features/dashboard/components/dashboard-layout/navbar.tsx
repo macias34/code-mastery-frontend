@@ -3,21 +3,25 @@ import Link from "next/link";
 import React, { type FC } from "react";
 
 interface NavbarProps {
-  courseName?: string;
+  backLink: {
+    label: string;
+    href: string;
+  };
+  pageTitle: string;
 }
 
-export const Navbar: FC<NavbarProps> = ({ courseName }) => {
+export const Navbar: FC<NavbarProps> = ({ backLink, pageTitle }) => {
   return (
-    <nav className="py-4 border-b border-border w-full">
+    <nav className="py-5 border-b border-border w-full">
       <div className="container flex justify-between items-center">
         <Link
-          href={"/dashboard/courses"}
+          href={backLink.href}
           className="inline-flex gap-2 hover:text-white/80 transition"
         >
-          <ChevronLeft /> Back to all courses
+          <ChevronLeft /> {backLink.label}
         </Link>
 
-        <span className="font-bold text-lg">{courseName ?? ""}</span>
+        <span className="font-bold text-lg">{pageTitle}</span>
       </div>
     </nav>
   );

@@ -1,13 +1,20 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { TOAST_ERROR_TITLE, TOAST_SUCCESS_TITLE } from "@/libs/toast";
-import { Button, InputWithLabel, Spinner, toast } from "@/shared/components";
+import {
+  Button,
+  InputWithLabel,
+  Label,
+  Spinner,
+  toast,
+} from "@/shared/components";
 
-import { usePatchCourse } from "../../api";
+import { useOverrideProperties, usePatchCourse } from "../../api";
 import { useGetPathnameCourse, useInvalidatePathnameCourse } from "../../hooks";
+import { type OverridePropertyDto, type PropertyDto } from "../../types";
 
 const ConfigurationFormSchema = z.object({
   name: z
@@ -22,16 +29,40 @@ const ConfigurationFormSchema = z.object({
     .string()
     .min(3, "Instructor name should be at least 3 characters")
     .max(50, "Instructor name should be 50 characters maximum"),
+  customProperties: z.array(
+    z.object({
+      label: z.string(),
+      value: z.string(),
+    }),
+  ),
 });
 
 type ConfigurationFormData = z.infer<typeof ConfigurationFormSchema>;
 
 export const ConfigurationForm = () => {
-  const { courseUseQueryResult } = useGetPathnameCourse();
-  const { data: course } = courseUseQueryResult;
+  const { data: course } = useGetPathnameCourse();
+  const [customProperties, setCustomProperties] = useState<
+    Omit<PropertyDto, "id">[]
+  >([]);
 
   const { invalidateCourse } = useInvalidatePathnameCourse();
   const { mutate, isLoading } = usePatchCourse();
+  const { mutateAsync: mutateProperties } = useOverrideProperties();
+
+  const addEmptyCustomProperty = () => {
+    const emptyProperty: Omit<PropertyDto, "id"> = { label: "", value: "" };
+    setCustomProperties((previousState) => [...previousState, emptyProperty]);
+  };
+
+  const removePreviousCustomProperty = () => {
+    setValue(`customProperties.${customProperties.length - 1}.label`, "");
+    setValue(`customProperties.${customProperties.length - 1}.value`, "");
+    setCustomProperties((previousState) => {
+      const newState = [...previousState];
+      newState.pop();
+      return newState;
+    });
+  };
 
   const { setValue, register, handleSubmit } = useForm<ConfigurationFormData>({
     mode: "onBlur",
@@ -39,28 +70,51 @@ export const ConfigurationForm = () => {
   });
 
   const onSubmit = (formData: ConfigurationFormData) => {
-    mutate(formData, {
-      onSuccess() {
-        toast({
-          title: TOAST_SUCCESS_TITLE,
-          description: "Course configuration has been saved.",
+    console.log(formData);
+    const propertiesToCreate: OverridePropertyDto[] =
+      formData.customProperties.slice(0, customProperties.length);
+
+    mutateProperties({
+      properties: propertiesToCreate,
+      courseId: course?.id ?? 0,
+    })
+      .then(() => {
+        mutate(formData, {
+          onSuccess() {
+            toast({
+              title: TOAST_SUCCESS_TITLE,
+              description: "Course configuration has been saved.",
+            });
+          },
+          onError() {
+            toast({
+              title: TOAST_ERROR_TITLE,
+              description: "Course configuration hasn't been saved.",
+              variant: "destructive",
+            });
+          },
+          async onSettled() {
+            await invalidateCourse();
+          },
         });
-      },
-      onError() {
+      })
+      .catch(() => {
         toast({
           title: TOAST_ERROR_TITLE,
           description: "Course configuration hasn't been saved.",
           variant: "destructive",
         });
-      },
-      async onSettled() {
-        await invalidateCourse();
-      },
-    });
+      });
   };
 
   useEffect(() => {
     if (course) {
+      course.properties.forEach((property, index) => {
+        const { label, value } = property;
+        setValue(`customProperties.${index}.label`, label);
+        setValue(`customProperties.${index}.value`, value);
+      });
+      setCustomProperties(course.properties);
       const { name, description, instructorName } = course;
       setValue("name", name);
       setValue("description", description);
@@ -95,6 +149,51 @@ export const ConfigurationForm = () => {
           placeholder: "Dawid Żmudzki",
         }}
       />
+
+      <div className="flex flex-col gap-4">
+        <Label className="text-md">Custom course properties</Label>
+        {customProperties.map((property, index) => (
+          <div key={index} className="flex gap-4">
+            <InputWithLabel
+              className="flex-1"
+              label={{ size: "lg" }}
+              labelContent="Label"
+              name={`customProperties.${index}.label`}
+              input={{
+                ...register(`customProperties.${index}.label`),
+                placeholder: "Label",
+              }}
+            />
+            <InputWithLabel
+              className="flex-1"
+              label={{ size: "lg" }}
+              labelContent="Value"
+              name={`customProperties.${index}.value`}
+              input={{
+                ...register(`customProperties.${index}.value`),
+                placeholder: "Value",
+              }}
+            />
+          </div>
+        ))}
+        <div className="flex gap-4">
+          <Button
+            className="w-fit"
+            type="button"
+            onClick={addEmptyCustomProperty}
+          >
+            Add
+          </Button>
+          <Button
+            className="w-fit"
+            type="button"
+            variant="destructive"
+            onClick={removePreviousCustomProperty}
+          >
+            Remove previous
+          </Button>
+        </div>
+      </div>
 
       <Button size="lg" className="self-end w-24">
         {isLoading ? <Spinner /> : "Save"}

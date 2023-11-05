@@ -3,7 +3,7 @@ import { useQuery } from "react-query";
 
 import { request } from "@/shared/utils";
 
-import { UserDto } from "../types";
+import { type UserDto } from "../types";
 
 export const useUser = () => {
   const session = useSession();

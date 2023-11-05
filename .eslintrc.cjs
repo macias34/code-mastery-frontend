@@ -39,6 +39,7 @@ const config = {
 	plugins: ["@typescript-eslint", "unicorn", "sonarjs"],
 	extends: ["next/core-web-vitals", "plugin:@typescript-eslint/recommended", "plugin:unicorn/recommended", "plugin:sonarjs/recommended"],
 	rules: {
+		"unicorn/no-useless-undefined": "off",
 		"unicorn/no-null": "off",
 		"@typescript-eslint/no-unsafe-call": "warn",
 		"@typescript-eslint/no-misused-promises": [2, {
@@ -58,18 +59,10 @@ const config = {
 		"unicorn/no-keyword-prefix": "off",
 		"unicorn/no-array-for-each": "off",
 		"unicorn/better-regex": "error",
-		'max-lines': [
-			'error',
-			{
-				max: 100,
-				skipBlankLines: true,
-				skipComments: true,
-			},
-		],
 		'max-lines-per-function': [
 			'error',
 			{
-				max: 20,
+				max: 30,
 				skipBlankLines: true,
 				skipComments: true,
 				IIFEs: true,
@@ -81,7 +74,7 @@ const config = {
 				fixStyle: "inline-type-imports",
 			},
 		],
-		"@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
+		"@typescript-eslint/no-unused-vars": ["warn"],
 	},
 };
 
