@@ -11,6 +11,8 @@ export type UserSearchFilters = Omit<Required<UserFilter>, "role"> & {
   page: number;
 };
 
+// @TODO: Move useForm to component
+
 function UsersDashboard() {
   const methods = useForm<UserSearchFilters>({
     defaultValues: {
@@ -25,7 +27,7 @@ function UsersDashboard() {
   const role = methods.watch("role");
   const username = methods.watch("username");
 
-  const { data: usersReponse, isLoading: areUsersLoading } = useUsers({
+  const { data: usersResponse, isLoading: areUsersLoading } = useUsers({
     userFilter: {
       email: "",
       username,
@@ -35,9 +37,20 @@ function UsersDashboard() {
   });
 
   return (
-    <DashboardLayout>
+    <DashboardLayout
+      navbar={{
+        backLink: {
+          href: "/dashboard",
+          label: "Go back to dashboard",
+        },
+        pageTitle: "Users",
+      }}
+      classNames={{
+        container: "justify-center",
+      }}
+    >
       <FormProvider {...methods}>
-        <UsersCard {...usersReponse} isLoading={areUsersLoading} />
+        <UsersCard {...usersResponse} isLoading={areUsersLoading} />
       </FormProvider>
     </DashboardLayout>
   );

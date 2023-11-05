@@ -1,4 +1,4 @@
-import { Course } from "@/features/course";
+import { ShopCourse } from "@/features/course";
 import { ShopLayout } from "@/features/shop";
 import { useUser } from "@/features/user";
 import { withRoleAuthorization } from "@/shared/utils";
@@ -16,7 +16,7 @@ function MyCoursesPage() {
           {userData &&
             (userData?.courses?.length ?? 0) > 0 &&
             userData.courses.map((course) => (
-              <Course buttonText="Watch" course={course} key={course.id} />
+              <ShopCourse buttonText="Watch" course={course} key={course.id} />
             ))}
         </div>
       </div>

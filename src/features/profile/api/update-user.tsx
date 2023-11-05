@@ -39,6 +39,9 @@ export const useUpdateUser = () => {
         description: "You have successfully updated account!",
       });
       await queryClient.invalidateQueries(["userData"]);
+      void queryClient.invalidateQueries({
+        queryKey: ["users"],
+      });
     },
     onError: (error: ApiError) => {
       toast({

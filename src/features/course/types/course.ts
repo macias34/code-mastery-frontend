@@ -14,7 +14,7 @@ export interface CourseDto {
   chapters: ChapterDto[];
 }
 
-export interface CourseResponseDto {
+export interface GetCoursesDto {
   totalElements: number;
   totalPages: number;
   currentPage: number;
