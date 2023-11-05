@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import "react-quill/dist/quill.snow.css";
 import { z } from "zod";
 
-import { DashboardLayout } from "@/features/dashboard";
+import { DashboardLayout, ManageCard } from "@/features/dashboard";
 import { usePage, useUpdatePage } from "@/features/information-page/api";
 import { useUser } from "@/features/user";
 import { ButtonWithLoader, InputWithLabel } from "@/shared/components";
@@ -88,30 +88,41 @@ export default function EditInformationPage() {
           href: "/dashboard/pages",
           label: "Go back to pages",
         },
-        pageTitle: slug,
+        pageTitle: `Edit page ${slug}`,
+      }}
+      classNames={{
+        container: "justify-center items-center",
       }}
     >
-      <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
-        <InputWithLabel
-          labelContent="Page title"
-          name="title"
-          input={{
-            ...register("title"),
-            className: "w-fit",
-          }}
-          error={<ErrorMessage errors={errors} name="title" />}
-        />
-        <QuillNoSSRWrapper
-          className="w-full text-[#222] bg-slate-200 min-h-[75vh] flex flex-col"
-          modules={modules}
-          value={content}
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-          onChange={(value) => setValue("content", value)}
-        />
-        <ButtonWithLoader className="w-fit" isLoading={isLoading}>
-          Save changes
-        </ButtonWithLoader>
-      </form>
+      <ManageCard
+        title="Edit page content"
+        description="Manage page title and description."
+      >
+        <form
+          className="flex flex-col gap-4 w-full"
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <InputWithLabel
+            labelContent="Page title"
+            name="title"
+            input={{
+              ...register("title"),
+              className: "w-fit",
+            }}
+            error={<ErrorMessage errors={errors} name="title" />}
+          />
+          <QuillNoSSRWrapper
+            className="w-full text-[#222] bg-slate-200 min-h-[75vh] flex flex-col"
+            modules={modules}
+            value={content}
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+            onChange={(value) => setValue("content", value)}
+          />
+          <ButtonWithLoader className=" w-32" isLoading={isLoading}>
+            Save changes
+          </ButtonWithLoader>
+        </form>
+      </ManageCard>
     </DashboardLayout>
   );
 }

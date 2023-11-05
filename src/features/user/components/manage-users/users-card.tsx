@@ -50,7 +50,7 @@ export const UsersCard = ({ totalPages, users, isLoading }: Props) => {
   );
 
   return (
-    <Card className="w-3/4 max-w-5xl mx-auto my-6">
+    <Card className="w-full max-w-5xl mx-auto my-6">
       <CardHeader>
         <CardTitle>Users</CardTitle>
         <CardDescription>Explore and edit users from shop</CardDescription>

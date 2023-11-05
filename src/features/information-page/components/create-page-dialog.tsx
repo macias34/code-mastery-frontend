@@ -52,11 +52,13 @@ export const CreatePageDialog = () => {
 
   return (
     <Dialog>
-      <DialogTrigger>
-        <Button className="w-fit">Create new page</Button>
+      <DialogTrigger asChild>
+        <Button size="lg" className="w-fit">
+          Create new page
+        </Button>
       </DialogTrigger>
       <DialogContent className="border-slate-700">
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
           <InputWithLabel
             name="title"
             labelContent="Title"
@@ -65,7 +67,7 @@ export const CreatePageDialog = () => {
             }}
             error={<ErrorMessage errors={errors} name="title" />}
           />
-          <Button disabled={!isValid} type="submit" className="max-w-fit mt-2">
+          <Button disabled={!isValid} type="submit" className=" w-20">
             {isLoading ? <Spinner className="h-6 w-6" /> : "Create"}
           </Button>
         </form>

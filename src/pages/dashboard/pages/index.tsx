@@ -11,6 +11,9 @@ export default function PagesDashboard() {
         },
         pageTitle: "Pages",
       }}
+      classNames={{
+        container: "justify-center",
+      }}
     >
       <PagesCard />
     </DashboardLayout>

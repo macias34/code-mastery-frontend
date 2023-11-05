@@ -11,10 +11,10 @@ interface AsideProps {
 
 export const Aside: FC<AsideProps> = ({ items }) => {
   return (
-    <aside className="flex flex-col gap-2 pr-10 py-16 border-r border-r-border w-60">
+    <aside className="flex flex-col gap-2 pr-10 py-8 border-r border-r-border w-60">
       {items.map(({ children, icon, ...rest }, index) => (
         <Link
-          className=" font-semibold hover:bg-slate-700 transition px-4 py-2 rounded flex gap-4 items-center"
+          className="hover:bg-slate-700 transition px-4 py-2 rounded flex gap-4 items-center"
           key={index}
           {...rest}
         >

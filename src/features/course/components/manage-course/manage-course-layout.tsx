@@ -40,7 +40,7 @@ export const ManageCourseLayout: FC<PropsWithChildren> = ({ children }) => {
       }}
       asideItems={asideItems}
     >
-      <section className="pt-16 w-full max-w-5xl">{children}</section>
+      <section className="my-8 w-full max-w-5xl">{children}</section>
     </DashboardLayout>
   );
 };
