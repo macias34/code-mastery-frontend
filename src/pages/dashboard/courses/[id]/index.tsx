@@ -1,4 +1,5 @@
-import { ManageCard, ManageCourseLayout } from "@/features/course";
+import { ManageCourseLayout } from "@/features/course";
+import { ManageCard } from "@/features/dashboard";
 
 export default function CourseDashboardPage() {
   return (
