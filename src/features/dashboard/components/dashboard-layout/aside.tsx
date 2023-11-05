@@ -1,16 +1,16 @@
 import Link, { type LinkProps } from "next/link";
 import React, { type FC, type PropsWithChildren } from "react";
 
-export type LinkItem = LinkProps & PropsWithChildren;
+export type AsideItem = LinkProps & PropsWithChildren;
 
 interface AsideProps {
-  linkItems: LinkItem[];
+  items: AsideItem[];
 }
 
-export const Aside: FC<AsideProps> = ({ linkItems }) => {
+export const Aside: FC<AsideProps> = ({ items }) => {
   return (
     <aside className="flex flex-col gap-6">
-      {linkItems.map(({ children, ...rest }, index) => (
+      {items.map(({ children, ...rest }, index) => (
         <Link
           className=" font-semibold hover:text-white/80 transition"
           key={index}

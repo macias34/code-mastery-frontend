@@ -1,18 +1,18 @@
 import {
   ConfigurationForm,
+  DashboardCourseLayout,
   ManageCard,
-  ManageCourseLayout,
 } from "@/features/course";
 
 export default function CourseConfigurationDashboardPage() {
   return (
-    <ManageCourseLayout>
+    <DashboardCourseLayout>
       <ManageCard
         title="Configuration"
         description="Set course name, description, thumbnail and instructor"
       >
         <ConfigurationForm />
       </ManageCard>
-    </ManageCourseLayout>
+    </DashboardCourseLayout>
   );
 }

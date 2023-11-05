@@ -1,38 +1,31 @@
-import { type FC, type PropsWithChildren } from "react";
+import React, { type FC, type PropsWithChildren } from "react";
 
-import { ShopLayout } from "@/features/shop";
+import { Aside, type AsideItem } from "./aside";
+import { Navbar } from "./navbar";
 
-import { Navigation } from "./navigation";
-import { type NavigationItem } from "./navigation-link";
+interface DashboardLayoutProps extends PropsWithChildren {
+  asideItems?: AsideItem[];
+  navbar: {
+    backLink: {
+      label: string;
+      href: string;
+    };
+    pageTitle: string;
+  };
+}
 
-export const DashboardLayout: FC<PropsWithChildren> = ({ children }) => {
-  const links: NavigationItem[] = [
-    {
-      href: "/dashboard",
-      children: "Dashboard",
-    },
-    {
-      href: "/dashboard/courses",
-      children: "Courses",
-    },
-    {
-      href: "/dashboard/orders",
-      children: "Orders",
-    },
-    {
-      href: "/dashboard/users",
-      children: "Users",
-    },
-    {
-      href: "/dashboard/information-pages",
-      children: "Information pages",
-    },
-  ];
-
+export const DashboardLayout: FC<DashboardLayoutProps> = ({
+  children,
+  asideItems,
+  navbar,
+}) => {
   return (
-    <ShopLayout>
-      <Navigation links={links} />
-      {children}
-    </ShopLayout>
+    <main className="flex flex-col min-h-screen">
+      <Navbar backLink={navbar.backLink} pageTitle={navbar.pageTitle} />
+      <div className="container flex gap-32 pb-6 max-w-7xl grow">
+        {asideItems && asideItems.length > 0 && <Aside items={asideItems} />}
+        {children}
+      </div>
+    </main>
   );
 };

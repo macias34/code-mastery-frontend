@@ -1,13 +1,13 @@
 import {
   ChapterList,
   CreateChapterDialog,
+  DashboardCourseLayout,
   ManageCard,
-  ManageCourseLayout,
 } from "@/features/course";
 
 export default function CourseContentDashboardPage() {
   return (
-    <ManageCourseLayout>
+    <DashboardCourseLayout>
       <ManageCard
         title="Content"
         description="Control content of your course"
@@ -18,6 +18,6 @@ export default function CourseContentDashboardPage() {
         <ChapterList />
         <CreateChapterDialog />
       </ManageCard>
-    </ManageCourseLayout>
+    </DashboardCourseLayout>
   );
 }
