@@ -4,12 +4,12 @@ import { useFormContext } from "react-hook-form";
 import { ManageCard } from "@/features/dashboard";
 import { type GetUsersDto, type UserRole } from "@/features/user";
 import { type UserSearchFilters } from "@/pages/dashboard/users";
+import { Skeleton } from "@/shared/components";
 import { Input } from "@/shared/components/input";
 import { PaginationBar } from "@/shared/components/pagination-bar";
 
 import { RoleSelect } from "./role-select";
 import { User } from "./user";
-import { UserSkeleton } from "./user-skeleton";
 
 interface Props extends Partial<GetUsersDto> {
   isLoading?: boolean;
@@ -57,9 +57,11 @@ export const UsersCard = ({ totalPages, users, isLoading }: Props) => {
         </div>
         <div className="flex flex-col gap-6">
           {isLoading &&
-            Array.from({ length: 5 })
+            Array.from({ length: 3 })
               .fill(0)
-              .map((_, index) => <UserSkeleton key={index} />)}
+              .map((_, index) => (
+                <Skeleton className="w-full h-24" key={index} />
+              ))}
           {users &&
             users.length > 0 &&
             users.map((user) => <User key={user.id} user={user} />)}
