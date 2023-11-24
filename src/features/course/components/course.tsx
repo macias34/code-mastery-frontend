@@ -1,7 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
+import { useCreateOrder } from "@/features/order";
+import { useUser } from "@/features/user";
 import { formatToDDMMYYYY } from "@/libs/dayjs";
+import { TOAST_SUCCESS_TITLE } from "@/libs/toast";
+import { toast } from "@/shared/components";
 import { Badge } from "@/shared/components/badge";
 import { Button } from "@/shared/components/button";
 import {
@@ -19,10 +24,39 @@ import { type CourseDto } from "../types";
 interface Props {
   course: CourseDto;
   buttonText?: string;
+  myCourses?: boolean;
 }
 
-export const ShopCourse = ({ course, buttonText }: Props) => {
-  console.log(course);
+export const ShopCourse = ({ course, myCourses }: Props) => {
+  const { mutate, isLoading } = useCreateOrder();
+  const router = useRouter();
+  const user = useUser();
+  const handleBuyNow = () => {
+    mutate(
+      {
+        courseId: course.id,
+        userId: user.userData?.id ?? 1,
+        accessToken: user.accessToken,
+      },
+      {
+        onSuccess: () => {
+          toast({
+            title: TOAST_SUCCESS_TITLE,
+            description: "Course bought successfully",
+            duration: 5000,
+          });
+          void router.push("/my-courses");
+        },
+        onError: () => {
+          toast({
+            title: "Error",
+            description: "Something went wrong",
+            duration: 5000,
+          });
+        },
+      },
+    );
+  };
   return (
     <Card className="w-[350px] flex flex-col">
       <CardHeader className="p-0">
@@ -44,9 +78,18 @@ export const ShopCourse = ({ course, buttonText }: Props) => {
             <CardTitle className="break-words">{course.name}</CardTitle>
             <CardDescription>{course.instructorName}</CardDescription>
           </div>
-
-          <Button>{buttonText ?? "See details"}</Button>
         </Link>
+        <div className="flex gap-4 justify-end">
+          {myCourses ? (
+            <Link href={`/course/${course.id}`}>
+              <Button>Watch</Button>
+            </Link>
+          ) : (
+            <Button disabled={isLoading} onClick={() => handleBuyNow()}>
+              Buy now
+            </Button>
+          )}
+        </div>
       </CardContent>
       <CardFooter className="flex justify-between mt-auto h-max">
         <div className="self-start flex flex-col justify-around gap-y-2">

@@ -27,7 +27,6 @@ export const withRoleAuthorization = (
       if (isLoading) {
         return;
       }
-
       if (!accessToken) {
         void router.push("/");
         return;
