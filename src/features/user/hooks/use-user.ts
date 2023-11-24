@@ -16,7 +16,7 @@ export const useUser = () => {
     enabled: !!accessToken,
   });
 
-  const isLoading = isUserDataLoading && session.status === "loading";
+  const isLoading = isUserDataLoading || session.status === "loading";
 
   return {
     accessToken,

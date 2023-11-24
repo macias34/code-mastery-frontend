@@ -39,7 +39,7 @@ function CoursesDashboardPage() {
 
   const page = watch("page");
 
-  const { data, isLoading: areCoursesLoading } = useGetCourses(page);
+  const { data, isLoading: areCoursesLoading } = useGetCourses(page, {});
   const router = useRouter();
 
   const courses = data?.courses ?? [];

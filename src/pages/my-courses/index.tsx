@@ -16,7 +16,12 @@ function MyCoursesPage() {
           {userData &&
             (userData?.courses?.length ?? 0) > 0 &&
             userData.courses.map((course) => (
-              <ShopCourse buttonText="Watch" course={course} key={course.id} />
+              <ShopCourse
+                myCourses
+                buttonText="Watch"
+                course={course}
+                key={course.id}
+              />
             ))}
         </div>
       </div>
