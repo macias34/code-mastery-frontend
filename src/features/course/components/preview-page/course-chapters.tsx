@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/components";
 
 import { type CourseDto } from "../../types";
@@ -9,9 +11,11 @@ interface CourseChaptersProps {
 
 export const CourseChapters = ({ course }: CourseChaptersProps) => {
   return (
-    <Card>
+    <Card className=" min-w-[400px] h-[80vh] overflow-y-auto">
       <CardHeader>
-        <CardTitle className="text-2xl">Course Chapters</CardTitle>
+        <Link href={`/course/${course.id}`}>
+          <CardTitle className="text-2xl">Course Chapters</CardTitle>
+        </Link>
       </CardHeader>
       <CardContent>
         <ol className="list-decimal list-inside text-base leading-loose flex flex-col gap-4">
