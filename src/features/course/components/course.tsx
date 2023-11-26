@@ -24,10 +24,9 @@ import { type CourseDto } from "../types";
 interface Props {
   course: CourseDto;
   buttonText?: string;
-  myCourses?: boolean;
 }
 
-export const ShopCourse = ({ course, myCourses }: Props) => {
+export const ShopCourse = ({ course }: Props) => {
   const { mutate, isLoading } = useCreateOrder();
   const router = useRouter();
   const user = useUser();
@@ -57,6 +56,11 @@ export const ShopCourse = ({ course, myCourses }: Props) => {
       },
     );
   };
+
+  const isBought = user.userData?.courses.some(
+    (userCourse) => userCourse.id === course.id,
+  );
+
   return (
     <Card className="w-[350px] flex flex-col">
       <CardHeader className="p-0">
@@ -80,7 +84,7 @@ export const ShopCourse = ({ course, myCourses }: Props) => {
           </div>
         </Link>
         <div className="flex gap-4 justify-end">
-          {myCourses ? (
+          {isBought ? (
             <Link href={`/course/${course.id}`}>
               <Button>Watch</Button>
             </Link>

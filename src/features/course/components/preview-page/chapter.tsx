@@ -13,7 +13,7 @@ export const Chapter = ({ chapter }: ChapterProps) => {
   return (
     <li
       onClick={() => setLessonsOpened((previousState) => !previousState)}
-      className="border border-border p-2 cursor-pointer rounded hover:bg-slate-900 transition"
+      className="border border-border p-2 cursor-pointer rounded-md hover:bg-slate-900 transition"
     >
       {chapter.title}
       <p className="text-sm text-zinc-500 dark:text-zinc-400">
@@ -30,7 +30,7 @@ export const Chapter = ({ chapter }: ChapterProps) => {
               key={lesson.id}
               href={`/course/${chapter.courseId}/lesson/${lesson.id}`}
             >
-              <li className="border border-border p-2 text-sm rounded hover:bg-slate-700 transition">
+              <li className="border border-border p-2 text-sm rounded-md hover:bg-slate-700 transition">
                 {lesson.title}
               </li>
             </Link>

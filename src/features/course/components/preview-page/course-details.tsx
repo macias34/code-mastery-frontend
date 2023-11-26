@@ -1,6 +1,9 @@
 import dayjs from "dayjs";
 import React from "react";
 
+import { useCreateOrder } from "@/features/order";
+import { useInvalidateUser, useUser } from "@/features/user";
+import { TOAST_SUCCESS_TITLE } from "@/libs/toast";
 import {
   Avatar,
   Badge,
@@ -8,6 +11,7 @@ import {
   Card,
   CardContent,
   CardFooter,
+  toast,
 } from "@/shared/components";
 
 import { type CourseDto } from "../../types";
@@ -18,6 +22,7 @@ interface CourseDetailsProps {
 
 export const CourseDetails = ({ course }: CourseDetailsProps) => {
   const {
+    id,
     name,
     instructorName,
     participantsCount,
@@ -27,6 +32,42 @@ export const CourseDetails = ({ course }: CourseDetailsProps) => {
     chapters,
     description,
   } = course;
+  const { mutate, isLoading } = useCreateOrder();
+  const user = useUser();
+  const { invalidate } = useInvalidateUser();
+
+  const isBought = user.userData?.courses.some(
+    (userCourse) => userCourse.id === id,
+  );
+
+  const handleBuyNow = () => {
+    mutate(
+      {
+        courseId: id,
+        userId: user.userData?.id ?? 1,
+        accessToken: user.accessToken,
+      },
+      {
+        onSuccess: () => {
+          toast({
+            title: TOAST_SUCCESS_TITLE,
+            description: "Course bought successfully",
+            duration: 5000,
+          });
+        },
+        onError: () => {
+          toast({
+            title: "Error",
+            description: "Something went wrong",
+            duration: 5000,
+          });
+        },
+        async onSettled() {
+          await invalidate();
+        },
+      },
+    );
+  };
 
   return (
     <div className="md:col-span-2">
@@ -86,9 +127,13 @@ export const CourseDetails = ({ course }: CourseDetailsProps) => {
           </div>
         </CardContent>
         <CardFooter className="flex items-center justify-end">
-          <Button color="primary" variant="secondary">
-            Enroll Now
-          </Button>
+          {isBought ? (
+            <Button disabled>Already bought</Button>
+          ) : (
+            <Button disabled={isLoading} onClick={() => handleBuyNow()}>
+              Buy now
+            </Button>
+          )}
         </CardFooter>
       </Card>
     </div>
