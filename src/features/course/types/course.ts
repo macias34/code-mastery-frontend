@@ -4,7 +4,7 @@ export interface CourseDto {
   id: number;
   name: string;
   price: number;
-  instructorName: string;
+  instructorName: string | null;
   participantsCount: string;
   createdAt: string;
   updatedAt: string;

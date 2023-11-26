@@ -19,9 +19,13 @@ export const CourseChapters = ({ course }: CourseChaptersProps) => {
       </CardHeader>
       <CardContent>
         <ol className="list-decimal list-inside text-base leading-loose flex flex-col gap-4">
-          {course.chapters.map((chapter) => (
-            <Chapter key={chapter.id} chapter={chapter} />
-          ))}
+          {course.chapters.length > 0 ? (
+            course.chapters.map((chapter) => (
+              <Chapter key={chapter.id} chapter={chapter} />
+            ))
+          ) : (
+            <p>No chapters found 😢</p>
+          )}
         </ol>
       </CardContent>
     </Card>

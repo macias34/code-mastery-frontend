@@ -41,7 +41,8 @@ export const CourseDetails = ({ course }: CourseDetailsProps) => {
     (userCourse) => userCourse.id === id,
   );
 
-  const instructorNameAbbreviation = instructorName.slice(0, 2).toUpperCase();
+  const instructorNameAbbreviation =
+    instructorName?.slice(0, 2).toUpperCase() ?? "AD";
 
   const handleBuyNow = () => {
     mutate(

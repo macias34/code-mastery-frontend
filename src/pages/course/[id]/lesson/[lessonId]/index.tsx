@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 import {
   CourseChapters,
@@ -8,10 +9,14 @@ import {
   useGetLesson,
 } from "@/features/course";
 import { ShopLayout } from "@/features/shop";
-import { Skeleton } from "@/shared/components";
+import { useUser } from "@/features/user";
+import { TOAST_ERROR_TITLE } from "@/libs/toast";
+import { Skeleton, toast } from "@/shared/components";
+import { withRoleAuthorization } from "@/shared/utils";
 
-export default function LessonPage() {
-  const { query } = useRouter();
+function LessonPage() {
+  const { query, push } = useRouter();
+  const { userData } = useUser();
 
   const lessonId = query?.lessonId
     ? Number.parseInt(query.lessonId as string)
@@ -22,6 +27,22 @@ export default function LessonPage() {
   });
 
   const { data: lesson, isLoading: isLessonLoading } = useGetLesson(lessonId);
+
+  const hasBoughtCourse = userData?.courses.some(
+    (userCourse) => userCourse.id === courseId,
+  );
+
+  useEffect(() => {
+    if (!hasBoughtCourse) {
+      void push(`/course/${courseId}`);
+      toast({
+        title: TOAST_ERROR_TITLE,
+        description: "You have not bought this course",
+        variant: "destructive",
+        duration: 3000,
+      });
+    }
+  }, [hasBoughtCourse, courseId, push]);
 
   const isLoading = isLessonLoading || isCourseLoading;
 
@@ -44,3 +65,9 @@ export default function LessonPage() {
     </ShopLayout>
   );
 }
+
+// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+export default withRoleAuthorization(LessonPage, {
+  userRolesToExclude: [],
+  redirectDestination: "/courses",
+});
