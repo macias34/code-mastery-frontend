@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
@@ -17,7 +16,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/shared/components/card";
-import { API_URL } from "@/shared/constants";
 
 import { type CourseDto } from "../types";
 
@@ -66,10 +64,9 @@ export const ShopCourse = ({ course }: Props) => {
     <Card className="w-[350px] flex flex-col">
       <CardHeader className="p-0">
         <figure className="relative overflow-hidden h-40">
-          <Image
-            src={`${API_URL}/course/avatar/${course.id}`}
+          <img
+            src={course.thumbnailSrc ?? ""}
             alt={course.name}
-            fill
             className="object-cover rounded-t-md"
           />
         </figure>
@@ -98,7 +95,7 @@ export const ShopCourse = ({ course }: Props) => {
       </CardContent>
       <CardFooter className="flex justify-between mt-auto h-max">
         <div className="self-start flex flex-col justify-around gap-y-2">
-          <p className="font-semibold ">Price: {course.price.toFixed(2)} zł</p>
+          <p className="font-semibold ">Price: {course.price} zł</p>
           <p>Last update: {formatToDDMMYYYY(course.updatedAt)}</p>
         </div>
 
