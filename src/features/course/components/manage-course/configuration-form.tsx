@@ -24,7 +24,7 @@ const ConfigurationFormSchema = z.object({
   description: z
     .string()
     .min(3, "Course description should be at least 3 characters")
-    .max(50, "Course description should be 50 characters maximum"),
+    .max(2000, "Course description should be 2000 characters maximum"),
   instructorName: z
     .string()
     .min(3, "Instructor name should be at least 3 characters")
