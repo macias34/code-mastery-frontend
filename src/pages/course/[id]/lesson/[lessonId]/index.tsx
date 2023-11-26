@@ -2,12 +2,13 @@ import { useRouter } from "next/router";
 
 import {
   CourseChapters,
+  CourseChaptersSkeleton,
   LessonDetails,
   useGetCourse,
   useGetLesson,
 } from "@/features/course";
 import { ShopLayout } from "@/features/shop";
-import { Spinner } from "@/shared/components";
+import { Skeleton } from "@/shared/components";
 
 export default function LessonPage() {
   const { query } = useRouter();
@@ -26,13 +27,20 @@ export default function LessonPage() {
 
   return (
     <ShopLayout>
-      {isLoading && <Spinner />}
-      {course && lesson && (
-        <div className="flex gap-6 max-w-8xl px-4 mx-auto py-6 ">
-          <LessonDetails lesson={lesson} />
-          <CourseChapters course={course} />
-        </div>
-      )}
+      <div className="flex gap-6 max-w-8xl px-4 mx-auto py-6 ">
+        {isLoading && (
+          <>
+            <Skeleton className="w-full h-[80vh]" />
+            <CourseChaptersSkeleton />
+          </>
+        )}
+        {course && lesson && (
+          <>
+            <LessonDetails lesson={lesson} />
+            <CourseChapters course={course} />
+          </>
+        )}
+      </div>
     </ShopLayout>
   );
 }

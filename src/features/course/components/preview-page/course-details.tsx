@@ -6,6 +6,7 @@ import { useInvalidateUser, useUser } from "@/features/user";
 import { TOAST_SUCCESS_TITLE } from "@/libs/toast";
 import {
   Avatar,
+  AvatarFallback,
   Badge,
   Button,
   Card,
@@ -39,6 +40,8 @@ export const CourseDetails = ({ course }: CourseDetailsProps) => {
   const isBought = user.userData?.courses.some(
     (userCourse) => userCourse.id === id,
   );
+
+  const instructorNameAbbreviation = instructorName.slice(0, 2).toUpperCase();
 
   const handleBuyNow = () => {
     mutate(
@@ -76,17 +79,9 @@ export const CourseDetails = ({ course }: CourseDetailsProps) => {
           <h1 className="font-bold text-3xl lg:text-4xl">{name}</h1>
           <div className="flex items-center gap-4">
             <Avatar>
-              <img
-                alt="Avatar"
-                className="rounded-full"
-                height="64"
-                src="/placeholder.svg"
-                style={{
-                  aspectRatio: "64/64",
-                  objectFit: "cover",
-                }}
-                width="64"
-              />
+              <AvatarFallback className="bg-primary/90 text-white font-semibold cursor-pointer hover:bg-primary transition">
+                {instructorNameAbbreviation}
+              </AvatarFallback>
             </Avatar>
             <div>
               <div className="text-base">Instructed by {instructorName}</div>
