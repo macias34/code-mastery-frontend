@@ -24,12 +24,15 @@ const ConfigurationFormSchema = z.object({
   description: z
     .string()
     .min(3, "Course description should be at least 3 characters")
-    .max(2000, "Course description should be 2000 characters maximum"),
+    .max(2000, "Course description should be 2000 characters maximum")
+    .optional(),
   instructorName: z
     .string()
     .min(3, "Instructor name should be at least 3 characters")
-    .max(50, "Instructor name should be 50 characters maximum"),
-  price: z.number().min(0, "Price should be at least 0"),
+    .max(50, "Instructor name should be 50 characters maximum")
+    .optional(),
+  price: z.number().min(0, "Price should be at least 0").optional(),
+  thumbnailImage: z.custom<FileList>().optional(),
   customProperties: z
     .array(
       z.object({
@@ -160,6 +163,33 @@ export const ConfigurationForm = () => {
         input={{
           ...register("price", { valueAsNumber: true }),
           type: "number",
+          placeholder: "50",
+        }}
+      />
+      <InputWithLabel
+        label={{
+          size: "lg",
+          children: (
+            <>
+              Thumbnail{" "}
+              {course?.thumbnailSrc && (
+                <a
+                  href={course.thumbnailSrc}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-zinc-400 text-sm"
+                >
+                  Show current
+                </a>
+              )}
+            </>
+          ),
+        }}
+        name="thumbnailImage"
+        input={{
+          ...register("thumbnailImage"),
+          type: "file",
+          accept: "image/*",
           placeholder: "50",
         }}
       />

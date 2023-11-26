@@ -12,6 +12,7 @@ export interface CourseDto {
   categories: CategoryDto[];
   properties: PropertyDto[];
   chapters: ChapterDto[];
+  thumbnailSrc: string;
 }
 
 export interface GetCoursesDto {
