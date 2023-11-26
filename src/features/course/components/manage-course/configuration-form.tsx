@@ -29,12 +29,15 @@ const ConfigurationFormSchema = z.object({
     .string()
     .min(3, "Instructor name should be at least 3 characters")
     .max(50, "Instructor name should be 50 characters maximum"),
-  customProperties: z.array(
-    z.object({
-      label: z.string(),
-      value: z.string(),
-    }),
-  ),
+  price: z.number().min(0, "Price should be at least 0"),
+  customProperties: z
+    .array(
+      z.object({
+        label: z.string(),
+        value: z.string(),
+      }),
+    )
+    .optional(),
 });
 
 type ConfigurationFormData = z.infer<typeof ConfigurationFormSchema>;
@@ -72,7 +75,7 @@ export const ConfigurationForm = () => {
   const onSubmit = (formData: ConfigurationFormData) => {
     console.log(formData);
     const propertiesToCreate: OverridePropertyDto[] =
-      formData.customProperties.slice(0, customProperties.length);
+      formData?.customProperties?.slice(0, customProperties.length) ?? [];
 
     mutateProperties({
       properties: propertiesToCreate,
@@ -115,10 +118,11 @@ export const ConfigurationForm = () => {
         setValue(`customProperties.${index}.value`, value);
       });
       setCustomProperties(course.properties);
-      const { name, description, instructorName } = course;
+      const { name, description, instructorName, price } = course;
       setValue("name", name);
       setValue("description", description);
-      setValue("instructorName", instructorName);
+      setValue("instructorName", instructorName ?? "");
+      setValue("price", price);
     }
   }, [course, setValue]);
 
@@ -147,6 +151,16 @@ export const ConfigurationForm = () => {
         input={{
           ...register("instructorName"),
           placeholder: "Dawid Żmudzki",
+        }}
+      />
+      <InputWithLabel
+        label={{ size: "lg" }}
+        labelContent="Price"
+        name="price"
+        input={{
+          ...register("price", { valueAsNumber: true }),
+          type: "number",
+          placeholder: "50",
         }}
       />
 

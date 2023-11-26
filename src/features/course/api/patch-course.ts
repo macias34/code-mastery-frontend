@@ -1,4 +1,4 @@
-import { UseMutationOptions, useMutation } from "react-query";
+import { type UseMutationOptions, useMutation } from "react-query";
 
 import { request } from "@/shared/utils";
 
@@ -6,7 +6,7 @@ import { useGetPathnameId } from "../hooks";
 
 interface PatchCourseDTO {
   name?: string;
-  price?: string;
+  price?: number;
   instructorName?: string;
   description?: string;
   categoriesIds?: number[];
