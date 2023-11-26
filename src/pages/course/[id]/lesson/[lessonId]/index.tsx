@@ -9,7 +9,7 @@ import {
   useGetLesson,
 } from "@/features/course";
 import { ShopLayout } from "@/features/shop";
-import { useUser } from "@/features/user";
+import { UserRole, useUser } from "@/features/user";
 import { TOAST_ERROR_TITLE } from "@/libs/toast";
 import { Skeleton, toast } from "@/shared/components";
 import { withRoleAuthorization } from "@/shared/utils";
@@ -28,9 +28,10 @@ function LessonPage() {
 
   const { data: lesson, isLoading: isLessonLoading } = useGetLesson(lessonId);
 
-  const hasBoughtCourse = userData?.courses.some(
-    (userCourse) => userCourse.id === courseId,
-  );
+  const hasBoughtCourse =
+    userData?.courses.some((userCourse) => userCourse.id === courseId) ||
+    userData?.role === UserRole.ADMIN ||
+    userData?.role === UserRole.WORKER;
 
   useEffect(() => {
     if (!hasBoughtCourse) {

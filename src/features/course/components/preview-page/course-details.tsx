@@ -2,7 +2,7 @@ import dayjs from "dayjs";
 import React from "react";
 
 import { useCreateOrder } from "@/features/order";
-import { useInvalidateUser, useUser } from "@/features/user";
+import { UserRole, useInvalidateUser, useUser } from "@/features/user";
 import { TOAST_SUCCESS_TITLE } from "@/libs/toast";
 import {
   Avatar,
@@ -37,9 +37,10 @@ export const CourseDetails = ({ course }: CourseDetailsProps) => {
   const user = useUser();
   const { invalidate } = useInvalidateUser();
 
-  const isBought = user.userData?.courses.some(
-    (userCourse) => userCourse.id === id,
-  );
+  const isBought =
+    user.userData?.courses.some((userCourse) => userCourse.id === id) ||
+    user.userData?.role === UserRole.ADMIN ||
+    user.userData?.role === UserRole.WORKER;
 
   const instructorNameAbbreviation =
     instructorName?.slice(0, 2).toUpperCase() ?? "AD";

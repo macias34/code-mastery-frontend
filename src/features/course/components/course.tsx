@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 
 import { useCreateOrder } from "@/features/order";
-import { useUser } from "@/features/user";
+import { UserRole, useUser } from "@/features/user";
 import { formatToDDMMYYYY } from "@/libs/dayjs";
 import { TOAST_SUCCESS_TITLE } from "@/libs/toast";
 import { toast } from "@/shared/components";
@@ -57,9 +57,10 @@ export const ShopCourse = ({ course }: Props) => {
     );
   };
 
-  const isBought = user.userData?.courses.some(
-    (userCourse) => userCourse.id === course.id,
-  );
+  const isBought =
+    user.userData?.courses.some((userCourse) => userCourse.id === course.id) ||
+    user.userData?.role === UserRole.ADMIN ||
+    user.userData?.role === UserRole.WORKER;
 
   return (
     <Card className="w-[350px] flex flex-col">
