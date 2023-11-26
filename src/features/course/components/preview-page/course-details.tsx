@@ -32,6 +32,7 @@ export const CourseDetails = ({ course }: CourseDetailsProps) => {
     updatedAt,
     chapters,
     description,
+    properties,
   } = course;
   const { mutate, isLoading } = useCreateOrder();
   const user = useUser();
@@ -112,15 +113,11 @@ export const CourseDetails = ({ course }: CourseDetailsProps) => {
           </div>
           <p className="text-base leading-loose">{description}</p>
           <div className="flex items-center gap-2">
-            <Badge color="primary" variant="secondary">
-              React
-            </Badge>
-            <Badge color="primary" variant="secondary">
-              JavaScript
-            </Badge>
-            <Badge color="primary" variant="secondary">
-              Web Development
-            </Badge>
+            {properties.map((property) => (
+              <Badge key={property.id} variant="secondary" className="text-sm">
+                {property.label}
+              </Badge>
+            ))}
           </div>
         </CardContent>
         <CardFooter className="flex items-center justify-end">
