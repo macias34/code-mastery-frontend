@@ -1,6 +1,6 @@
 import { ShopCourse } from "@/features/course";
 import { ShopLayout } from "@/features/shop";
-import { useUser } from "@/features/user";
+import { UserRole, useUser } from "@/features/user";
 import { withRoleAuthorization } from "@/shared/utils";
 
 function MyCoursesPage() {
@@ -26,6 +26,6 @@ function MyCoursesPage() {
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-call
 export default withRoleAuthorization(MyCoursesPage, {
-  userRolesToExclude: [],
-  redirectDestination: "/auth",
+  userRolesToExclude: [UserRole.ADMIN, UserRole.WORKER],
+  redirectDestination: "/courses",
 });

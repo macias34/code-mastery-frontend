@@ -1,19 +1,46 @@
 import { type GetServerSideProps } from "next";
+import { FormProvider, useForm } from "react-hook-form";
+import { useDebounce } from "usehooks-ts";
 
-import { FilterBar, type GetCoursesDto, ShopCourse } from "@/features/course";
+import {
+  type CourseFilter,
+  CoursesSkeleton,
+  FilterBar,
+  type GetCoursesDto,
+  ShopCourse,
+  useGetCourses,
+} from "@/features/course";
 import { ShopLayout } from "@/features/shop";
 import { request } from "@/shared/utils";
 
 export default function CoursesPage({
-  courseResponse,
+  courseResponse: initialCoursesResponse,
 }: {
   courseResponse: GetCoursesDto;
 }) {
-  const { courses } = courseResponse;
+  const methods = useForm<CourseFilter>();
 
-  if (courses.length === 0) {
+  const maxPrice = useDebounce(methods.watch("maxPrice"), 300);
+  const minPrice = useDebounce(methods.watch("minPrice"), 300);
+  const name = useDebounce(methods.watch("name"), 300);
+
+  const { data: coursesResponse, isLoading } = useGetCourses(
+    0,
+    {
+      maxPrice: maxPrice ?? undefined,
+      minPrice: minPrice ?? 0,
+      name: name,
+    },
+    { initialData: initialCoursesResponse },
+  );
+
+  if ((coursesResponse?.courses?.length ?? 0) === 0) {
     return (
       <ShopLayout>
+        <FormProvider {...methods}>
+          <FilterBar />
+        </FormProvider>
+
         <div className="flex justify-center gap-5 mt-10">
           <p>Brak kursów</p>
         </div>
@@ -21,23 +48,28 @@ export default function CoursesPage({
     );
   }
 
+  const courses = coursesResponse?.courses ?? [];
+
   return (
     <ShopLayout>
-      <FilterBar />
-      <div className="w-11/12 max-w-6xl mx-auto mt-10 ">
-        <div className=" flex justify-center gap-5 mt-10 flex-wrap">
-          {courses.map((course) => (
-            <ShopCourse course={course} key={course.id} />
-          ))}
+      <FormProvider {...methods}>
+        <FilterBar />
+        <div className="w-11/12 max-w-6xl mx-auto mt-10 ">
+          <div className=" flex justify-center gap-5 mt-10 flex-wrap">
+            {isLoading && <CoursesSkeleton />}
+            {courses.map((course) => (
+              <ShopCourse course={course} key={course.id} />
+            ))}
+          </div>
         </div>
-      </div>
+      </FormProvider>
     </ShopLayout>
   );
 }
 
 export const getServerSideProps = (async () => {
   try {
-    const courseResponse = await request<GetCoursesDto>("/course/");
+    const courseResponse = await request<GetCoursesDto>("/course");
     return { props: { courseResponse } };
   } catch {
     return {

@@ -1,5 +1,5 @@
 import { useSession } from "next-auth/react";
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 
 import { request } from "@/shared/utils";
 
@@ -16,12 +16,24 @@ export const useUser = () => {
     enabled: !!accessToken,
   });
 
-  const isLoading = isUserDataLoading && session.status === "loading";
+  const isLoading = isUserDataLoading || session.status === "loading";
 
   return {
     accessToken,
     userData,
     isLoading,
     expiresAt,
+  };
+};
+
+export const useInvalidateUser = () => {
+  const queryClient = useQueryClient();
+
+  const invalidate = async () => {
+    await queryClient.invalidateQueries("userData");
+  };
+
+  return {
+    invalidate,
   };
 };

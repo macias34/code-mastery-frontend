@@ -9,7 +9,7 @@ import { Label, labelVariants } from "./label";
 
 export interface InputWithLabelProps extends PropsWithClassname {
   name: string;
-  labelContent: string;
+  labelContent?: string;
   label?: LabelProps & VariantProps<typeof labelVariants>;
   input?: InputProps;
   error?: ReactElement | string;
@@ -26,7 +26,7 @@ export const InputWithLabel: FC<InputWithLabelProps> = ({
   return (
     <div className={cn("flex flex-col gap-2", className)}>
       <Label htmlFor={name} {...label}>
-        {labelContent}
+        {labelContent || label?.children}
       </Label>
       <Input {...input} />
 
