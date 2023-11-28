@@ -161,9 +161,9 @@ export const EditLessonDialog: FC<LessonFormProps> = ({ lesson }) => {
                 {showVideo ? "Change video" : "Preview video"}
               </button>
             </div>
-            {showVideo && videoFile ? (
+            {showVideo ? (
               <video controls className=" max-h-72">
-                <source src={videoFile.name} type="video/mp4" />
+                <source src={videoFile?.name ?? ""} type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
             ) : (
