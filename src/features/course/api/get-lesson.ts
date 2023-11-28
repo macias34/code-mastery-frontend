@@ -26,6 +26,7 @@ export const useGetLesson = (id: number, options?: UseGetLessonOptions) => {
   return useQuery<LessonDto, ApiError>({
     queryFn: () => getLesson(id, accessToken),
     queryKey: ["lesson", id],
+    enabled: !!accessToken && !!id,
     ...options,
   });
 };
