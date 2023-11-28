@@ -123,6 +123,8 @@ export const CourseDetails = ({ course }: CourseDetailsProps) => {
         <CardFooter className="flex items-center justify-end">
           {isBought ? (
             <Button disabled>Already bought</Button>
+          ) : !user.accessToken ? (
+            <Button disabled>Sign in to buy</Button>
           ) : (
             <Button disabled={isLoading} onClick={() => handleBuyNow()}>
               Buy now
