@@ -8,9 +8,9 @@ import { type CourseFilter } from "../../types";
 export const FilterBar = () => {
   const { register } = useFormContext<CourseFilter>();
   return (
-    <section className="container mx-auto">
+    <section className="container mx-auto w-fit">
       <Card className="p-10">
-        <form className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 items-start">
+        <form className="flex gap-4 justify-center">
           <div>
             <Label htmlFor="search-title">Title</Label>
             <Input

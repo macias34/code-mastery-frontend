@@ -123,12 +123,13 @@ export const CourseDetails = ({ course }: CourseDetailsProps) => {
         <CardFooter className="flex items-center justify-end">
           {isBought ? (
             <Button disabled>Already bought</Button>
-          ) : !user.accessToken ? (
-            <Button disabled>Sign in to buy</Button>
-          ) : (
+          ) : // eslint-disable-next-line unicorn/no-nested-ternary
+          user.accessToken ? (
             <Button disabled={isLoading} onClick={() => handleBuyNow()}>
               Buy now
             </Button>
+          ) : (
+            <Button disabled>Sign in to buy</Button>
           )}
         </CardFooter>
       </Card>
