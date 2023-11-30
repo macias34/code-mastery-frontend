@@ -1,10 +1,13 @@
 import React from "react";
 
 import { DashboardLayout } from "@/features/dashboard";
+import { useGetOrders } from "@/features/order";
+import { OrdersTable } from "@/features/order/components";
 import { UserRole } from "@/features/user";
 import { withRoleAuthorization } from "@/shared/utils";
 
 export function OrdersPage() {
+  const { data: orders } = useGetOrders();
   return (
     <DashboardLayout
       navbar={{
@@ -14,7 +17,9 @@ export function OrdersPage() {
         },
         pageTitle: "Orders",
       }}
-    ></DashboardLayout>
+    >
+      <OrdersTable orders={orders ?? []} />
+    </DashboardLayout>
   );
 }
 
