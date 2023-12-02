@@ -1,4 +1,3 @@
-import { type GetServerSideProps } from "next";
 import { FormProvider, useForm } from "react-hook-form";
 import { useDebounce } from "usehooks-ts";
 
@@ -6,35 +5,29 @@ import {
   type CourseFilter,
   CoursesSkeleton,
   FilterBar,
-  type GetCoursesDto,
   ShopCourse,
   useGetCourses,
 } from "@/features/course";
 import { ShopLayout } from "@/features/shop";
-import { request } from "@/shared/utils";
 
-export default function CoursesPage({
-  courseResponse: initialCoursesResponse,
-}: {
-  courseResponse: GetCoursesDto;
-}) {
+export default function CoursesPage() {
   const methods = useForm<CourseFilter>();
 
   const maxPrice = useDebounce(methods.watch("maxPrice"), 300);
   const minPrice = useDebounce(methods.watch("minPrice"), 300);
   const name = useDebounce(methods.watch("name"), 300);
 
-  const { data: coursesResponse, isLoading } = useGetCourses(
-    0,
-    {
-      maxPrice: maxPrice ?? undefined,
-      minPrice: minPrice ?? 0,
-      name: name,
-    },
-    { initialData: initialCoursesResponse },
-  );
+  const {
+    data: coursesResponse,
+    isLoading,
+    error,
+  } = useGetCourses(0, {
+    maxPrice: maxPrice ?? undefined,
+    minPrice: minPrice ?? 0,
+    name: name,
+  });
 
-  if ((coursesResponse?.courses?.length ?? 0) === 0) {
+  if ((coursesResponse?.courses?.length ?? 0) === 0 || error) {
     return (
       <ShopLayout>
         <FormProvider {...methods}>
@@ -66,23 +59,3 @@ export default function CoursesPage({
     </ShopLayout>
   );
 }
-
-export const getServerSideProps = (async () => {
-  try {
-    const courseResponse = await request<GetCoursesDto>("/course");
-    return { props: { courseResponse } };
-  } catch {
-    return {
-      props: {
-        courseResponse: {
-          courses: [],
-          currentPage: 0,
-          totalPages: 0,
-          totalElements: 0,
-        },
-      },
-    };
-  }
-}) satisfies GetServerSideProps<{
-  courseResponse: GetCoursesDto;
-}>;
