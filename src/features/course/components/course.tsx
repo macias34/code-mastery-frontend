@@ -82,7 +82,7 @@ export const ShopCourse = ({ course }: Props) => {
           </div>
         </Link>
         <div className="flex gap-4 justify-end">
-          {isBought ? (
+          {isBought || !user.accessToken ? (
             <Link href={`/course/${course.id}`}>
               <Button>Watch</Button>
             </Link>
