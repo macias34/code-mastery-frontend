@@ -4,7 +4,8 @@ import { type ApiError, request } from "@/shared/utils";
 
 import { type OrderDto } from "../types";
 
-export const getOrders = () => request<OrderDto[]>(`/order`);
+export const getOrders = () =>
+  request<OrderDto[]>(`/order/get`, { method: "POST" });
 
 export const useGetOrders = () => {
   return useQuery<OrderDto[], ApiError>({
