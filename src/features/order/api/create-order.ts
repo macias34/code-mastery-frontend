@@ -16,7 +16,7 @@ export const createOrder = ({
   accessToken,
 }: CreateOrderArguments) => {
   return request(
-    "/order",
+    "/orders",
     {
       method: "POST",
       headers: {
